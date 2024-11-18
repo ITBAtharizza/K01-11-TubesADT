@@ -6,7 +6,7 @@ boolean EOP;
 static FILE *pita;
 static int retval;
 
-void START(char *filename) {
+void START(char *filename){
     /* Mesin siap dioperasikan. Pita disiapkan ... */
     /* Algoritma */
     if (filename == NULL){
@@ -18,23 +18,23 @@ void START(char *filename) {
     ADV();
 }
 
-void ADV() {
+void ADV(){
     /* Pita dimajukan satu karakter. ... */
     /* Algoritma */
     retval = fscanf(pita, "%c", &currentChar);
     EOP = (currentChar == MARK);
-    if (EOP) {
+    if (EOP){
         fclose(pita);
     }
 }
 
-char GetCC() {
+char GetCC(){
     /* Mengirimkan currentChar */
     /* Algoritma */
     return currentChar;
 }
 
-boolean IsEOP() {
+boolean IsEOP(){
     /* Mengirimkan true jika currentChar = MARK */
     /* Algoritma */
     return EOP;

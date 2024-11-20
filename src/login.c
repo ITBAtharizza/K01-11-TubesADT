@@ -38,4 +38,5 @@ void login(boolean *log_stats, List *list_user, User *logged_in) {
     } else {
         printf("Username atau password salah.\n");
     }
+    
 }

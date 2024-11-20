@@ -8,6 +8,7 @@
 #include "list.h"
 #include "listdin.h"
 #include "load.h"
+#include "login.h"
 
 int main(){
     char filename[50];
@@ -15,6 +16,8 @@ int main(){
     STARTWORD(NULL);
     List list_user;
     ListDin list_barang;
+    boolean log_stats = false;
+    User logged_in;
 
     if (IsWordEqual(currentWord, "LOAD")){
         ADVWORD();
@@ -31,7 +34,7 @@ int main(){
         }
     }
     else if (IsWordEqual(currentWord, "LOGIN")){
-        printf("1");
+        login(&log_stats, &list_user, &logged_in);
     }
 
 }

@@ -7,6 +7,7 @@
 #include "custom.h"
 #include "list.h"
 #include "listdin.h"
+#include "load.h"
 
 int main(){
     char filename[50];

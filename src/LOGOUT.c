@@ -1,90 +1,61 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include "boolean.h"
+#include "mesinkarakter.h"
 #include "mesinkata.h"
+#include "fungsi.h"
+#include "custom.h"
+#include "list.h"
+#include "listdin.h"
 
-// Node untuk menyimpan nama pengguna
-typedef struct LogoutNode {
-    Word username;               // Menggunakan tipe Word dari mesin kata
-    struct LogoutNode *next;
-} LogoutNode;
-
-// Struktur utama untuk menyimpan daftar logout
-typedef struct {
-    LogoutNode *head;
-} LogoutList;
-
-// Inisialisasi daftar logout
-void initLogoutList(LogoutList *list) {
-    list->head = NULL;
-}
-
-// Menambahkan pengguna ke daftar logout
-void addLogoutUser(LogoutList *list, Word username) {
-    LogoutNode *newNode = (LogoutNode *)malloc(sizeof(LogoutNode));
-    if (newNode == NULL) {
-        printf("Gagal mengalokasikan memori untuk LogoutNode.\n");
-        return;
+// Fungsi untuk logout
+void Logout(List *list_user, ListDin *list_barang) {
+    // Dealokasi semua list dinamis dan statis
+    for (int i = 0; i < Length(*list_user); i++) {
+        free((*list_user).A[i].name);
+        free((*list_user).A[i].password);
     }
-    newNode->username = username; // Salin Word langsung
-    newNode->next = list->head;
-    list->head = newNode;
-}
+    DeallocateListDin(list_barang); // List dinamis (list_barang)
+    CreateList(list_user);         // Reset list statis (list_user)
 
-// Menampilkan daftar pengguna yang telah logout
-void displayLogoutList(const LogoutList *list) {
-    if (list->head == NULL) {
-        printf("Belum ada pengguna yang logout.\n");
-        return;
-    }
-    printf("Daftar pengguna yang telah logout:\n");
-    LogoutNode *current = list->head;
-    int count = 1;
-    while (current != NULL) {
-        // Cetak username
-        printf("%d. ", count);
-        for (int i = 0; i < current->username.Length; i++) {
-            printf("%c", current->username.TabWord[i]);
-        }
-        printf("\n");
-        current = current->next;
-        count++;
-    }
-}
-
-// Fungsi untuk logout pengguna
-void logoutUser(LogoutList *list, Word username) {
-    printf("Pengguna ");
-    for (int i = 0; i < username.Length; i++) {
-        printf("%c", username.TabWord[i]);
-    }
-    printf(" telah logout dari sistem PURRMART. Silakan REGISTER/LOGIN kembali untuk melanjutkan.\n");
-    addLogoutUser(list, username); // Tambahkan ke daftar logout
+    printf("Logout berhasil. Semua data telah dikembalikan ke kondisi awal.\n");
 }
 
 int main() {
-    LogoutList logoutList;
-    initLogoutList(&logoutList);
+    char filename[50];
+    printf("Masukkan perintah:  ");
+    STARTWORD(NULL);
+    List list_user;        // List user statis
+    ListDin list_barang;   // List barang dinamis
 
-    printf("=== Sistem Logout PURRMART ===\n");
-    printf("Masukkan nama pengguna untuk logout (ketik END untuk selesai):\n");
+    CreateList(&list_user); // Inisialisasi list_user
+    CreateListDin(&list_barang, 100); // Inisialisasi list_barang dengan kapasitas 100
 
-    STARTWORD(); // Mulai membaca input menggunakan mesin kata
-    while (!isEndWord()) {
-        if (currentWord.Length == 3 &&
-            currentWord.TabWord[0] == 'E' &&
-            currentWord.TabWord[1] == 'N' &&
-            currentWord.TabWord[2] == 'D') {
-            break; // Keluar jika input adalah "END"
+    if (IsWordEqual(currentWord, "LOAD")) {
+        ADVWORD();
+        for (int i = 0; i < currentWord.Length; i++) {
+            filename[i] = currentWord.TabWord[i];
         }
+        filename[currentWord.Length] = '\0';
 
-        logoutUser(&logoutList, currentWord); // Proses logout pengguna
-        ADVWORD(); // Lanjutkan membaca input
+        Load(filename, &list_user, &list_barang);
+
+        for (int i = 0; i < LengthListDin(list_barang); i++) {
+            printf("Harga: %d, Nama: %s\n", list_barang.A[i].price, list_barang.A[i].name);
+        }
+        for (int i = 0; i < Length(list_user); i++) {
+            printf("Uang: %d, Nama: %s, Password: %s\n", list_user.A[i].money, list_user.A[i].name, list_user.A[i].password);
+        }
+    }
+    else if (IsWordEqual(currentWord, "HELP")) {
+        printf("1\n");
+    }
+    else if (IsWordEqual(currentWord, "LOGOUT")) {
+        Logout(&list_user, &list_barang); // Memanggil fungsi logout
+    }
+    else {
+        printf("Perintah tidak dikenali.\n");
     }
 
-    printf("\n=== Daftar Pengguna Logout ===\n");
-    displayLogoutList(&logoutList);
-
-    printf("Program selesai.\n");
     return 0;
 }

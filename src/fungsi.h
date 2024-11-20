@@ -4,7 +4,6 @@
 #include "boolean.h"
 #include "mesinkarakter.h"
 #include "mesinkata.h"
-#include "datatype.h"
 
 boolean IsWordEqual(Word word, char *reference);
 int wordToInt(Word word);

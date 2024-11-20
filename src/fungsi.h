@@ -8,8 +8,6 @@
 boolean IsWordEqual(Word word, char *reference);
 int wordToInt(Word word);
 void goodsWithManyWords(char **goods, int *length, Word word);
-
-
 void Load(char *filename);
 
 #endif

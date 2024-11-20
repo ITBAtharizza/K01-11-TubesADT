@@ -3,7 +3,7 @@
 
 // Konstruktor
 
-const User MARK_USER = {"", "", -1};
+const User MARK_USER ={"", "", -1};
 
 List MakeList(){
 	List L;
@@ -26,11 +26,11 @@ int Length(List L){
 	return i;
 }
 
-ElType Get(List L, IdxType i){
+ElTypeUser Get(List L, IdxType i){
 	return L.A[i];
 }
 
-void Set(List *L, IdxType i, ElType v){
+void Set(List *L, IdxType i, ElTypeUser v){
 	(*L).A[i] = v;
 }
 
@@ -54,7 +54,7 @@ boolean IsIdxEff (List L, IdxType i){
 	return (FirstIdx(L) <= i) && (LastIdx(L) >= i);
 }
 
-boolean Search(List L, ElType X){
+boolean Search(List L, ElTypeUser X){
 	int i = FirstIdx(L);
 	int j = LastIdx(L);
 	boolean found = false;
@@ -67,7 +67,7 @@ boolean Search(List L, ElType X){
     return found;
 }
 
-void InsertFirst(List *L, ElType X){
+void InsertFirst(List *L, ElTypeUser X){
 	IdxType i = LastIdx(*L);
 	IdxType j = FirstIdx(*L);
 	while (i > j){
@@ -78,7 +78,7 @@ void InsertFirst(List *L, ElType X){
 }
 
 
-void InsertAt(List *L, ElType X, IdxType i){
+void InsertAt(List *L, ElTypeUser X, IdxType i){
     IdxType j = LastIdx(*L);
 	while (i <= j){
 		Set(L, j+1, Get(*L, j));
@@ -87,7 +87,7 @@ void InsertAt(List *L, ElType X, IdxType i){
 	Set(L, i, X);
 }
 
-void InsertLast(List *L, ElType X){
+void InsertLast(List *L, ElTypeUser X){
     if (IsEmpty(*L)){
         InsertFirst(L, X);
     } else{
@@ -137,23 +137,4 @@ List Concat(List L1, List L2){
 	}
 
     return L3;
-}
-
-boolean IsMarkUser(User user){
-    return (user.money == -1 && user.name[0] == '\0' && user.password[0] == '\0');
-}
-
-boolean IsSameUser(User user1, User user2){
-    return (IsSameString(user1.name, user2.name) && IsSameString(user1.password, user2.password) && user1.money == user2.money);
-}
-
-boolean IsSameString(char *str1, char *str2){
-    int i = 0;
-    while (str1[i] != '\0' && str2[i] != '\0') {
-        if (str1[i] != str2[i]) {
-            return false;
-        }
-        i++;
-    }
-    return str1[i] == '\0' && str2[i] == '\0';
 }

@@ -26,4 +26,9 @@ Barang makeBarang(int price, Word name);
 I.S Sudah tersedia uang dan nama untuk pengguna
 F.S Terbentuk barang baru*/
 
+boolean IsMarkUser(User user);
+boolean IsSameUser(User user1, User user2);
+boolean IsSameBarang(Barang barang1, Barang barang2);
+boolean IsSameString(char *str1, char *str2);
+
 #endif

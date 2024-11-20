@@ -1,5 +1,5 @@
-#ifndef __ListDin_H__
-#define __ListDin_H__
+#ifndef __LISTDIN_H__
+#define __LISTDIN_H__
 
 #include "boolean.h"
 #include "custom.h"

@@ -52,13 +52,50 @@ void goodsWithManyWords(char **goods, int *length, Word currentWord){
     (*goods)[*length] = '\0';
 }
 
+Barang makeBarang(int price, Word name){
+    Barang barang;
+    for (int i = 0; i < name.Length; i++){
+        barang.name[i] = name.TabWord[i];
+    }
+    barang.name[name.Length] = '\0';
+
+    barang.price = price;
+    return barang;
+}
+
+User makeUser(int money, Word name, Word password){
+    User user;
+    for (int i = 0; i < name.Length; i++){
+        user.name[i] = name.TabWord[i];
+    }
+    user.name[name.Length] = '\0';
+
+    for (int j = 0; j < password.Length; j++){
+        user.password[j] = password.TabWord[j];
+    }
+    user.password[password.Length] = '\0';
+    user.money = money;
+
+    return user;
+}
+
 void Load(char *filename){
     STARTWORD(filename);
+    
+    if (IsEOP()){
+        return;
+    }
+
     int jumlah_barang = wordToInt(currentWord);
 
     for (int i = 0; i < jumlah_barang; i++){
         ADVWORD();
-        int harga = wordToInt(currentWord);
+        int price = wordToInt(currentWord);
+        Word name;
+        name.Length = 0;
+        for (int i = 0; i < NMax; i++){
+            name.TabWord[i] = '\0';
+        }
         
         char *goods = malloc(1);
         if (goods == NULL){
@@ -79,8 +116,21 @@ void Load(char *filename){
 
         if (length > 0 && goods[length - 1] == ' '){
             goods[length - 1] = '\0';
+            length -= 1;
         }
 
+        if (length > 50){
+            length = 50;
+        }
+
+        for (int j = 0; j < length && j < 50; j++){
+            name.TabWord[j] = goods[j];
+        }            
+        name.TabWord[length] = '\0';
+        name.Length = length;
+
+        Barang barang = makeBarang(price, name);
+        printf("Barang: %s, Harga: %d\n", barang.name, barang.price);
         free(goods);
     }
 
@@ -97,5 +147,10 @@ void Load(char *filename){
         
         ADVWORD();
         Word password = currentWord;
+
+        User user = makeUser(money, name, password);
+        printf("Uang: %d, Nama: %s, Password: %s\n", user.money, user.name, user.password);
     }
 }
+
+

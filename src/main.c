@@ -9,6 +9,7 @@
 #include "listdin.h"
 #include "load.h"
 #include "login.h"
+#include "help.h"
 
 int main(){
     char filename[50];
@@ -36,5 +37,8 @@ int main(){
     else if (IsWordEqual(currentWord, "LOGIN")){
         login(&log_stats, &list_user, &logged_in);
     }
-
+/*    else if (IsWordEqual(currentWord, "HELP")){
+        displayCommandHelp(menuType);
+    }
+*/
 }

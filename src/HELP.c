@@ -1,9 +1,6 @@
 #include <stdio.h>
-#include "mesinkarakter.h"
-#include "mesinkata.h"
-#include "fungsi.h"
+#include "help.h"
 
-// Fungsi untuk menampilkan daftar HELP
 void displayCommandHelp(Word menuType) {
     if (IsWordEqual(menuType, "Welcome")) {
         printf("=====[ Welcome Menu Help PURRMART]=====\n");
@@ -29,23 +26,4 @@ void displayCommandHelp(Word menuType) {
     } else {
         printf("Jenis menu tidak dikenali. Masukkan salah satu: Welcome, Login, Main.\n");
     }
-}
-
-// Fungsi utama
-int main() {
-    printf("Masukkan perintah:\n");
-    STARTWORD();
-
-    if (IsWordEqual(currentWord, "HELP")) {
-        ADVWORD();
-        if (!isEndWord()) {
-            displayCommandHelp(currentWord);
-        } else {
-            printf("Masukkan jenis menu untuk bantuan (Welcome, Login, Main).\n");
-        }
-    } else {
-        printf("Perintah tidak dikenali. Ketik 'HELP' untuk bantuan.\n");
-    }
-
-    return 0;
 }

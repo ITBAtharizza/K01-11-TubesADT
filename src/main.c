@@ -29,7 +29,7 @@ int main(){
             printf("Uang: %d, Nama: %s, Password: %s\n", list_user.A[i].money, list_user.A[i].name, list_user.A[i].password);
         }
     }
-    else if (IsWordEqual(currentWord, "HELP")){
+    else if (IsWordEqual(currentWord, "LOGIN")){
         printf("1");
     }
 

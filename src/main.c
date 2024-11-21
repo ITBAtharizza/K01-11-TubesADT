@@ -9,6 +9,7 @@
 #include "listdin.h"
 #include "load.h"
 #include "login.h"
+#include "storelist.h"
 
 int main(){
     char filename[50];
@@ -38,6 +39,13 @@ int main(){
 
         if (IsWordEqual(currentWord, "LOGIN")){
             login(&log_stats, &list_user, &logged_in);
+        }
+
+        if (IsWordEqual(currentWord, "STORE")){
+            ADVWORD();
+            if (IsWordEqual(currentWord, "LIST")){
+                displayList(&list_barang);
+            }
         }
         printf("Current word: %s\n", currentWord.TabWord);
     }

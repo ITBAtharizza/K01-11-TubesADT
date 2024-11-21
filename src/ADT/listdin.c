@@ -134,16 +134,13 @@ void DeleteFirstListDin(ListDin *array){
  */
 void PrintListDin(ListDin array){
     if (IsEmptyListDin(array)){
-        printf("[]\n");
+        printf("TOKO KOSONG\n\n");
     } else{
-        printf("[");
+        printf("List barang yang ada di toko :\n");
         for (int i = 0; i < array.Neff; i++){
-            printf("%d", array.A[i]);
-            if (i < array.Neff - 1){
-                printf(", ");
-            }
+            printf("- %s\n", array.A[i].name);
         }
-        printf("]\n");
+        printf("\n");
     }
 }
 

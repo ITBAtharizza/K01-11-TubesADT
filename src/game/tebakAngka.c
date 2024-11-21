@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tebakAngka.h"
-#include "mesinkata.h"
+#include "../ADT/mesinkata.h"
 
 void tebakAngka(int* score){
     int random = rand() % 100 + 1;
@@ -53,3 +53,9 @@ void tebakAngka(int* score){
     }
     printf("kamu mendapatkan %d poin.\n", *score);
 }
+
+// int main(){
+//     int score = 0;
+//     tebakAngka(&score);
+//     return 0;
+// }

@@ -12,6 +12,7 @@
 #include "storelist.h"
 #include "queue.h"
 #include "request.h"
+#include "start.h"
 
 int main(){
     char filename[50];
@@ -58,7 +59,12 @@ int main(){
                 Request(&antrian, &list_barang);
                 displayQueue(antrian);
             }
+        } 
+        if (IsWordEqual(currentWord, "STARTGAME")) {
+            STARTGAME();
+            printf("File konfigurasi aplikasi berhasil dibaca. PURRMART berhasil dijalankan.\n");
         }
         printf("Current word: %s\n", currentWord.TabWord);
     }
+    return 0;
 }

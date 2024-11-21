@@ -16,7 +16,6 @@ void Load(char *filename, List *list_user, ListDin *list_barang){
     }
 
     int jumlah_barang = wordToInt(currentWord);
-    *list_barang = MakeListDin();
 
     for (int i = 0; i < jumlah_barang; i++){
         ADVWORD();
@@ -58,15 +57,14 @@ void Load(char *filename, List *list_user, ListDin *list_barang){
         }            
         name.TabWord[length] = '\0';
         name.Length = length;
+        free(goods);
 
         Barang barang = makeBarang(price, name);
         InsertLastListDin(list_barang, barang);
-        free(goods);
     }
 
     ADVWORD();
     int jumlah_user = wordToInt(currentWord);
-    *list_user = MakeList();
 
     for (int i = 0; i < jumlah_user; i++){
         ADVWORD();

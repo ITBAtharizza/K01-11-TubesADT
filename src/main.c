@@ -10,14 +10,22 @@
 #include "load.h"
 #include "login.h"
 #include "storelist.h"
+#include "queue.h"
+#include "request.h"
 
 int main(){
     char filename[50];
 
     List list_user;
     ListDin list_barang;
+    Queue antrian;
     boolean log_stats = false;
     User logged_in;
+
+    CreateQueue(&antrian);
+    list_barang = MakeListDin();
+    list_user = MakeList();
+
 
     while (1){
         printf("Masukkan perintah:  ");
@@ -45,6 +53,10 @@ int main(){
             ADVWORD();
             if (IsWordEqual(currentWord, "LIST")){
                 displayList(&list_barang);
+            }
+            if (IsWordEqual(currentWord, "REQUEST")){
+                Request(&antrian, &list_barang);
+                displayQueue(antrian);
             }
         }
         printf("Current word: %s\n", currentWord.TabWord);

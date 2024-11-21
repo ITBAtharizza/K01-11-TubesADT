@@ -1,16 +1,17 @@
-#ifndef QUEUE_H
-#define QUEUE_H
+#ifndef __QUEUE_H__
+#define __QUEUE_H__
 
 #include "boolean.h"
+#include "custom.h"
 
 #define IDX_UNDEF -1
 #define CAPACITY 100
 
 /* Definisi elemen dan address */
-typedef int ElType;
+typedef Word ElTypeQueue;
 typedef struct
 {
-    ElType buffer[CAPACITY];
+    ElTypeQueue buffer[CAPACITY];
     int idxHead;
     int idxTail;
 } Queue;
@@ -41,12 +42,12 @@ int length(Queue q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika q kosong. */
 
 /* *** Primitif Add/Delete *** */
-void enqueue(Queue *q, ElType val);
+void enqueue(Queue *q, ElTypeQueue val);
 /* Proses: Menambahkan val pada q dengan aturan FIFO */
 /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
 /* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur" dalam buffer melingkar. */
 
-void dequeue(Queue *q, ElType *val);
+void dequeue(Queue *q, ElTypeQueue *val);
 /* Proses: Menghapus val pada q dengan aturan FIFO */
 /* I.S. q tidak mungkin kosong */
 /* F.S. val = nilai elemen HEAD pd I.S., IDX_HEAD "mundur";
@@ -61,5 +62,7 @@ void displayQueue(Queue q);
 /* F.S. Jika q tidak kosong: [e1,e2,...,en] */
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
 /* Jika Queue kosong : menulis [] */
+
+int isMemberQueue(Queue q, ElTypeQueue val);
 
 #endif

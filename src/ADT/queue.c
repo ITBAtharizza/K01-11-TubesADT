@@ -29,7 +29,7 @@ int length(Queue q)
     }
 }
 
-void enqueue(Queue *q, ElType val)
+void enqueue(Queue *q, ElTypeQueue val)
 {
     if (isFull(*q))
     {
@@ -37,16 +37,22 @@ void enqueue(Queue *q, ElType val)
     }
     else
     {
-        if (isEmpty(*q))
+        if (isEmpty(*q)) 
         {
             IDX_HEAD(*q) = 0;
+            IDX_TAIL(*q) = 0;
+            HEAD(*q) = val; 
         }
-        IDX_TAIL(*q) = (IDX_TAIL(*q) + 1) % CAPACITY;
-        TAIL(*q) = val;
+        else if (!isMemberQueue(*q, val)) 
+        {
+            IDX_TAIL(*q) = (IDX_TAIL(*q) + 1) % CAPACITY;
+            TAIL(*q) = val; 
+        }
     }
 }
 
-void dequeue(Queue *q, ElType *val)
+
+void dequeue(Queue *q, ElTypeQueue *val)
 {
     if (isEmpty(*q))
     {
@@ -67,6 +73,7 @@ void dequeue(Queue *q, ElType *val)
     }
 }
 
+
 void displayQueue(Queue q)
 {
     if (isEmpty(q))
@@ -79,8 +86,24 @@ void displayQueue(Queue q)
         printf("[");
         for (i = IDX_HEAD(q); i != IDX_TAIL(q); i = (i + 1) % CAPACITY)
         {
-            printf("%d,", q.buffer[i]);
+            printf("%s,", q.buffer[i].TabWord);
         }
-        printf("%d]\n", TAIL(q));
+        printf("%s]\n", TAIL(q).TabWord);
     }
+}
+
+int isMemberQueue(Queue q, ElTypeQueue val)
+{
+    if (isEmpty(q)) return 0;
+
+    for (int i = IDX_HEAD(q);; i = (i + 1) % CAPACITY)
+    {
+        if (IsSameString(q.buffer[i].TabWord, val.TabWord))
+        {
+            printf("Barang dengan nama yang sama sudah ada di antrian!\n");
+            return 1;
+        }
+        if (i == IDX_TAIL(q)) break;
+    }
+    return 0;
 }

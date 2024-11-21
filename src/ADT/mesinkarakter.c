@@ -14,6 +14,12 @@ void START(char *filename){
     }
     else{
         pita = fopen(filename, "r");
+        if (pita == NULL){
+            printf("Save file tidak ditemukan. PURRMART gagal dijalankan.\n");
+            EOP = true;
+            return;
+        }
+        printf("Save file berhasil dibaca. PURRMART berhasil dijalankan.\n");
     }
     ADV();
 }
@@ -23,9 +29,6 @@ void ADV(){
     /* Algoritma */
     retval = fscanf(pita, "%c", &currentChar);
     EOP = (currentChar == MARK);
-    if (EOP){
-        fclose(pita);
-    }
 }
 
 char GetCC(){

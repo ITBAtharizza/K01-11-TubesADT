@@ -58,6 +58,10 @@ int main(){
                 Request(&antrian, &list_barang);
                 displayQueue(antrian);
             }
+            if (IsWordEqual(currentWord, "SUPPLY")){
+                Supply(&antrian, &list_barang);
+                displayList(&list_barang);
+            }
         } 
         if (IsWordEqual(currentWord, "STARTGAME")) {
             STARTGAME();

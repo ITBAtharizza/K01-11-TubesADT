@@ -12,6 +12,7 @@
 #include "storelist.h"
 #include "queue.h"
 #include "request.h"
+#include "supply.h"
 
 int main(){
     char filename[50];
@@ -25,7 +26,6 @@ int main(){
     CreateQueue(&antrian);
     list_barang = MakeListDin();
     list_user = MakeList();
-
 
     while (1){
         printf("Masukkan perintah:  ");
@@ -57,6 +57,10 @@ int main(){
             if (IsWordEqual(currentWord, "REQUEST")){
                 Request(&antrian, &list_barang);
                 displayQueue(antrian);
+            }
+            if (IsWordEqual(currentWord, "SUPPLY")){
+                Supply(&antrian, &list_barang);
+                displayList(&list_barang);
             }
         }
         printf("Current word: %s\n", currentWord.TabWord);

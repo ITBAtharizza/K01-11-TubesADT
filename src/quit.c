@@ -2,11 +2,9 @@
 #include "save.h"
 
 void quit(List *list_user, ListDin *list_barang) {
-    char pilihan;
     printf("Apakah kamu ingin menyimpan data sesi sekarang (Y/N)? ");
-    scanf("%c", &pilihan);
-
-    if (pilihan == 'Y' || pilihan == 'y') {
+    STARTWORD(NULL);
+    if (IsWordEqual(currentWord, "Y") || IsWordEqual(currentWord, "y")){
         char filename[55];
         printf("Masukkan nama file: ");
         scanf("%s", filename);

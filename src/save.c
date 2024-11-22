@@ -18,9 +18,8 @@ void save(char *filename, List *list_user, ListDin *list_barang) {
     if (file != NULL) {
         fclose(file);
         printf("File '%s' sudah ada. Apakah ingin di-overwrite? (y/n): ", filename);
-        char response;
-        scanf(" %c", &response);
-        if (response != 'y') {
+        STARTWORD(NULL);
+        if (!IsWordEqual(currentWord, "Y") || !IsWordEqual(currentWord, "y")){{
             printf("Proses dibatalkan.\n");
             return;
         }

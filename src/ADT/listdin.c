@@ -57,27 +57,29 @@ int GetCapacityListDin(ListDin array){
  * Jika array penuh, maka array akan diperbesar sebanyak InitialSize.
  */
 void InsertAtListDin(ListDin *array, ElTypeBarang el, IdxType i){
-    int length = LengthListDin(*array);
-    int capacity = GetCapacityListDin(*array);
+    if (SearchListDin(*array, el) == -1){
+        int length = LengthListDin(*array);
+        int capacity = GetCapacityListDin(*array);
 
-    if (length == capacity){
-        int desiredCapacity = capacity + InitialSize;
-        ElTypeBarang *arr = (ElTypeBarang *) malloc(desiredCapacity * sizeof(ElTypeBarang));
-        for (int a = 0; a < length; a++){
-            arr[a] = GetListDin(*array, a);
+        if (length == capacity){
+            int desiredCapacity = capacity + InitialSize;
+            ElTypeBarang *arr = (ElTypeBarang *) malloc(desiredCapacity * sizeof(ElTypeBarang));
+            for (int a = 0; a < length; a++){
+                arr[a] = GetListDin(*array, a);
+            }
+            free(array->A);
+            
+            array->A = arr;
+            array->Capacity = desiredCapacity;
         }
-        free(array->A);
-        
-        array->A = arr;
-        array->Capacity = desiredCapacity;
-    }
 
-    for (int a = length - 1; a >= i; a--){
-        array->A[a + 1] = array->A[a];
-    }
+        for (int a = length - 1; a >= i; a--){
+            array->A[a + 1] = array->A[a];
+        }
 
-    array->A[i] = el;
-    array->Neff++;
+        array->A[i] = el;
+        array->Neff++;
+    }
 }
 
 /**
@@ -132,17 +134,23 @@ void DeleteFirstListDin(ListDin *array){
  * dan diakhiri newline.
  * Prekondisi: array terdefinisi
  */
-void PrintListDin(ListDin array){
-    if (IsEmptyListDin(array)){
+void PrintListDin(ListDin array) {
+    if (IsEmptyListDin(array)) {
         printf("TOKO KOSONG\n\n");
-    } else{
-        printf("List barang yang ada di toko :\n");
-        for (int i = 0; i < array.Neff; i++){
-            printf("- %s\n", array.A[i].name);
+    } else {
+        printf("=========================================================================\n");
+        printf("| %-3s | %-50s | %-10s |\n", "No", "Nama Barang", "Harga");
+        printf("=========================================================================\n");
+
+        for (int i = 0; i < array.Neff; i++) {
+            printf("| %-3d | %-50s | %-10d |\n", i + 1, array.A[i].name, array.A[i].price);
         }
-        printf("\n");
+
+        printf("=========================================================================\n\n");
     }
 }
+
+
 
 /**
  * Fungsi untuk melakukan reverse suatu ListDin.
@@ -182,4 +190,14 @@ IdxType SearchListDin(ListDin array, ElTypeBarang el){
         }
     }
     return -1;
+}
+
+boolean IsMemberListDin(ListDin array, Word word){
+    for (int i = 0; i < array.Neff; i++){
+        if (IsSameString(array.A[i].name, word.TabWord)){
+            printf("Barang dengan nama yang sama sudah ada di toko!\n");
+            return true;
+        }
+    }
+    return false;
 }

@@ -1,19 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "boolean.h"
-#include "mesinkarakter.h"
-#include "mesinkata.h"
-#include "fungsi.h"
-#include "custom.h"
-#include "list.h"
-#include "listdin.h"
-#include "load.h"
-#include "login.h"
-#include "storelist.h"
-#include "queue.h"
-#include "request.h"
-#include "supply.h"
-#include "register.h"
+#include "console.h"
 
 int main(){
     char filename[50];
@@ -21,53 +8,134 @@ int main(){
     List list_user;
     ListDin list_barang;
     Queue antrian;
-    boolean log_stats = false;
     User logged_in;
+    boolean log_stats = false;
+    int where = 0;
 
     CreateQueue(&antrian);
-    list_barang = MakeListDin();
     list_user = MakeList();
+    list_barang = MakeListDin();
 
     while (1){
-        printf("Masukkan perintah:  ");
+        printf(">> ");
         STARTWORD(NULL);
-        if (IsWordEqual(currentWord, "LOAD")){
-            ADVWORD();
-            for (int i = 0; i < currentWord.Length; i++){
-                filename[i] = currentWord.TabWord[i];
+        printf("\n");
+
+        if (where == 0){
+            if (IsWordEqual(currentWord, "START")){
+                //fungsi start
+                where = 1;
             }
-            filename[currentWord.Length] = '\0';
-            Load(filename, &list_user, &list_barang);
-            for (int i = 0; i < LengthListDin(list_barang); i++){
-                printf("Harga: %d, Nama: %s\n", list_barang.A[i].price, list_barang.A[i].name);
+
+            if (IsWordEqual(currentWord, "LOAD")){
+                ADVWORD();
+                for (int i = 0; i < currentWord.Length; i++){
+                    filename[i] = currentWord.TabWord[i];
+                }
+                filename[currentWord.Length] = '\0';
+                Load(filename, &list_user, &list_barang);
+                where = 1;
+                DisplayUser(list_user);
+                StoreList(list_barang);
             }
-            for (int i = 0; i < Length(list_user); i++){
-                printf("Uang: %d, Nama: %s, Password: %s\n", list_user.A[i].money, list_user.A[i].name, list_user.A[i].password);
+
+            if (IsWordEqual(currentWord, "QUIT")){
+                printf("Apakah kamu ingin menyimpan data sesi sekarang (Y/N)? ");
+                STARTWORD(NULL);
+                if (IsWordEqual(currentWord, "Y")){
+                    //fungsi save
+                }
+                printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n\n");
+                break;
+            }
+
+            if (IsWordEqual(currentWord, "HELP")){
+                Help(where);
             }
         }
 
-        if (IsWordEqual(currentWord, "LOGIN")){
-            login(&log_stats, &list_user, &logged_in);
+        if (where == 1){
+            if (IsWordEqual(currentWord, "REGISTER")){
+                Register(&list_user);
+                DisplayUser(list_user);
+            }
+            
+            if (IsWordEqual(currentWord, "LOGIN")){
+                Login(&list_user, &logged_in, &log_stats);
+                if (log_stats){
+                    where = 2;
+                }
+            }
+
+            if (IsWordEqual(currentWord, "QUIT")){
+                printf("Apakah kamu ingin menyimpan data sesi sekarang (Y/N)? ");
+                STARTWORD(NULL);
+                if (IsWordEqual(currentWord, "Y")){
+                    //fungsi save
+                }
+                printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n");
+                break;
+            }
+
+            if (IsWordEqual(currentWord, "HELP")){
+                Help(where);
+            }
         }
 
-        if (IsWordEqual(currentWord, "REGISTER")){
-            Register(&list_user);
-        }
+        if (where == 2){
+            if (IsWordEqual(currentWord, "WORK")){
+                if (isEndWord()){
+                    //fungsi work
+                }
+                else{
+                    ADVWORD();
+                    if (IsWordEqual(currentWord, "CHALLENGE")){
+                        //fungsi work challenge
+                    }
+                }
+            }
 
-        if (IsWordEqual(currentWord, "STORE")){
-            ADVWORD();
-            if (IsWordEqual(currentWord, "LIST")){
-                displayList(&list_barang);
+            if (IsWordEqual(currentWord, "STORE")){
+                ADVWORD();
+                if (IsWordEqual(currentWord, "LIST")){
+                    StoreList(list_barang);
+                }
+                if (IsWordEqual(currentWord, "REQUEST")){
+                    Request(&antrian, &list_barang);
+                    displayQueue(antrian);
+                }
+                if (IsWordEqual(currentWord, "SUPPLY")){
+                    Supply(&antrian, &list_barang);
+                    StoreList(list_barang);
+                }
+                if (IsWordEqual(currentWord, "REMOVE")){
+                    //fungsi store remove
+                }
             }
-            if (IsWordEqual(currentWord, "REQUEST")){
-                Request(&antrian, &list_barang);
-                displayQueue(antrian);
+
+            if (IsWordEqual(currentWord, "LOGOUT")){
+                log_stats = false;
+                where = 1;
+                //fungsi logout
             }
-            if (IsWordEqual(currentWord, "SUPPLY")){
-                Supply(&antrian, &list_barang);
-                displayList(&list_barang);
+
+            if (IsWordEqual(currentWord, "SAVE")){
+                //fungsi save
+            }
+
+            if (IsWordEqual(currentWord, "QUIT")){
+                printf("Apakah kamu ingin menyimpan data sesi sekarang (Y/N)? ");
+                STARTWORD(NULL);
+                if (IsWordEqual(currentWord, "Y")){
+                    //fungsi save
+                }
+                printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n");
+                break;
+            }
+            
+            if (IsWordEqual(currentWord, "HELP")){
+                Help(where);
             }
         }
-        printf("Current word: %s\n", currentWord.TabWord);
     }
 }

@@ -74,23 +74,24 @@ void dequeue(Queue *q, ElTypeQueue *val)
 }
 
 
-void displayQueue(Queue q)
-{
-    if (isEmpty(q))
-    {
-        printf("[]\n");
-    }
-    else
-    {
-        int i;
-        printf("[");
-        for (i = IDX_HEAD(q); i != IDX_TAIL(q); i = (i + 1) % CAPACITY)
-        {
-            printf("%s,", q.buffer[i].TabWord);
+void displayQueue(Queue q) {
+    if (isEmpty(q)) {
+        printf("Antrian Kosong!\n");
+    } else {
+        int i, count = 1;
+        printf("Antrian:\n");
+        printf("============================================================\n");
+        printf("| %-3s | %-50s |\n", "No", "Content");
+        printf("============================================================\n");
+
+        for (i = IDX_HEAD(q); i != IDX_TAIL(q); i = (i + 1) % CAPACITY) {
+            printf("| %-3d | %-50s |\n", count++, q.buffer[i].TabWord);
         }
-        printf("%s]\n", TAIL(q).TabWord);
+        printf("| %-3d | %-50s |\n", count, TAIL(q).TabWord);
+        printf("============================================================\n");
     }
 }
+
 
 int isMemberQueue(Queue q, ElTypeQueue val)
 {

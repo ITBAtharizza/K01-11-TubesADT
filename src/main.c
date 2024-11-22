@@ -12,7 +12,8 @@
 #include "storelist.h"
 #include "queue.h"
 #include "request.h"
-#include "start.h"
+#include "supply.h"
+#include "register.h"
 
 int main(){
     char filename[50];
@@ -49,6 +50,10 @@ int main(){
             login(&log_stats, &list_user, &logged_in);
         }
 
+        if (IsWordEqual(currentWord, "REGISTER")){
+            Register(&list_user);
+        }
+
         if (IsWordEqual(currentWord, "STORE")){
             ADVWORD();
             if (IsWordEqual(currentWord, "LIST")){
@@ -62,12 +67,7 @@ int main(){
                 Supply(&antrian, &list_barang);
                 displayList(&list_barang);
             }
-        } 
-        if (IsWordEqual(currentWord, "STARTGAME")) {
-            STARTGAME();
-            printf("File konfigurasi aplikasi berhasil dibaca. PURRMART berhasil dijalankan.\n");
         }
         printf("Current word: %s\n", currentWord.TabWord);
     }
-    return 0;
 }

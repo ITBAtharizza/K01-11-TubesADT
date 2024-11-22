@@ -35,18 +35,15 @@ void ADVWORD(){
               currentChar adalah karakter pertama dari kata berikutnya, mungkin MARK
               Jika currentChar = MARK, endWord = true.
        Proses : Akuisisi kata menggunakan procedure CopyWord */
-     if (isEndWord()) {
-        return;
-    }
-
     IgnoreBlanks();
-    if (currentChar == MARK || currentChar == ENTER) {
+    if (currentChar == MARK || currentChar == ENTER){
         endWord = true;
-        return;
     }
-
-    CopyWord();
-    IgnoreBlanks();
+    else{
+        endWord = false;
+        CopyWord();
+        IgnoreBlanks();
+    }
 }
 
 void CopyWord(){

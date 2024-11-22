@@ -32,25 +32,20 @@ void save(char *filename, List *list_user, ListDin *list_barang) {
         return;
     }
 
-    // Menyimpan jumlah barang
     fprintf(file, "%d\n", list_barang->Neff);
 
-    // Menyimpan data setiap barang
     for (int i = 0; i < list_barang->Neff; i++) {
         ElTypeBarang barang = list_barang->A[i];
         fprintf(file, "%d %s\n", barang.price, barang.name);
     }
 
-    // Menyimpan jumlah pengguna
     fprintf(file, "%d\n", Length(*list_user));
 
-    // Menyimpan data setiap pengguna
     for (int i = 0; i < lLength(*list_user); i++) {
         ElTypeUser user = list_user->A[i];
         fprintf(file, "%d %s %s\n", user.money, user.name, user.password);
     }
 
-    // Menutup file
     fclose(file);
     printf("Data berhasil disimpan ke %s\n", path);
 }

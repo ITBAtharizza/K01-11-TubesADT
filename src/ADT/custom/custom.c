@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "boolean.h"
 #include "custom.h"
 
 User makeUser(int money, Word name, Word password){

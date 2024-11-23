@@ -1,9 +1,9 @@
 #ifndef __CUSTOM_H__
 #define __CUSTOM_H__
 
-#include "../mesin karakter/mesinkarakter.h"
-#include "../mesin kata/mesinkata.h"
-#include "boolean.h"
+#include "../../boolean.h"
+#include "../mesinkarakter/mesinkarakter.h"
+#include "../mesinkata/mesinkata.h"
 
 typedef struct{
   char name[50];

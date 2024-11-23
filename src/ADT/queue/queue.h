@@ -1,8 +1,8 @@
 #ifndef __QUEUE_H__
 #define __QUEUE_H__
 
-#include "boolean.h"
-#include "custom.h"
+#include "../../boolean.h"
+#include "../custom/custom.h"
 
 #define IDX_UNDEF -1
 #define CAPACITY 100

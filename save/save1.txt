@@ -1,0 +1,7 @@
+3
+30 Nasi Bakar
+40 Bakso Pak Budi
+100 Emping Bu Sucipto
+2
+1000 suci suci123
+400 budi abc132;

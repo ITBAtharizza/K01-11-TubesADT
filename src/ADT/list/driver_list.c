@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "list.h"
-#include "custom.h"
 
 void PrintList(List L) {
     int i;

@@ -1,13 +1,13 @@
 #ifndef __CONSOLE_H__
 #define __CONSOLE_H__
 
-#include "ADT/boolean.h"
-#include "ADT/mesinkarakter.h"
-#include "ADT/mesinkata.h"
-#include "ADT/list.h"
-#include "ADT/listdin.h"
-#include "ADT/queue.h"
-#include "ADT/custom.h"
+#include "boolean.h"
+#include "ADT/mesinkarakter/mesinkarakter.h"
+#include "ADT/mesinkata/mesinkata.h"
+#include "ADT/list/list.h"
+#include "ADT/listdin/listdin.h"
+#include "ADT/queue/queue.h"
+#include "ADT/custom/custom.h"
 
 //start
 //fungsi start

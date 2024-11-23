@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "save.h"
 
 void save(char *filename, List *list_user, ListDin *list_barang) {
@@ -19,7 +20,7 @@ void save(char *filename, List *list_user, ListDin *list_barang) {
         fclose(file);
         printf("File '%s' sudah ada. Apakah ingin di-overwrite? (y/n): ", filename);
         STARTWORD(NULL);
-        if (!IsWordEqual(currentWord, "Y") || !IsWordEqual(currentWord, "y")){{
+        if (!IsWordEqual(currentWord, "Y") || !IsWordEqual(currentWord, "y")){
             printf("Proses dibatalkan.\n");
             return;
         }

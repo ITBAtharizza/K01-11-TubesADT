@@ -1,8 +1,8 @@
 #ifndef __LISTDIN_H__
 #define __LISTDIN_H__
 
-#include "boolean.h"
-#include "custom.h"
+#include "../../boolean.h"
+#include "../custom/custom.h"
 
 #define InitialSize 10
 

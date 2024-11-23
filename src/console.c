@@ -1,11 +1,4 @@
 #include <stdio.h>
-#include "ADT/boolean.h"
-#include "ADT/mesinkarakter.h"
-#include "ADT/mesinkata.h"
-#include "ADT/list.h"
-#include "ADT/listdin.h"
-#include "ADT/queue.h"
-#include "ADT/custom.h"
 #include "console.h"
 
 //start

@@ -1,8 +1,8 @@
 #ifndef __CUSTOM_H__
 #define __CUSTOM_H__
 
-#include "mesinkarakter.h"
-#include "mesinkata.h"
+#include "../mesin karakter/mesinkarakter.h"
+#include "../mesin kata/mesinkata.h"
 #include "boolean.h"
 
 typedef struct{

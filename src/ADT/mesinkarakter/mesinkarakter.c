@@ -15,11 +15,11 @@ void START(char *filename){
     else{
         pita = fopen(filename, "r");
         if (pita == NULL){
-            printf("Save file tidak ditemukan. PURRMART gagal dijalankan.\n");
+            printf("Save file tidak ditemukan. PURRMART gagal dijalankan.\n\n");
             EOP = true;
             return;
         }
-        printf("Save file berhasil dibaca. PURRMART berhasil dijalankan.\n");
+        printf("Save file berhasil dibaca. PURRMART berhasil dijalankan.\n\n");
     }
     ADV();
 }

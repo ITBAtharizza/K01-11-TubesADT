@@ -25,6 +25,8 @@ int main(){
         if (where == 0){
             if (IsWordEqual(currentWord, "START")){
                 Start(&list_user, &list_barang, &where);
+                DisplayUser(list_user);
+                StoreList(list_barang);
             }
 
             if (IsWordEqual(currentWord, "LOAD")){
@@ -112,7 +114,7 @@ int main(){
                 }
                 filename[currentWord.Length] = '\0';
 
-                save(filename, &list_user, &list_barang);
+                Save(filename, &list_user, &list_barang);
             }
 
             if (IsWordEqual(currentWord, "QUIT")){

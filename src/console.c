@@ -251,7 +251,54 @@ void Supply(Queue *antrian, ListDin *list_barang){
 //fungsi logout
 
 //save
-//fungsi save
+void Save(char *filename, List *list_user, ListDin *list_barang) {
+    char path[100] = "../save/";
+    int idx = 0;
+    while (filename[idx] != '\0' && idx < 50) {
+        path[8 + idx] = filename[idx];
+        idx++;
+    }
+    path[8 + idx] = '\0';
+
+    system("mkdir save >nul 2>nul");
+
+
+    FILE *file = fopen(path, "r");
+    if (file != NULL) {
+        fclose(file);
+        printf("File '%s' sudah ada. Apakah ingin di-overwrite? (y/n): ", filename);
+        STARTWORD(NULL);
+        if (!IsWordEqual(currentWord, "Y") && !IsWordEqual(currentWord, "y")){
+            printf("Proses dibatalkan.\n");
+            return;
+        }
+        system("mkdir save >nul 2>nul");
+    }
+
+    file = fopen(path, "w");
+    if (file == NULL) {
+        printf("Error: Tidak dapat membuka file '%s'.\n", filename);
+        return;
+    }
+
+    fprintf(file, "%d\n", list_barang->Neff);
+
+    for (int i = 0; i < list_barang->Neff; i++) {
+        ElTypeBarang barang = list_barang->A[i];
+        fprintf(file, "%d %s\n", barang.price, barang.name);
+    }
+
+    fprintf(file, "%d", Length(*list_user));
+
+    for (int i = 0; i < Length(*list_user); i++) {
+        fprintf(file, "\n", list_barang->Neff);
+        ElTypeUser user = list_user->A[i];
+        fprintf(file, "%d %s %s", user.money, user.name, user.password);
+    }
+
+    fclose(file);
+    printf("Data berhasil disimpan ke %s\n", path);
+}
 
 //quit
 void Quit(List *list_user, ListDin *list_barang, boolean *running){
@@ -269,7 +316,7 @@ void Quit(List *list_user, ListDin *list_barang, boolean *running){
         }
         filename[currentWord.Length] = '\0'; 
 
-        save(filename, list_user, list_barang);
+        Save(filename, list_user, list_barang);
 
         printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n");
         *running = false;
@@ -371,18 +418,6 @@ void GoodsWithManyWords(char *goods, int *length, Word currentWord){
     goods[*length] = '\0';
 }
 
-
-boolean IsSameString(char *str1, char *str2){
-    int i = 0;
-    while (str1[i] != '\0' && str2[i] != '\0'){
-        if (str1[i] != str2[i]){
-            return false;
-        }
-        i++;
-    }
-    return str1[i] == '\0' && str2[i] == '\0';
-}
-
 // fungsi untuk salin string secara manual
 void CopyString(char *dest, char *src) {
     int i = 0;
@@ -395,8 +430,9 @@ void CopyString(char *dest, char *src) {
 
 void DisplayUser(List list_user) {
     if (IsEmpty(list_user)) {
-        printf("No users available.\n");
+        printf("USER KOSONG!\n\n");
     } else {
+        printf("ISI USER:\n");
         printf("========================================================================================================================\n");
         printf("| %-50s | %-50s | %-10s |\n", "Username", "Password", "Money");
         printf("========================================================================================================================\n");
@@ -407,53 +443,4 @@ void DisplayUser(List list_user) {
 
         printf("========================================================================================================================\n\n");
     }
-}
-
-void save(char *filename, List *list_user, ListDin *list_barang) {
-    char path[100] = "../save/";
-    int idx = 0;
-    while (filename[idx] != '\0' && idx < 50) {
-        path[8 + idx] = filename[idx];
-        idx++;
-    }
-    path[8 + idx] = '\0';
-
-    system("mkdir save >nul 2>nul");
-
-
-    FILE *file = fopen(path, "r");
-    if (file != NULL) {
-        fclose(file);
-        printf("File '%s' sudah ada. Apakah ingin di-overwrite? (y/n): ", filename);
-        STARTWORD(NULL);
-        if (!IsWordEqual(currentWord, "Y") && !IsWordEqual(currentWord, "y")){
-            printf("Proses dibatalkan.\n");
-            return;
-        }
-        system("mkdir save >nul 2>nul");
-    }
-
-    file = fopen(path, "w");
-    if (file == NULL) {
-        printf("Error: Tidak dapat membuka file '%s'.\n", filename);
-        return;
-    }
-
-    fprintf(file, "%d\n", list_barang->Neff);
-
-    for (int i = 0; i < list_barang->Neff; i++) {
-        ElTypeBarang barang = list_barang->A[i];
-        fprintf(file, "%d %s\n", barang.price, barang.name);
-    }
-
-    fprintf(file, "%d", Length(*list_user));
-
-    for (int i = 0; i < Length(*list_user); i++) {
-        fprintf(file, "\n", list_barang->Neff);
-        ElTypeUser user = list_user->A[i];
-        fprintf(file, "%d %s %s", user.money, user.name, user.password);
-    }
-
-    fclose(file);
-    printf("Data berhasil disimpan ke %s\n", path);
 }

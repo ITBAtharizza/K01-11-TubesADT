@@ -76,10 +76,10 @@ void dequeue(Queue *q, ElTypeQueue *val)
 
 void displayQueue(Queue q) {
     if (isEmpty(q)) {
-        printf("Antrian Kosong!\n");
+        printf("ANTRIAN KOSONG!\n\n");
     } else {
         int i, count = 1;
-        printf("Antrian:\n");
+        printf("ISI ANTRIAN:\n");
         printf("============================================================\n");
         printf("| %-3s | %-50s |\n", "No", "Content");
         printf("============================================================\n");

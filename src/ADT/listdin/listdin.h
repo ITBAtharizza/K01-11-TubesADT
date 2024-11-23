@@ -116,4 +116,6 @@ ListDin CopyListDin(ListDin array);
  */
 IdxType SearchListDin(ListDin array, ElTypeBarang el);
 
+boolean IsMemberListDin(ListDin array, Word word);
+
 #endif

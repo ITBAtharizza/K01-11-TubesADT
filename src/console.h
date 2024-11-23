@@ -42,7 +42,7 @@ void Supply(Queue *antrian, ListDin *list_barang);
 //fungsi logout
 
 //save
-void save(char *filename, List *list_user, ListDin *list_barang);
+void Save(char *filename, List *list_user, ListDin *list_barang);
 
 //quit
 void Quit(List *list_user, ListDin *list_barang, boolean *running);

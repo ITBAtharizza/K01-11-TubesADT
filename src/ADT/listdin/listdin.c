@@ -136,8 +136,9 @@ void DeleteFirstListDin(ListDin *array){
  */
 void PrintListDin(ListDin array) {
     if (IsEmptyListDin(array)) {
-        printf("TOKO KOSONG\n\n");
+        printf("TOKO KOSONG!\n\n");
     } else {
+        printf("ISI TOKO:\n");
         printf("=========================================================================\n");
         printf("| %-3s | %-50s | %-10s |\n", "No", "Nama Barang", "Harga");
         printf("=========================================================================\n");

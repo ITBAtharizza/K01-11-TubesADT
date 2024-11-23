@@ -9,11 +9,10 @@
 #include "ADT/queue/queue.h"
 #include "ADT/custom/custom.h"
 
-//start
-//fungsi start
+void Start(List *list_user, ListDin *list_barang, int *where);
 
 //load
-void Load(char *filename, List *list_user, ListDin *list_barang);
+void Load(char *filename, List *list_user, ListDin *list_barang, int *where);
 
 //register
 void Register(List *list_user);
@@ -43,10 +42,10 @@ void Supply(Queue *antrian, ListDin *list_barang);
 //fungsi logout
 
 //save
-//fungsi save
+void save(char *filename, List *list_user, ListDin *list_barang);
 
 //quit
-//fungsi quit
+void Quit(List *list_user, ListDin *list_barang, boolean *running);
 
 //help
 void Help(int where);

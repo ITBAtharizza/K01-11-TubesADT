@@ -1,12 +1,23 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "console.h"
 
 //start
-//fungsi start
+void Start(List *list_user, ListDin *list_barang, int *where){
+    Load("default.txt", list_user, list_barang, where);
+}
 
 //load
-void Load(char *filename, List *list_user, ListDin *list_barang){
-    STARTWORD(filename);
+void Load(char *filename, List *list_user, ListDin *list_barang, int *where){
+    char path[100] = "../save/";
+    int idx = 0;
+    while (filename[idx] != '\0' && idx < 50) {
+        path[8 + idx] = filename[idx];
+        idx++;
+    }
+    path[8 + idx] = '\0';
+
+    STARTWORD(path);
     
     if (IsEOP()){
         return;
@@ -68,6 +79,7 @@ void Load(char *filename, List *list_user, ListDin *list_barang){
 
         InsertLast(list_user, user);
     }
+    *where = 1;
 }
 
 //register
@@ -76,7 +88,6 @@ void Register(List *list_user) {
     char password[50];
     boolean usernameExists = false;
 
-    // input Username
     printf("Username: ");
     STARTWORD(NULL);
     for (int i = 0; i < currentWord.Length; i++) {
@@ -84,7 +95,6 @@ void Register(List *list_user) {
     }
     username[currentWord.Length] = '\0';
 
-    // cek apakah username sudah ada
     for (int i = FirstIdx(*list_user); i <= LastIdx(*list_user); i++) {
         if (IsSameString(list_user->A[i].name, username)) {
             usernameExists = true;
@@ -97,7 +107,6 @@ void Register(List *list_user) {
         return;
     }
 
-    // input Password
     printf("Password: ");
     ADVWORD();
     for (int i = 0; i < currentWord.Length; i++) {
@@ -105,7 +114,6 @@ void Register(List *list_user) {
     }
     password[currentWord.Length] = '\0';
 
-    // tambahkan pengguna baru
     User newUser;
     CopyString(newUser.name, username);
     CopyString(newUser.password, password);
@@ -149,7 +157,7 @@ void Login(List *list_user, User *logged_in, boolean *log_stats) {
                 *logged_in = list_user->A[first];
             }
         }
-        first++; // Increment after the check
+        first++;
     }
 
     if (isCorrectPass && *log_stats == false) {
@@ -246,7 +254,34 @@ void Supply(Queue *antrian, ListDin *list_barang){
 //fungsi save
 
 //quit
-//fungsi quit
+void Quit(List *list_user, ListDin *list_barang, boolean *running){
+    char filename[50];
+
+    printf("Apakah kamu ingin menyimpan data sesi sekarang (Y/N)? ");
+    STARTWORD(NULL);
+
+    if (IsWordEqual(currentWord, "Y") || IsWordEqual(currentWord, "y")){
+        printf("Tuliskan nama file tempat kamu ingin menyimpan: ");
+        ADVWORD();
+
+        for (int i = 0; i < currentWord.Length; i++){
+            filename[i] = currentWord.TabWord[i];
+        }
+        filename[currentWord.Length] = '\0'; 
+
+        save(filename, list_user, list_barang);
+
+        printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n");
+        *running = false;
+    } 
+    else{
+        printf("Data sesi tidak disimpan. Tetap keluar (Y/N)? ");
+        ADVWORD();
+        if (IsWordEqual(currentWord, "Y") || IsWordEqual(currentWord, "y")){
+            *running = false;
+        }
+    }
+}
 
 //help
 void Help(int where) {
@@ -372,6 +407,55 @@ void DisplayUser(List list_user) {
 
         printf("========================================================================================================================\n\n");
     }
+}
+
+void save(char *filename, List *list_user, ListDin *list_barang) {
+    char path[100] = "../save/";
+    int idx = 0;
+    while (filename[idx] != '\0' && idx < 50) {
+        path[8 + idx] = filename[idx];
+        idx++;
+    }
+    path[8 + idx] = '\0';
+
+    system("mkdir save >nul 2>nul");
+
+
+    FILE *file = fopen(path, "r");
+    if (file != NULL) {
+        fclose(file);
+        printf("File '%s' sudah ada. Apakah ingin di-overwrite? (y/n): ", filename);
+        STARTWORD(NULL);
+        if (!IsWordEqual(currentWord, "Y") && !IsWordEqual(currentWord, "y")){
+            printf("Proses dibatalkan.\n");
+            return;
+        }
+        system("mkdir save >nul 2>nul");
+    }
+
+    file = fopen(path, "w");
+    if (file == NULL) {
+        printf("Error: Tidak dapat membuka file '%s'.\n", filename);
+        return;
+    }
+
+    fprintf(file, "%d\n", list_barang->Neff);
+
+    for (int i = 0; i < list_barang->Neff; i++) {
+        ElTypeBarang barang = list_barang->A[i];
+        fprintf(file, "%d %s\n", barang.price, barang.name);
+    }
+
+    fprintf(file, "%d", Length(*list_user));
+
+    for (int i = 0; i < Length(*list_user); i++) {
+        fprintf(file, "\n", list_barang->Neff);
+        ElTypeUser user = list_user->A[i];
+        fprintf(file, "%d %s %s", user.money, user.name, user.password);
+    }
+
+    fclose(file);
+    printf("Data berhasil disimpan ke %s\n", path);
 }
 
 

@@ -4,4 +4,4 @@
 100 Emping Bu Sucipto
 2
 1000 suci suci123
-400 budi abc132;
+400 budi abc132

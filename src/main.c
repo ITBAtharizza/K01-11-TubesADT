@@ -10,21 +10,21 @@ int main(){
     Queue antrian;
     User logged_in;
     boolean log_stats = false;
+    boolean running = true;
     int where = 0;
 
     CreateQueue(&antrian);
     list_user = MakeList();
     list_barang = MakeListDin();
 
-    while (1){
+    while (running){
         printf(">> ");
         STARTWORD(NULL);
         printf("\n");
 
         if (where == 0){
             if (IsWordEqual(currentWord, "START")){
-                //fungsi start
-                where = 1;
+                Start(&list_user, &list_barang, &where);
             }
 
             if (IsWordEqual(currentWord, "LOAD")){
@@ -33,20 +33,13 @@ int main(){
                     filename[i] = currentWord.TabWord[i];
                 }
                 filename[currentWord.Length] = '\0';
-                Load(filename, &list_user, &list_barang);
-                where = 1;
+                Load(filename, &list_user, &list_barang, &where);
                 DisplayUser(list_user);
                 StoreList(list_barang);
             }
 
             if (IsWordEqual(currentWord, "QUIT")){
-                printf("Apakah kamu ingin menyimpan data sesi sekarang (Y/N)? ");
-                STARTWORD(NULL);
-                if (IsWordEqual(currentWord, "Y")){
-                    //fungsi save
-                }
-                printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n\n");
-                break;
+                Quit(&list_user, &list_barang, &running);
             }
 
             if (IsWordEqual(currentWord, "HELP")){
@@ -68,13 +61,7 @@ int main(){
             }
 
             if (IsWordEqual(currentWord, "QUIT")){
-                printf("Apakah kamu ingin menyimpan data sesi sekarang (Y/N)? ");
-                STARTWORD(NULL);
-                if (IsWordEqual(currentWord, "Y")){
-                    //fungsi save
-                }
-                printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n");
-                break;
+                Quit(&list_user, &list_barang, &running);
             }
 
             if (IsWordEqual(currentWord, "HELP")){
@@ -116,21 +103,20 @@ int main(){
             if (IsWordEqual(currentWord, "LOGOUT")){
                 log_stats = false;
                 where = 1;
-                //fungsi logout
             }
 
             if (IsWordEqual(currentWord, "SAVE")){
-                //fungsi save
+                ADVWORD();
+                for (int i = 0; i < currentWord.Length; i++){
+                    filename[i] = currentWord.TabWord[i];
+                }
+                filename[currentWord.Length] = '\0';
+
+                save(filename, &list_user, &list_barang);
             }
 
             if (IsWordEqual(currentWord, "QUIT")){
-                printf("Apakah kamu ingin menyimpan data sesi sekarang (Y/N)? ");
-                STARTWORD(NULL);
-                if (IsWordEqual(currentWord, "Y")){
-                    //fungsi save
-                }
-                printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n");
-                break;
+                Quit(&list_user, &list_barang, &running);
             }
             
             if (IsWordEqual(currentWord, "HELP")){

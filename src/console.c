@@ -108,7 +108,7 @@ void Register(List *list_user) {
     }
 
     printf("Password: ");
-    ADVWORD();
+    STARTWORD(NULL);
     for (int i = 0; i < currentWord.Length; i++) {
         password[i] = currentWord.TabWord[i];
     }
@@ -138,7 +138,7 @@ void Login(List *list_user, User *logged_in, boolean *log_stats) {
     username[currentWord.Length] = '\0';
 
     printf("Password: ");
-    ADVWORD();
+    STARTWORD(NULL);
 
     for (int i = 0; i < currentWord.Length; i++) {
         password[i] = currentWord.TabWord[i];
@@ -227,7 +227,7 @@ void Supply(Queue *antrian, ListDin *list_barang){
     STARTWORD(NULL);
     if (IsWordEqual(currentWord, "Terima")){
         printf("Harga barang: ");
-        ADVWORD();
+        STARTWORD(NULL);
         int Harga = WordToInt(currentWord);
         if (Harga != -9999){
             Barang barang = makeBarang(Harga, val);
@@ -262,7 +262,7 @@ void Quit(List *list_user, ListDin *list_barang, boolean *running){
 
     if (IsWordEqual(currentWord, "Y") || IsWordEqual(currentWord, "y")){
         printf("Tuliskan nama file tempat kamu ingin menyimpan: ");
-        ADVWORD();
+        STARTWORD(NULL);
 
         for (int i = 0; i < currentWord.Length; i++){
             filename[i] = currentWord.TabWord[i];
@@ -276,7 +276,7 @@ void Quit(List *list_user, ListDin *list_barang, boolean *running){
     } 
     else{
         printf("Data sesi tidak disimpan. Tetap keluar (Y/N)? ");
-        ADVWORD();
+        STARTWORD(NULL);
         if (IsWordEqual(currentWord, "Y") || IsWordEqual(currentWord, "y")){
             *running = false;
         }
@@ -457,6 +457,3 @@ void save(char *filename, List *list_user, ListDin *list_barang) {
     fclose(file);
     printf("Data berhasil disimpan ke %s\n", path);
 }
-
-
-

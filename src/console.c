@@ -225,11 +225,7 @@ void Request(Queue *antrian, ListDin *list_barang){
         length = 50;
     }
 
-    for (int j = 0; j < length && j < 50; j++){
-        name.TabWord[j] = goods[j];
-    }
-    name.TabWord[length] = '\0';
-    name.Length = length;
+    CopyString(name.TabWord, goods);
 
     if (!IsMemberListDin(*list_barang, name)){
         if (!isMemberQueue(*antrian, name)){
@@ -289,11 +285,7 @@ void Remove (ListDin *list_barang){
         length = 50;
     }
 
-    for (int j = 0; j < length && j < 50; j++){
-        name.TabWord[j] = goods[j];
-    }
-    name.TabWord[length] = '\0';
-    name.Length = length;
+    CopyString(name.TabWord, goods);
 
     if (IsMemberListDin(*list_barang, name)){
         Barang tempBarang = makeBarang(0, name);
@@ -307,7 +299,14 @@ void Remove (ListDin *list_barang){
 }
 
 //logout
-//fungsi logout
+void Logout(User *logged_in, boolean *log_stats, int where){
+    logged_in->name[0] = '\0';
+    logged_in->password[0] = '\0';
+    logged_in->money = 0;
+
+    *log_stats = false;
+    where = 1;
+}
 
 //save
 void Save(char *filename, List *list_user, ListDin *list_barang) {
@@ -412,6 +411,54 @@ void Help(int where) {
     }
 }
 
+//bonus
+void Bioweapon(Queue *antrian, ListDin *list_barang){
+    printf("Masukan nama senjata biologis: ");
+    STARTWORD(NULL);
+
+    Word name;
+    name.Length = 0;
+
+    char goods[50] = "";
+    int length = 0;
+
+    GoodsWithManyWords(goods, &length, currentWord);
+    while (!isEndWord()){
+        STARTWORD(NULL);
+        GoodsWithManyWords(goods, &length, currentWord);
+    }
+
+    if (length > 0 && goods[length - 1] == ' '){
+        goods[length - 1] = '\0';
+        length -= 1;
+    }
+
+    if (length > 50){
+        length = 50;
+    }
+
+    CopyString(name.TabWord, goods);
+
+    if (!IsMemberListDin(*list_barang, name)){
+        if (!isMemberQueue(*antrian, name)){
+            printf("Masukan sekuens DNA: ");
+            STARTWORD(NULL);
+            Word RNA = DNAToRNA(currentWord);
+
+            printf("Masukan kode rahasia: ");
+            STARTWORD(NULL);
+            if (IsCode(RNA, currentWord)){
+                printf("Senjata biologis mengandung kode, barang akan ditambahkan ke dalam queue!\n\n");
+                enqueue(antrian, name);
+            }
+
+            else{
+                printf("Kode rahasia tidak ditemukan, maka senjata biologis sudah disabotase, barang ditolak!\n\n");
+            }
+        }
+    }
+}
+
 //fungsi-fungsi pembantu
 //fungsi IsWordEqual
 boolean IsWordEqual(Word word, char *reference){
@@ -499,4 +546,156 @@ void DisplayUser(List list_user) {
 
         printf("========================================================================================================================\n\n");
     }
+}
+
+Word DNAToRNA(Word DNA){
+    Word RNA;
+    RNA.Length = DNA.Length;
+
+    for (int i = 0; i < DNA.Length; i++){
+        if (DNA.TabWord[i] == 'T'){
+            RNA.TabWord[i] = 'A';
+        }
+        if (DNA.TabWord[i] == 'A'){
+            RNA.TabWord[i] = 'U';
+        }
+        if (DNA.TabWord[i] == 'G'){
+            RNA.TabWord[i] = 'C';
+        }
+        if (DNA.TabWord[i] == 'C'){
+            RNA.TabWord[i] = 'G';
+        }
+    }
+
+    RNA.TabWord[RNA.Length] = '\0';
+    return RNA;
+}
+
+boolean IsCode(Word RNA, Word Code){
+    Word decodedWord;
+
+    int start = 0;
+    int modulus = 2;
+
+    while (!IsInString(&decodedWord, &Code)){
+        char decoded[50];
+        int index = 0;
+
+        for (int i = start; i + 2 < RNA.Length; i++){
+            char column[3];
+            column[i % 3 - start] = RNA.TabWord[i];
+            if (i % 3 == modulus){
+                column[3] = '\0';
+                Decoding(column, decoded, index);
+                index++;
+            }
+        }
+        decoded[index] = '\0';
+
+        CopyString(decodedWord.TabWord, decoded);
+        decodedWord.Length = index;
+
+        start++;
+        modulus++;
+        modulus = modulus % 3;
+        
+        if (start > 2) {
+            break;
+        }
+    }
+
+    return IsInString(&decodedWord, &Code);
+}
+
+void Decoding(char *column, char *decoded, int index){
+    column[3] = '\0';
+    if (IsSameString(column, "UUU") || IsSameString(column, "UUC")){
+        decoded[index] = 'F'; 
+    }
+    if (IsSameString(column, "UUA") || IsSameString(column, "UUG")){
+        decoded[index] = 'L';
+    }
+    if (IsSameString(column, "UCU") || IsSameString(column, "UCC") || IsSameString(column, "UCA") || IsSameString(column, "UCG")){
+        decoded[index] = 'S';
+    }
+    if (IsSameString(column, "UAU") || IsSameString(column, "UAC")){
+        decoded[index] = 'Y';
+    }
+    if (IsSameString(column, "UAA") || IsSameString(column, "UAG") || IsSameString(column, "UGA")){
+        return;
+    }
+    if (IsSameString(column, "UGU") || IsSameString(column, "UGC")){
+        decoded[index] = 'C';
+    }
+    if (IsSameString(column, "UGG")){
+        decoded[index] = 'W';
+    }
+    if (IsSameString(column, "CUU") || IsSameString(column, "CUC") || IsSameString(column, "CUA") || IsSameString(column, "CUG")){
+        decoded[index] = 'L';
+    }
+    if (IsSameString(column, "CCU") || IsSameString(column, "CCC") || IsSameString(column, "CCA") || IsSameString(column, "CCG")){
+        decoded[index] = 'P';
+    }
+    if (IsSameString(column, "CAU") || IsSameString(column, "CAC")){
+        decoded[index] = 'H';
+    }
+    if (IsSameString(column, "CAA") || IsSameString(column, "CAG")){
+        decoded[index] = 'Q';
+    }
+    if (IsSameString(column, "CGU") || IsSameString(column, "CGC") || IsSameString(column, "CGA") || IsSameString(column, "CGG")){
+        decoded[index] = 'R';
+    }
+    if (IsSameString(column, "AUU") || IsSameString(column, "AUC") || IsSameString(column, "AUA")){
+        decoded[index] = 'I';
+    }
+    if (IsSameString(column, "AUG")){
+        decoded[index] = 'M';
+    }
+    if (IsSameString(column, "ACU") || IsSameString(column, "ACC") || IsSameString(column, "ACA") || IsSameString(column, "ACG")){
+        decoded[index] = 'T';
+    }
+    if (IsSameString(column, "AAU") || IsSameString(column, "AAC")){
+        decoded[index] = 'N';
+    }
+    if (IsSameString(column, "AAA") || IsSameString(column, "AAG")){
+        decoded[index] = 'K';
+    }
+    if (IsSameString(column, "AGU") || IsSameString(column, "AGC")){
+        decoded[index] = 'S';
+    }
+    if (IsSameString(column, "AGA") || IsSameString(column, "AGG")){
+        decoded[index] = 'R';
+    }
+    if (IsSameString(column, "GUU") || IsSameString(column, "GUC") || IsSameString(column, "GUA") || IsSameString(column, "GUG")){
+        decoded[index] = 'V';
+    }
+    if (IsSameString(column, "GCU") || IsSameString(column, "GCC") || IsSameString(column, "GCA") || IsSameString(column, "GCG")){
+        decoded[index] = 'A';
+    }
+    if (IsSameString(column, "GAU") || IsSameString(column, "GAC")){
+        decoded[index] = 'D';
+    }
+    if (IsSameString(column, "GAA") || IsSameString(column, "GAG")){
+        decoded[index] = 'E';
+    }
+    if (IsSameString(column, "GGU") || IsSameString(column, "GGC") || IsSameString(column, "GGA") || IsSameString(column, "GGG")){
+        decoded[index] = 'G';
+    }
+}
+
+boolean IsInString(Word *decoded, Word *code){
+    int i, j;
+
+    for (i = 0; i <= decoded->Length - code->Length; i++){
+        for (j = 0; j < code->Length; j++){
+            if (decoded->TabWord[i + j] != code->TabWord[j]){
+                break;
+            }
+        }
+        if (j == code->Length){
+            return true;
+        }
+    }
+
+    return false;
 }

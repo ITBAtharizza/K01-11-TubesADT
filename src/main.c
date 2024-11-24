@@ -90,8 +90,17 @@ int main(){
                     StoreList(list_barang);
                 }
                 if (IsWordEqual(currentWord, "REQUEST")){
-                    Request(&antrian, &list_barang);
-                    displayQueue(antrian);
+                    if (isEndWord()){
+                        Request(&antrian, &list_barang);
+                        displayQueue(antrian);
+                    }
+                    else{
+                        STARTWORD(NULL);
+                        if (IsWordEqual(currentWord, "BIOWEAPON")){
+                            Bioweapon(&antrian, &list_barang);
+                            displayQueue(antrian);
+                        }
+                    }
                 }
                 if (IsWordEqual(currentWord, "SUPPLY")){
                     Supply(&antrian, &list_barang);
@@ -104,8 +113,7 @@ int main(){
             }
 
             if (IsWordEqual(currentWord, "LOGOUT")){
-                log_stats = false;
-                where = 1;
+                Logout(&logged_in, &log_stats, where);
             }
 
             if (IsWordEqual(currentWord, "SAVE")){

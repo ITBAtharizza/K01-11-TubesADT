@@ -41,6 +41,9 @@ void Supply(Queue *antrian, ListDin *list_barang);
 //store remove
 void Remove(ListDin *list_barang);
 
+//logout
+void Logout(User *logged_in, boolean *log_stats, int where);
+
 //save
 void Save(char *filename, List *list_user, ListDin *list_barang);
 
@@ -49,6 +52,9 @@ void Quit(List *list_user, ListDin *list_barang, boolean *running);
 
 //help
 void Help(int where);
+
+//bonus
+void Bioweapon(Queue *antrian, ListDin *list_barang);
 
 //fungsi-fungsi pembantu
 //fungsi IsWordEqual
@@ -65,5 +71,15 @@ void CopyString(char *dest, char *src);
 
 //fungsi DisplayUser
 void DisplayUser(List list_user);
+
+//fungsi DNAToRNA
+Word DNAToRNA(Word DNA);
+
+//fungsi IsCode
+boolean IsCode(Word RNA, Word Code);
+
+void Decoding(char *column, char *decoded, int index);
+
+boolean IsInString(Word *decoded, Word *code);
 
 #endif

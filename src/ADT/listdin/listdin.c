@@ -196,7 +196,7 @@ IdxType SearchListDin(ListDin array, ElTypeBarang el){
 boolean IsMemberListDin(ListDin array, Word word){
     for (int i = 0; i < array.Neff; i++){
         if (IsSameString(array.A[i].name, word.TabWord)){
-            printf("Barang dengan nama yang sama sudah ada di toko!\n");
+            printf("Barang dengan nama yang sama sudah ada di toko!\n\n");
             return true;
         }
     }

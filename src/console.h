@@ -11,6 +11,7 @@
 #include "game/tebakAngka.h"
 #include "game/wordl3.h"
 
+//start
 void Start(List *list_user, ListDin *list_barang, int *where);
 
 //load
@@ -27,6 +28,7 @@ void Login(List *list_user, User *logged_in, boolean *log_stats);
 
 //work challenge
 void WorkChallenge(User *logged_in);
+
 //store list
 void StoreList(ListDin list_barang);
 
@@ -58,8 +60,10 @@ int WordToInt(Word word);
 //fungsi GoodsWithManyWords
 void GoodsWithManyWords(char *goods, int *length, Word word);
 
+//fungsi CopyString
 void CopyString(char *dest, char *src);
 
+//fungsi DisplayUser
 void DisplayUser(List list_user);
 
 #endif

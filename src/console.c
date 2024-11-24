@@ -212,7 +212,7 @@ void Request(Queue *antrian, ListDin *list_barang){
 
     GoodsWithManyWords(goods, &length, currentWord);
     while (!isEndWord()){
-        ADVWORD();
+        STARTWORD(NULL);
         GoodsWithManyWords(goods, &length, currentWord);
     }
 
@@ -276,7 +276,7 @@ void Remove (ListDin *list_barang){
 
     GoodsWithManyWords(goods, &length, currentWord);
     while (!isEndWord()){
-        ADVWORD();
+        STARTWORD(NULL);
         GoodsWithManyWords(goods, &length, currentWord);
     }
 

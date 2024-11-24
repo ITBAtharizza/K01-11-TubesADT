@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <math.h>
 #include "console.h"
 
 int main(){
-    char filename[50];
+    char loadfile[50];
+    char savefile[50];
 
     List list_user;
     ListDin list_barang;
@@ -30,12 +33,9 @@ int main(){
             }
 
             if (IsWordEqual(currentWord, "LOAD")){
-                ADVWORD();
-                for (int i = 0; i < currentWord.Length; i++){
-                    filename[i] = currentWord.TabWord[i];
-                }
-                filename[currentWord.Length] = '\0';
-                Load(filename, &list_user, &list_barang, &where);
+                STARTWORD(NULL);
+                CopyString(loadfile, currentWord.TabWord);
+                Load(loadfile, &list_user, &list_barang, &where);
                 DisplayUser(list_user);
                 StoreList(list_barang);
             }
@@ -77,15 +77,15 @@ int main(){
                     //fungsi work
                 }
                 else{
-                    ADVWORD();
+                    STARTWORD(NULL);
                     if (IsWordEqual(currentWord, "CHALLENGE")){
-                        //fungsi work challenge
+                        WorkChallenge(&logged_in);
                     }
                 }
             }
 
             if (IsWordEqual(currentWord, "STORE")){
-                ADVWORD();
+                STARTWORD(NULL);
                 if (IsWordEqual(currentWord, "LIST")){
                     StoreList(list_barang);
                 }
@@ -108,13 +108,9 @@ int main(){
             }
 
             if (IsWordEqual(currentWord, "SAVE")){
-                ADVWORD();
-                for (int i = 0; i < currentWord.Length; i++){
-                    filename[i] = currentWord.TabWord[i];
-                }
-                filename[currentWord.Length] = '\0';
-
-                Save(filename, &list_user, &list_barang);
+                STARTWORD(NULL);
+                CopyString(savefile, currentWord.TabWord);
+                Save(savefile, &list_user, &list_barang);
             }
 
             if (IsWordEqual(currentWord, "QUIT")){

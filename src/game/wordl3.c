@@ -1,17 +1,13 @@
-#include "wordl3.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#include "../src/boolean.h"
-#include "../ADT/mesinkata/mesinkata.h"
+#include "wordl3.h"
 
 void wordl3(int *score)
 {
     printf("\n");
     printf("WELCOME TO W0RDL3, YOU HAVE 5 CHANCES TO ANSWER BEFORE YOU LOSE!\n");
-
-    int hargaPermainan = 500;
-    *score -= hargaPermainan; 
 
     // jawaban
     char *word[JUMLAH_KATA] = {
@@ -65,11 +61,10 @@ void wordl3(int *score)
     while (chance < 5)
     {
         printf("Masukan kata tebakan Anda: ");
-        for (int i = 0; i < 5; i++)
-        {
-            scanf(" %c", &jwbn[i]);
-            arrJwbn[chance][i] = jwbn[i];
-        }
+        STARTWORD(NULL);
+        char jwbn[50];
+        CopyString(jwbn, currentWord.TabWord);
+        CopyString(arrJwbn[chance], jwbn);
     
         for (int i = 0; i < 5; i++)
         {
@@ -147,11 +142,10 @@ void wordl3(int *score)
         printf("Selamat, Anda menang!\n\n");
         printf("+1500 rupiah telah ditambahkan ke akun Anda.\n");
         *score += prize;
-        printf("Isi Rekening : %d\n", *score);
     }
     else
     {
-        printf("Boo! Anda kalah.");
+        printf("Boo! Anda kalah. Jawabannya adalah %s\n\n", KJ);
     }
 
 }

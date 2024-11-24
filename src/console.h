@@ -8,6 +8,8 @@
 #include "ADT/listdin/listdin.h"
 #include "ADT/queue/queue.h"
 #include "ADT/custom/custom.h"
+#include "game/tebakAngka.h"
+#include "game/wordl3.h"
 
 void Start(List *list_user, ListDin *list_barang, int *where);
 
@@ -24,8 +26,7 @@ void Login(List *list_user, User *logged_in, boolean *log_stats);
 //fungsi work
 
 //work challenge
-//fungsi work challenge
-
+void WorkChallenge(User *logged_in);
 //store list
 void StoreList(ListDin list_barang);
 
@@ -37,9 +38,6 @@ void Supply(Queue *antrian, ListDin *list_barang);
 
 //store remove
 //fungsi store remove
-
-//logout
-//fungsi logout
 
 //save
 void Save(char *filename, List *list_user, ListDin *list_barang);

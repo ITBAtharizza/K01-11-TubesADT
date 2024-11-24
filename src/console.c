@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <math.h>
 #include "console.h"
 
 //start
@@ -90,10 +92,7 @@ void Register(List *list_user) {
 
     printf("Username: ");
     STARTWORD(NULL);
-    for (int i = 0; i < currentWord.Length; i++) {
-        username[i] = currentWord.TabWord[i];
-    }
-    username[currentWord.Length] = '\0';
+    CopyString(username, currentWord.TabWord);
 
     for (int i = FirstIdx(*list_user); i <= LastIdx(*list_user); i++) {
         if (IsSameString(list_user->A[i].name, username)) {
@@ -109,10 +108,7 @@ void Register(List *list_user) {
 
     printf("Password: ");
     STARTWORD(NULL);
-    for (int i = 0; i < currentWord.Length; i++) {
-        password[i] = currentWord.TabWord[i];
-    }
-    password[currentWord.Length] = '\0';
+    CopyString(password, currentWord.TabWord);
 
     User newUser;
     CopyString(newUser.name, username);
@@ -132,19 +128,11 @@ void Login(List *list_user, User *logged_in, boolean *log_stats) {
 
     printf("Username: ");
     STARTWORD(NULL);
-    for (int i = 0; i < currentWord.Length; i++) {
-        username[i] = currentWord.TabWord[i];
-    }
-    username[currentWord.Length] = '\0';
+    CopyString(username, currentWord.TabWord);
 
     printf("Password: ");
     STARTWORD(NULL);
-
-    for (int i = 0; i < currentWord.Length; i++) {
-        password[i] = currentWord.TabWord[i];
-    }
-
-    password[currentWord.Length] = '\0';
+    CopyString(password, currentWord.TabWord);
 
     int first = FirstIdx(*list_user);
     int last = LastIdx(*list_user);
@@ -173,7 +161,38 @@ void Login(List *list_user, User *logged_in, boolean *log_stats) {
 //fungsi work
 
 //work challenge
-//fungsi work challenge
+void WorkChallenge(User *logged_in){
+    printf("Daftar challenge yang tersedia:\n");
+    printf("1. Tebak Angka (biaya main=200)\n");
+    printf("2. W0RDL399 (biaya main=500)\n\n");
+    printf("Masukan challenge yang hendak dimainkan: ");
+    STARTWORD(NULL);
+    int gamescore = 0;
+    int gamechoice = WordToInt(currentWord);
+    if (gamechoice != 1 && gamechoice != 2){
+        printf("Angka tidak valid! Kembali ke menu utama...\n");
+    }
+    else{
+        if (gamechoice == 1){
+            if (logged_in->money < 200){
+                printf("Uang tidak cukup! Silakan bekerja dulu.\n");
+            }
+            else{
+                tebakAngka(&gamescore);
+                logged_in->money = logged_in->money + gamescore - 200;
+            }
+        }
+        else{
+            if (logged_in->money < 500){
+                printf("Uang tidak cukup! Silakan bekerja dulu.\n");
+            }
+            else{
+                wordl3(&gamescore);
+                logged_in->money = logged_in->money + gamescore - 500;
+            }
+        }
+    }
+}
 
 //store list
 void StoreList(ListDin list_barang){
@@ -311,10 +330,7 @@ void Quit(List *list_user, ListDin *list_barang, boolean *running){
         printf("Tuliskan nama file tempat kamu ingin menyimpan: ");
         STARTWORD(NULL);
 
-        for (int i = 0; i < currentWord.Length; i++){
-            filename[i] = currentWord.TabWord[i];
-        }
-        filename[currentWord.Length] = '\0'; 
+        CopyString(filename, currentWord.TabWord); 
 
         Save(filename, list_user, list_barang);
 

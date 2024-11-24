@@ -264,7 +264,47 @@ void Supply(Queue *antrian, ListDin *list_barang){
 }
 
 //store remove
-//fungsi store remove
+void Remove (ListDin *list_barang){
+    printf("Nama barang yang ingin dihapus: ");
+    STARTWORD(NULL);
+
+    Word name;
+    name.Length = 0;
+
+    char goods[50] = "";
+    int length = 0;
+
+    GoodsWithManyWords(goods, &length, currentWord);
+    while (!isEndWord()){
+        ADVWORD();
+        GoodsWithManyWords(goods, &length, currentWord);
+    }
+
+    if (length > 0 && goods[length - 1] == ' '){
+        goods[length - 1] = '\0';
+        length -= 1;
+    }
+
+    if (length > 50){
+        length = 50;
+    }
+
+    for (int j = 0; j < length && j < 50; j++){
+        name.TabWord[j] = goods[j];
+    }
+    name.TabWord[length] = '\0';
+    name.Length = length;
+
+    if (IsMemberListDin(*list_barang, name)){
+        Barang tempBarang = makeBarang(0, name);
+        int idx = SearchListDin(*list_barang, tempBarang);
+        DeleteAtListDin(list_barang, idx);
+        printf("\"%s\" telah dihapus dari toko.\n", name.TabWord);
+    }
+    else{
+        printf("Barang tidak ditemukan di toko.\n");
+    }
+}
 
 //logout
 //fungsi logout

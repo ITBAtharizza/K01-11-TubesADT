@@ -98,7 +98,8 @@ int main(){
                     StoreList(list_barang);
                 }
                 if (IsWordEqual(currentWord, "REMOVE")){
-                    //fungsi store remove
+                    Remove(&list_barang);
+                    StoreList(list_barang);
                 }
             }
 

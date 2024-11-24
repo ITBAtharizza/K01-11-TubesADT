@@ -37,7 +37,7 @@ void Request(Queue *antrian, ListDin *list_barang);
 void Supply(Queue *antrian, ListDin *list_barang);
 
 //store remove
-//fungsi store remove
+void Remove(ListDin *list_barang);
 
 //save
 void Save(char *filename, List *list_user, ListDin *list_barang);

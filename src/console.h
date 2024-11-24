@@ -51,7 +51,8 @@ void Quit(List *list_user, ListDin *list_barang, boolean *running);
 void Help(int where);
 
 //fungsi-fungsi pembantu
-boolean TwoString(char *str1, char *str2);
+//fungsi IsWordEqual
+boolean IsWordEqual(Word word, char *reference);
 
 //fungsi WordToInt
 int WordToInt(Word word);
@@ -60,6 +61,8 @@ int WordToInt(Word word);
 void GoodsWithManyWords(char *goods, int *length, Word word);
 
 void CopyString(char *dest, char *src);
+
+boolean TwoString(char *str1, char *str2);
 
 void DisplayUser(List list_user);
 

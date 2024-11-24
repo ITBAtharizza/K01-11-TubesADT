@@ -62,8 +62,6 @@ void GoodsWithManyWords(char *goods, int *length, Word word);
 
 void CopyString(char *dest, char *src);
 
-boolean TwoString(char *str1, char *str2);
-
 void DisplayUser(List list_user);
 
 #endif

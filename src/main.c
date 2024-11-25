@@ -115,7 +115,7 @@ int main(){
             }
 
             if (IsWordEqual(currentWord, "LOGOUT")){
-                Logout(&logged_in, &log_stats, where);
+                Logout(&logged_in, &log_stats, &where);
             }
 
             if (IsWordEqual(currentWord, "SAVE")){

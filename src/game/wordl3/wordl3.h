@@ -3,9 +3,9 @@
 
 #define JUMLAH_KATA 30
 
-#include "../console.h"
-#include "../ADT/mesinkata/mesinkata.h"
-#include "../ADT/custom/custom.h"
+#include "../../console.h"
+#include "../../ADT/custom/custom.h"
+#include "../../ADT/mesinkata/mesinkata.h"
 
 void wordl3(int *score);
 

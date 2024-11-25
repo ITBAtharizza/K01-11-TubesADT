@@ -123,7 +123,6 @@ void Register(List *list_user) {
 void Login(List *list_user, User *logged_in, boolean *log_stats) {
     char username[50];
     char password[50];
-    boolean isUser = false;
     boolean isCorrectPass = false;
 
     printf("Username: ");
@@ -139,7 +138,6 @@ void Login(List *list_user, User *logged_in, boolean *log_stats) {
 
     while ((first <= last) && !isCorrectPass) {
         if (IsSameString(list_user->A[first].name, username)) {
-            isUser = true;
             if (IsSameString(list_user->A[first].password, password)) {
                 isCorrectPass = true;
                 *logged_in = list_user->A[first];
@@ -254,8 +252,6 @@ void Request(Queue *antrian, ListDin *list_barang){
     STARTWORD(NULL);
 
     Word name;
-    name.Length = 0;
-
     char goods[50] = "";
     int length = 0;
 
@@ -275,6 +271,7 @@ void Request(Queue *antrian, ListDin *list_barang){
     }
 
     CopyString(name.TabWord, goods);
+    name.Length = length;
 
     if (!IsMemberListDin(*list_barang, name)){
         if (!isMemberQueue(*antrian, name)){
@@ -285,6 +282,10 @@ void Request(Queue *antrian, ListDin *list_barang){
 
 //store supply
 void Supply(Queue *antrian, ListDin *list_barang){
+    if (isEmpty(*antrian)){
+        return;
+    }
+    
     Word val;
     dequeue(antrian, &val);
     printf("Apakah kamu ingin menambahkan barang %s: ", val.TabWord);
@@ -294,6 +295,7 @@ void Supply(Queue *antrian, ListDin *list_barang){
         STARTWORD(NULL);
         int Harga = WordToInt(currentWord);
         if (Harga != -9999){
+            printf("%s, %d", val.TabWord, val.Length);
             Barang barang = makeBarang(Harga, val);
             InsertLastListDin(list_barang, barang);
             printf("\"%s\" dengan harga %d telah ditambahkan ke toko.\n", list_barang->A[list_barang->Neff-1].name, list_barang->A[list_barang->Neff-1].price);
@@ -301,10 +303,10 @@ void Supply(Queue *antrian, ListDin *list_barang){
     }
     else if (IsWordEqual(currentWord, "Tunda")){
         enqueue(antrian, val);
-        printf("\"%s\" dikembalikan ke antrian.\n", val);
+        printf("\"%s\" dikembalikan ke antrian.\n", val.TabWord);
     }
     else if (IsWordEqual(currentWord, "Tolak")){
-        printf("\"%s\" dihapuskan dari antrian.\n", val);
+        printf("\"%s\" dihapuskan dari antrian.\n", val.TabWord);
     }
 }
 
@@ -314,8 +316,6 @@ void Remove(ListDin *list_barang){
     STARTWORD(NULL);
 
     Word name;
-    name.Length = 0;
-
     char goods[50] = "";
     int length = 0;
 
@@ -335,10 +335,10 @@ void Remove(ListDin *list_barang){
     }
 
     CopyString(name.TabWord, goods);
+    name.Length = length;
 
     if (IsMemberListDin(*list_barang, name)){
-        Barang tempBarang = makeBarang(0, name);
-        int idx = SearchListDin(*list_barang, tempBarang);
+        int idx = IdxMemberListDin(*list_barang, name);
         DeleteAtListDin(list_barang, idx);
         printf("\"%s\" telah dihapus dari toko.\n", name.TabWord);
     }
@@ -348,13 +348,13 @@ void Remove(ListDin *list_barang){
 }
 
 //logout
-void Logout(User *logged_in, boolean *log_stats, int where){
+void Logout(User *logged_in, boolean *log_stats, int *where){
     logged_in->name[0] = '\0';
     logged_in->password[0] = '\0';
     logged_in->money = 0;
 
     *log_stats = false;
-    where = 1;
+    *where = 1;
 }
 
 //save
@@ -398,7 +398,7 @@ void Save(char *filename, List *list_user, ListDin *list_barang) {
     fprintf(file, "%d", Length(*list_user));
 
     for (int i = 0; i < Length(*list_user); i++) {
-        fprintf(file, "\n", list_barang->Neff);
+        fprintf(file, "\n");
         ElTypeUser user = list_user->A[i];
         fprintf(file, "%d %s %s", user.money, user.name, user.password);
     }

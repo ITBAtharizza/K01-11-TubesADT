@@ -118,4 +118,6 @@ IdxType SearchListDin(ListDin array, ElTypeBarang el);
 
 boolean IsMemberListDin(ListDin array, Word word);
 
+int IdxMemberListDin(ListDin array, Word word);
+
 #endif

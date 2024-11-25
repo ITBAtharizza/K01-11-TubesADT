@@ -35,7 +35,6 @@ void wordl3(int *score)
     printf("_ _ _ _ _\n");
     printf("\n");
 
-    char jwbn[5];
     boolean correct = false;
 
     char arrCorrect[5][5] =  {
@@ -62,7 +61,7 @@ void wordl3(int *score)
     {
         printf("Masukan kata tebakan Anda: ");
         STARTWORD(NULL);
-        char jwbn[50];
+        char jwbn[5];
         CopyString(jwbn, currentWord.TabWord);
         CopyString(arrJwbn[chance], jwbn);
     

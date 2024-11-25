@@ -202,3 +202,12 @@ boolean IsMemberListDin(ListDin array, Word word){
     }
     return false;
 }
+
+int IdxMemberListDin(ListDin array, Word word){
+    for (int i = 0; i < array.Neff; i++){
+        if (IsSameString(array.A[i].name, word.TabWord)){
+            return i;
+        }
+    }
+    return -1;
+}

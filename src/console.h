@@ -43,7 +43,7 @@ void Supply(Queue *antrian, ListDin *list_barang);
 void Remove(ListDin *list_barang);
 
 //logout
-void Logout(User *logged_in, boolean *log_stats, int where);
+void Logout(User *logged_in, boolean *log_stats, int *where);
 
 //save
 void Save(char *filename, List *list_user, ListDin *list_barang);

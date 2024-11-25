@@ -295,7 +295,6 @@ void Supply(Queue *antrian, ListDin *list_barang){
         STARTWORD(NULL);
         int Harga = WordToInt(currentWord);
         if (Harga != -9999){
-            printf("%s, %d", val.TabWord, val.Length);
             Barang barang = makeBarang(Harga, val);
             InsertLastListDin(list_barang, barang);
             printf("\"%s\" dengan harga %d telah ditambahkan ke toko.\n", list_barang->A[list_barang->Neff-1].name, list_barang->A[list_barang->Neff-1].price);
@@ -349,6 +348,7 @@ void Remove(ListDin *list_barang){
 
 //logout
 void Logout(User *logged_in, boolean *log_stats, int *where){
+    printf("Selamat Jalan %s!\n", logged_in->name);
     logged_in->name[0] = '\0';
     logged_in->password[0] = '\0';
     logged_in->money = 0;
@@ -373,7 +373,7 @@ void Save(char *filename, List *list_user, ListDin *list_barang) {
     FILE *file = fopen(path, "r");
     if (file != NULL) {
         fclose(file);
-        printf("File '%s' sudah ada. Apakah ingin di-overwrite? (y/n): ", filename);
+        printf("File '%s' sudah ada. Apakah ingin di-overwrite (Y/N)? ", filename);
         STARTWORD(NULL);
         if (!IsWordEqual(currentWord, "Y") && !IsWordEqual(currentWord, "y")){
             printf("Proses dibatalkan.\n");

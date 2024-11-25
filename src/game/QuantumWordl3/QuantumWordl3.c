@@ -2,31 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "../ADT/mesinkata/mesinkata.h"
 
 #define MAX_WORDS 4
 #define MAX_ATTEMPTS 9
 #define WORD_LENGTH 5
-
-boolean isSameString(const char *str1, const char *str2) {
-    int i = 0;
-    while (str1[i] != '\0' && str2[i] != '\0') {
-        if (str1[i] != str2[i]) {
-            return false;
-        }
-        i++;
-    }
-    return str1[i] == '\0' && str2[i] == '\0';
-}
-
-void copyString(char *dest, const char *src) {
-    int i = 0;
-    while (src[i] != '\0') {
-        dest[i] = src[i];
-        i++;
-    }
-    dest[i] = '\0';
-}
 
 void toUpperCase(char *str) {
     int i = 0;
@@ -38,8 +17,8 @@ void toUpperCase(char *str) {
     }
 }
 
-void quantumWordl3(int *score) {
-    const char *wordBank[] = {
+void QuantumWordl3(int *score) {
+    char *wordBank[] = {
         "BUNGA", "RUMAH", "PISAU", "ANGIN", "LAMPU",
         "SAKIT", "HUJAN", "BADAI", "MERDU", "PUNYA"
     };
@@ -50,7 +29,7 @@ void quantumWordl3(int *score) {
 
     srand(time(NULL));
     for (int i = 0; i < MAX_WORDS; i++) {
-        copyString(selectedWords[i], wordBank[rand() % wordBankSize]);
+        CopyString(selectedWords[i], wordBank[rand() % wordBankSize]);
     }
 
     printf("Selamat datang di Quantum W0RDL3!\n");
@@ -77,7 +56,7 @@ void quantumWordl3(int *score) {
                 printf("Kata %d sudah benar: %s\n", i + 1, selectedWords[i]);
                 continue;
             }
-            if (isSameString(guesses[i], selectedWords[i])) {
+            if (IsSameString(guesses[i], selectedWords[i])) {
                 guessedCorrect[i] = true;
                 printf("Kata %d benar: %s\n", i + 1, guesses[i]);
             } else {

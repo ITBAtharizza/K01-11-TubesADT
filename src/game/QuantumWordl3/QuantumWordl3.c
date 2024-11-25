@@ -1,7 +1,8 @@
-#include "QuantumWordl3.h"
+#include "quantum_wordl3.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "../ADT/mesinkata/mesinkata.h"
 
 #define MAX_WORDS 4
 #define MAX_ATTEMPTS 9
@@ -37,7 +38,7 @@ void toUpperCase(char *str) {
     }
 }
 
-void QuantumWordl3(int *score) {
+void quantumWordl3(int *score) {
     const char *wordBank[] = {
         "BUNGA", "RUMAH", "PISAU", "ANGIN", "LAMPU",
         "SAKIT", "HUJAN", "BADAI", "MERDU", "PUNYA"

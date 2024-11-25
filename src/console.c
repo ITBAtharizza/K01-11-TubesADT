@@ -158,18 +158,56 @@ void Login(List *list_user, User *logged_in, boolean *log_stats) {
     }
 }
 //work
-//fungsi work
+void Work(User *user) {
+    // daftar pekerjaan yang tersedia
+    Job jobs[] = {
+        {"Evil Lab Assistant", 100, 14},
+        {"OWCA Hiring Manager", 4200, 21},
+        {"Cikapundunginator Caretaker", 7000, 30},
+        {"Mewing Specialist", 10000, 22},
+        {"Inator Connoisseur", 997, 15}
+    };
+    int jobCount = sizeof(jobs) / sizeof(jobs[0]);
 
+    // menampilkan daftar pekerjaan
+    printf("Daftar pekerjaan:\n");
+    for (int i = 0; i < jobCount; i++) {
+        printf("%d. %s (pendapatan=%d, durasi=%ds)\n", i + 1, jobs[i].name, jobs[i].income, jobs[i].duration);
+    }
+
+    // meng-input pilihan pekerjaan
+    printf("Masukkan pekerjaan yang dipilih (1-%d): ", jobCount);
+    int choice;
+    scanf("%d", &choice);
+
+    // validasi pilihan pekerjaan
+    if (choice < 1 || choice > jobCount) {
+        printf("Pekerjaan tidak valid!\n");
+        return;
+    }
+
+    // melakukan pekerjaan
+    Job selectedJob = jobs[choice - 1];
+    printf("Anda sedang bekerja sebagai %s. Harap tunggu...\n", selectedJob.name);
+
+    clock_t start_time = clock();
+    while ((clock() - start_time) < (selectedJob.duration * CLOCKS_PER_SEC)) {}
+
+    // menambahkan pendapatan ke user
+    user->money += selectedJob.income;
+    printf("Pekerjaan selesai. +%d rupiah telah ditambahkan ke akun Anda.\n", selectedJob.income);
+}
 //work challenge
 void WorkChallenge(User *logged_in){
     printf("Daftar challenge yang tersedia:\n");
     printf("1. Tebak Angka (biaya main=200)\n");
     printf("2. W0RDL399 (biaya main=500)\n\n");
+    printf("2. QUANTUM W0RDL3 (biaya main=500)\n\n");
     printf("Masukan challenge yang hendak dimainkan: ");
     STARTWORD(NULL);
     int gamescore = 0;
     int gamechoice = WordToInt(currentWord);
-    if (gamechoice != 1 && gamechoice != 2){
+    if (gamechoice != 1 && gamechoice != 2 && gamechoice != 3){
         printf("Angka tidak valid! Kembali ke menu utama...\n");
     }
     else{
@@ -182,12 +220,21 @@ void WorkChallenge(User *logged_in){
                 logged_in->money = logged_in->money + gamescore - 200;
             }
         }
-        else{
+        if (gamechoice == 2){
             if (logged_in->money < 500){
                 printf("Uang tidak cukup! Silakan bekerja dulu.\n");
             }
             else{
                 wordl3(&gamescore);
+                logged_in->money = logged_in->money + gamescore - 500;
+            }
+        }
+        if (gamechoice == 3){
+            if (logged_in->money < 500){
+                printf("Uang tidak cukup! Silakan bekerja dulu.\n");
+            }
+            else{
+                QuantumWordl3(&gamescore);
                 logged_in->money = logged_in->money + gamescore - 500;
             }
         }

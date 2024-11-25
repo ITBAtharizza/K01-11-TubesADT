@@ -74,7 +74,7 @@ int main(){
         if (where == 2){
             if (IsWordEqual(currentWord, "WORK")){
                 if (isEndWord()){
-                    //fungsi work
+                    Work(&logged_in);
                 }
                 else{
                     STARTWORD(NULL);
@@ -82,6 +82,7 @@ int main(){
                         WorkChallenge(&logged_in);
                     }
                 }
+                DisplayUser(list_user);
             }
 
             if (IsWordEqual(currentWord, "STORE")){

@@ -4,6 +4,6 @@
 #include "../ADT/custom/custom.h"
 #include "../ADT/mesinkata/mesinkata.h"
 
-void quantumWordl3(int *score);
+void QuantumWordl3(int *score);
 
 #endif

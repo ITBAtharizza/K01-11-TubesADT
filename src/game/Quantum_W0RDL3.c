@@ -2,13 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <time.h>
 
 #define MAX_WORDS 4
 #define MAX_ATTEMPTS 9
 #define WORD_LENGTH 5
 
-void quantumWordl3(int *score) {
+void QuantumWordl3(int *score) {
 
     const char *wordBank[] = {
         "BUNGA", "RUMAH", "PISAU", "ANGIN", "LAMPU",

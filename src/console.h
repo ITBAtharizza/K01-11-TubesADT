@@ -10,6 +10,7 @@
 #include "ADT/custom/custom.h"
 #include "game/tebakAngka.h"
 #include "game/wordl3.h"
+#include "game/Quantum_W0RDL3.h"
 
 //start
 void Start(List *list_user, ListDin *list_barang, int *where);
@@ -24,7 +25,7 @@ void Register(List *list_user);
 void Login(List *list_user, User *logged_in, boolean *log_stats);
 
 //work
-//fungsi work
+void Work(User *user);
 
 //work challenge
 void WorkChallenge(User *logged_in);

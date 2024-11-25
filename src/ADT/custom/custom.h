@@ -16,6 +16,12 @@ typedef struct{
   int price;
 } Barang;
 
+typedef struct {
+    char name[50];
+    int income;
+    int duration; //durasi dalam detik
+} Job;
+
 User makeUser(int money, Word name, Word password);
 /*Fungsi untuk membuat user
 I.S Sudah tersedia uang, nama dan password untuk akun pengguna

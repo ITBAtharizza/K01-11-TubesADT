@@ -297,15 +297,15 @@ void Supply(Queue *antrian, ListDin *list_barang){
         if (Harga != -9999){
             Barang barang = makeBarang(Harga, val);
             InsertLastListDin(list_barang, barang);
-            printf("\"%s\" dengan harga %d telah ditambahkan ke toko.\n", list_barang->A[list_barang->Neff-1].name, list_barang->A[list_barang->Neff-1].price);
+            printf("%s dengan harga %d telah ditambahkan ke toko.\n", list_barang->A[list_barang->Neff-1].name, list_barang->A[list_barang->Neff-1].price);
         }
     }
     else if (IsWordEqual(currentWord, "Tunda")){
         enqueue(antrian, val);
-        printf("\"%s\" dikembalikan ke antrian.\n", val.TabWord);
+        printf("%s dikembalikan ke antrian.\n", val.TabWord);
     }
     else if (IsWordEqual(currentWord, "Tolak")){
-        printf("\"%s\" dihapuskan dari antrian.\n", val.TabWord);
+        printf("%s dihapuskan dari antrian.\n", val.TabWord);
     }
 }
 
@@ -339,7 +339,7 @@ void Remove(ListDin *list_barang){
     if (IsMemberListDin(*list_barang, name)){
         int idx = IdxMemberListDin(*list_barang, name);
         DeleteAtListDin(list_barang, idx);
-        printf("\"%s\" telah dihapus dari toko.\n", name.TabWord);
+        printf("%s telah dihapus dari toko.\n", name.TabWord);
     }
     else{
         printf("Barang tidak ditemukan di toko.\n");

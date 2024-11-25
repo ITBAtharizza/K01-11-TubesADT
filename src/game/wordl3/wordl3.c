@@ -21,7 +21,7 @@ void wordl3(int *score)
 
     // kata yang dipilih secara acak
     srand(time(NULL));
-    int idx = rand() % 52;
+    int idx = rand() % 30;
     // printf("%d\n", idx); buat liat idx
     char *KJ = word[idx];
 

@@ -82,6 +82,7 @@ int main(){
                         WorkChallenge(&logged_in);
                     }
                 }
+                DumpUser(&list_user, &logged_in);
                 DisplayUser(list_user);
             }
 

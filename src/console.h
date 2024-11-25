@@ -85,4 +85,7 @@ void Decoding(char *column, char *decoded, int index);
 //fungsi mencari substring
 boolean IsInString(Word *decoded, Word *code);
 
+//fungsi DumpUser data saat work dan workchallenge
+void DumpUser(List *list_user, User *logged_in);
+
 #endif

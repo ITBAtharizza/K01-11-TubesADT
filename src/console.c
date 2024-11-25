@@ -203,8 +203,8 @@ void Work(User *user) {
 void WorkChallenge(User *logged_in){
     printf("Daftar challenge yang tersedia:\n");
     printf("1. Tebak Angka (biaya main=200)\n");
-    printf("2. W0RDL399 (biaya main=500)\n\n");
-    printf("2. QUANTUM W0RDL3 (biaya main=500)\n\n");
+    printf("2. W0RDL399 (biaya main=500)\n");
+    printf("3. QUANTUM W0RDL3 (biaya main=500)\n\n");
     printf("Masukan challenge yang hendak dimainkan: ");
     STARTWORD(NULL);
     int gamescore = 0;
@@ -747,4 +747,12 @@ boolean IsInString(Word *decoded, Word *code){
     }
 
     return false;
+}
+
+void DumpUser(List *list_user, User *logged_in){
+    for (int i = 0; i < Length(*list_user); i++){
+        if (IsSameString(list_user->A[i].name, logged_in->name) && IsSameString(list_user->A[i].password, logged_in->password)){
+            list_user->A[i].money = logged_in->money;
+        }
+    }
 }

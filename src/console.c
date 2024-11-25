@@ -307,7 +307,7 @@ void Supply(Queue *antrian, ListDin *list_barang){
 }
 
 //store remove
-void Remove (ListDin *list_barang){
+void Remove(ListDin *list_barang){
     printf("Nama barang yang ingin dihapus: ");
     STARTWORD(NULL);
 

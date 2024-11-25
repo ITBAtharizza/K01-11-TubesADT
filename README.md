@@ -1,12 +1,13 @@
-# K01-11-TubesADT
+# Tugas Besar Algoritma dan Struktur Data STI (IF2111) 2024
+Kelompok 11 K01
 
 ## Anggota
-18223053	Daffa Athalla Rajasa <br />
 18221026	Syasya Umaira <br />
 18222041	Kezia Caren Cahyadi <br />
-18223079	Atharizza Muhammad Athaya <br />
-18223037	Michelle Hamdani <br />
 18223013	Raka Adhitya Nugraha <br />
+18223037	Michelle Hamdani <br />
+18223053	Daffa Athalla Rajasa <br />
+18223079	Atharizza Muhammad Athaya <br />
 
 ## Deskripsi Program
 PURRMART adalah sebuah aplikasi berbasis Command Line Interface (CLI) yang dikembangkan sebagai keluaran dari tugas besar mata kuliah Algoritma dan Struktur Data STI (IF2111). PURRMART menggunakan teknologi bahasa C dalam implementasinya. Aplikasi PURRMART mensimulasikan aktivitas proses jual-beli barang di situs e-commerce dengan menggunakan berbagai fungsi interaktif yang ada di dalamnya.

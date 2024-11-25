@@ -157,6 +157,7 @@ void Login(List *list_user, User *logged_in, boolean *log_stats) {
         printf("Username atau password salah.\n\n");
     }
 }
+
 //work
 void Work(User *user) {
     // daftar pekerjaan yang tersedia
@@ -197,6 +198,7 @@ void Work(User *user) {
     user->money += selectedJob.income;
     printf("Pekerjaan selesai. +%d rupiah telah ditambahkan ke akun Anda.\n", selectedJob.income);
 }
+
 //work challenge
 void WorkChallenge(User *logged_in){
     printf("Daftar challenge yang tersedia:\n");
@@ -584,7 +586,7 @@ void DisplayUser(List list_user) {
     } else {
         printf("ISI USER:\n");
         printf("========================================================================================================================\n");
-        printf("| %-50s | %-50s | %-10s |\n", "Username", "Password", "Money");
+        printf("| %-50s | %-50s | %-10s |\n", "Name", "Password", "Money");
         printf("========================================================================================================================\n");
 
         for (IdxType i = FirstIdx(list_user); i <= LastIdx(list_user); i++) {

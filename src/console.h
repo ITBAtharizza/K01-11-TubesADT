@@ -79,8 +79,10 @@ Word DNAToRNA(Word DNA);
 //fungsi IsCode
 boolean IsCode(Word RNA, Word Code);
 
+//fungsi DecodingRNA
 void Decoding(char *column, char *decoded, int index);
 
+//fungsi mencari substring
 boolean IsInString(Word *decoded, Word *code);
 
 #endif

@@ -1,9 +1,7 @@
 #ifndef QUANTUM_WORDL3_H
 #define QUANTUM_WORDL3_H
 
-#include "../../ADT/custom/custom.h"
-#include "../../ADT/mesinkata/mesinkata.h"
+#include "../ADT/custom/custom.h"
+#include "../ADT/mesinkata/mesinkata.h"
 
-void QuantumWordl3(int *score);
-
-#endif
+// Permainan Quantum W0RDL3

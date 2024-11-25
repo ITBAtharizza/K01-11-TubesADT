@@ -1,8 +1,7 @@
-#include "quantum_wordl3.h"
+#include "QuantumWordl3.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "../ADT/mesinkata/mesinkata.h"
 
 #define MAX_WORDS 4
 #define MAX_ATTEMPTS 9

@@ -8,9 +8,9 @@
 #include "ADT/listdin/listdin.h"
 #include "ADT/queue/queue.h"
 #include "ADT/custom/custom.h"
-#include "game/tebakAngka.h"
-#include "game/wordl3.h"
-#include "game/Quantum_W0RDL3.h"
+#include "game/tebakAngka/tebakAngka.h"
+#include "game/wordl3/wordl3.h"
+#include "game/QuantumWordl3/QuantumWordl3.h"
 
 //start
 void Start(List *list_user, ListDin *list_barang, int *where);

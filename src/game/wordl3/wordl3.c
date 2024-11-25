@@ -10,7 +10,6 @@ void wordl3(int *score)
     printf("WELCOME TO W0RDL3, YOU HAVE 5 CHANCES TO ANSWER BEFORE YOU LOSE!\n");
 
     // jawaban
-    char jwbn[5];
     char *word[JUMLAH_KATA] = {
     "BUNGA", "RUMAH", "PISAU", "ANGIN", "LAMPU", 
     "SAKIT", "HUJAN", "BADAI", "MERDU", "PUNYA",

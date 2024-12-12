@@ -6,12 +6,13 @@
 #define __STACK_H__
 
 #include "../../boolean.h"
+#include "../custom/custom.h"
 
 #define Nil -1
 #define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
 
-typedef int infotype;
+typedef OnePurchases infotype;
 typedef int address; /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */

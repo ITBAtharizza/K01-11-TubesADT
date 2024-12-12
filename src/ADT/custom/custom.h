@@ -8,7 +8,7 @@
 typedef struct{
   char name[50];
   char password[50];
-  int money;
+  int money;z
 } User;
 
 typedef struct{
@@ -17,10 +17,26 @@ typedef struct{
 } Barang;
 
 typedef struct {
-    char name[50];
-    int income;
-    int duration; //durasi dalam detik
+  char name[50];
+  int income;
+  int duration; //durasi dalam detik
 } Job;
+
+typedef struct {
+  int jumlah;
+  Barang barang;
+} Purchase;
+
+typedef struct {
+  Purchase list[50];
+  int total;
+} OnePurchases;
+
+Purchase makePurchase(int jumlah, Barang Barang);
+OnePurchases makeOnePurchases();
+int LengthOnePurchases(OnePurchases onePurchases);
+void addPurchase(OnePurchases *onePurchase, Purchase purchase);
+void removePurchase(OnePurchases *onePurchase);
 
 User makeUser(int money, Word name, Word password);
 /*Fungsi untuk membuat user

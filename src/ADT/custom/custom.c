@@ -2,53 +2,6 @@
 #include <stdlib.h>
 #include "custom.h"
 
-const Purchase MARK_PURCHASE = {-1, {"", -1}};
-
-Purchase makePurchase(int jumlah, Barang Barang){
-    Purchase purchase;
-    purchase.barang = Barang;
-    purchase.jumlah = jumlah;
-    return purchase;
-}
-
-OnePurchases makeOnePurchases(){
-    OnePurchases onePurchases;
-    for (int i = 0; i < 100; i++){
-        onePurchases.list[i] = MARK_PURCHASE;
-    }
-    onePurchases.total = 0;
-    return onePurchases;
-}
-
-void addPurchase(OnePurchases *onePurchase, Purchase purchase){
-    int panjang = LengthOnePurchases(*onePurchase);
-    if (panjang == 100){
-        printf("Terlalu banyak pembelian dalam satu transaksi!\n");
-    }
-    else{
-        onePurchase->list[panjang] = purchase;
-    }
-}
-
-void removePurchase(OnePurchases *onePurchase, Purchase purchase){
-    int panjang = LengthOnePurchases(*onePurchase);
-    for (int i = 0; i < panjang; i++){
-        if (IsSameString(onePurchase->list[i].barang.name, purchase.barang.name)){
-            if (onePurchase->list[i].jumlah < purchase.jumlah){
-                printf("Tidak berhasil mengurangi, hanya terdapat %d %s pada keranjang!", onePurchase->list[i].jumlah, onePurchase->list[i].barang.name);
-            }
-        }
-    }
-
-}
-
-int LengthOnePurchases(OnePurchases onePurchases){
-    int i = 0, panjang = 0;
-    while (i < 100 && onePurchases.list[i].jumlah != MARK_PURCHASE.jumlah){
-        panjang++;
-    }
-    return panjang;
-}
 
 User makeUser(int money, Word name, Word password){
     User user;

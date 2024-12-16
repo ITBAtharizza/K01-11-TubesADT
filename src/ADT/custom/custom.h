@@ -22,22 +22,6 @@ typedef struct {
   int duration; //durasi dalam detik
 } Job;
 
-typedef struct {
-  int jumlah;
-  Barang barang;
-} Purchase;
-
-typedef struct {
-  Purchase list[50];
-  int total;
-} OnePurchases;
-
-Purchase makePurchase(int jumlah, Barang Barang);
-OnePurchases makeOnePurchases();
-int LengthOnePurchases(OnePurchases onePurchases);
-void addPurchase(OnePurchases *onePurchase, Purchase purchase);
-void removePurchase(OnePurchases *onePurchase);
-
 User makeUser(int money, Word name, Word password);
 /*Fungsi untuk membuat user
 I.S Sudah tersedia uang, nama dan password untuk akun pengguna

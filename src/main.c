@@ -122,7 +122,7 @@ int main(){
                     CartAdd(&list_barang, &cart);
                 }
                 if (IsWordEqual(currentWord, "REMOVE")){
-                    //remove
+                    CartRemove(&list_barang, &cart);
                 }
                 if (IsWordEqual(currentWord, "SHOW")){
                     CartShow(cart);

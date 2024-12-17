@@ -25,7 +25,7 @@ valuetype ValueMap(Map M, keytype k){
 }
 
 void InsertMap(Map *M, keytype barang, valuetype quantity){
-    if(IsEmpty(*M)){
+    if(IsEmptyMap(*M)){
         M->Elements[0].Barang = barang;
         M->Elements[0].Quantity = quantity;
         M->Count++;

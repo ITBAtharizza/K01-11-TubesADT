@@ -48,6 +48,9 @@ void Remove(ListDin *list_barang);
 //cart add
 void CartAdd(ListDin *List_Items, Map *Cart);
 
+//cart remove
+void CartRemove(ListDin *List_Items, Map *Cart);
+
 //cart show
 void CartShow(Map Cart);
 

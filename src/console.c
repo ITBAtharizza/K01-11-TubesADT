@@ -369,7 +369,7 @@ void CartAdd(ListDin *List_Items, Map *Cart) {
     }
 
     CopyString(name.TabWord, goods);
-    name.Length = length;     
+    name.Length = length;
 
     int Banyak = WordToInt(currentWord);
 
@@ -413,6 +413,71 @@ void CartShow(Map Cart) {
 
         printf("================================================================================ \n");
         printf("Total biaya yang harus dikeluarkan adalah %d.\n", total_biaya);
+    }
+}
+
+void CartRemove(ListDin *List_Items, Map *Cart){
+    Word name;
+    char goods[50] = "";
+    int length = 0;
+
+    STARTWORD(NULL);
+    do{
+        GoodsWithManyWords(goods, &length, currentWord);
+        STARTWORD(NULL);
+    } while (WordToInt(currentWord) == -9999);
+
+    if (length > 0 && goods[length - 1] == ' '){
+        goods[length - 1] = '\0';
+        length -= 1;
+    }
+
+    if (length > 50){
+        length = 50;
+    }
+
+    CopyString(name.TabWord, goods);
+    name.Length = length;     
+
+    int Banyak = WordToInt(currentWord);
+
+    int index = IdxMemberListDin(*List_Items, name);
+    if (index == -1) {
+        printf("Barang tidak ada di toko!\n");
+    } else {
+        if (Banyak == 0) {
+            printf("Jumlah barang yang diremove tidak bisa 0!\n");
+        } else if (Banyak < 0) {
+            printf("Barang yang diremove harus berjumlah positif!\n");
+        } else {
+            Barang barang = makeBarang(List_Items->A[index].price, name);
+            if (!IsMemberMap(*Cart, barang)){
+                printf("Barang tidak ada di keranjang belanja!\n");
+            }
+            else{
+                int quantity = ValueMap(*Cart, barang);
+                if (quantity < Banyak){
+                    printf("Tidak berhasil mengurangi, hanya terdapat %d %s pada keranjang!\n", quantity, barang.name);
+                }
+                else if (quantity == Banyak){
+                    DeleteMap(Cart, barang);
+                    printf("Berhasil mengurangi %d %s dari keranjang belanja!\n", Banyak, barang.name);
+                }
+                else{
+                    int i = 0;
+                    boolean found = false;
+                    while (!found && i < Cart->Count) {
+                        if (IsSameString(Cart->Elements[i].Barang.name, barang.name)) {
+                            found = true;
+                        } else {
+                            i++;
+                        }
+                    }
+                    Cart->Elements[i].Quantity -= Banyak;
+                    printf("Berhasil mengurangi %d %s dari keranjang belanja!\n", Banyak, barang.name);
+                }
+            }
+        }
     }
 }
 

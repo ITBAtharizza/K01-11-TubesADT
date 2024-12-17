@@ -88,4 +88,6 @@ boolean IsInString(Word *decoded, Word *code);
 //fungsi DumpUser data saat work dan workchallenge
 void DumpUser(List *list_user, User *logged_in);
 
+Word MultiWordWord();
+
 #endif

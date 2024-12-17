@@ -30,35 +30,8 @@ void Load(char *filename, List *list_user, ListDin *list_barang, int *where){
     for (int i = 0; i < jumlah_barang; i++){
         ADVWORD();
         int price = WordToInt(currentWord);
-        Word name;
-        name.Length = 0;
-        
-        char goods[50] = "";
-        int length = 0;
 
-        while (true){
-            ADVWORD();
-            GoodsWithManyWords(goods, &length, currentWord);
-
-            if (isEndWord()){
-                break;
-            }
-        }
-
-        if (length > 0 && goods[length - 1] == ' '){
-            goods[length - 1] = '\0';
-            length -= 1;
-        }
-
-        if (length > 50){
-            length = 50;
-        }
-
-        for (int j = 0; j < length && j < 50; j++){
-            name.TabWord[j] = goods[j];
-        }            
-        name.TabWord[length] = '\0';
-        name.Length = length;
+        Word name = MultiWordWord();
 
         Barang barang = makeBarang(price, name);
         InsertLastListDin(list_barang, barang);
@@ -80,6 +53,33 @@ void Load(char *filename, List *list_user, ListDin *list_barang, int *where){
         User user = makeUser(money, name, password);
 
         InsertLast(list_user, user);
+
+        ADVWORD();
+        int jumlah_riwayat = WordToInt(currentWord);
+
+        for (int j = 0; j < jumlah_riwayat; j++){
+            ADVWORD();
+            int numitems = WordToInt(currentWord);
+
+            ADVWORD();
+            int currentPrice = WordToInt(currentWord);
+            
+            for (int k = 0; k < numitems; k++){
+                ADVWORD();
+                int hargaitem = WordToInt(currentWord);
+
+                ADVWORD();
+                int jumlahitem = WordToInt(currentWord);
+
+                Word item = MultiWordWord();
+            }
+        }
+
+        ADVWORD();
+        int jumlah_wishlist = WordToInt(currentWord);
+        for (int j = 0; j < jumlah_wishlist; j++){
+            Word name = MultiWordWord();
+        }
     }
     *where = 1;
 }
@@ -755,4 +755,38 @@ void DumpUser(List *list_user, User *logged_in){
             list_user->A[i].money = logged_in->money;
         }
     }
+}
+
+Word MultiWordWord(){
+    Word name;
+    name.Length = 0;
+    
+    char goods[50] = "";
+    int length = 0;
+
+    while (true){
+        ADVWORD();
+        GoodsWithManyWords(goods, &length, currentWord);
+
+        if (isEndWord()){
+            break;
+        }
+    }
+
+    if (length > 0 && goods[length - 1] == ' '){
+        goods[length - 1] = '\0';
+        length -= 1;
+    }
+
+    if (length > 50){
+        length = 50;
+    }
+
+    for (int j = 0; j < length && j < 50; j++){
+        name.TabWord[j] = goods[j];
+    }            
+    name.TabWord[length] = '\0';
+    name.Length = length;
+
+    return name;
 }

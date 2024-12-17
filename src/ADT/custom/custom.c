@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "custom.h"
 
+
 User makeUser(int money, Word name, Word password){
     User user;
     for (int i = 0; i < name.Length; i++){

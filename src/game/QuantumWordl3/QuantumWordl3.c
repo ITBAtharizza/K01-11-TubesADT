@@ -37,7 +37,7 @@ void toUpperCase(char *str) {
     }
 }
 
-void quantumWordl3(int *score) {
+void QuantumWordl3(int *score) {
     const char *wordBank[] = {
         "BUNGA", "RUMAH", "PISAU", "ANGIN", "LAMPU",
         "SAKIT", "HUJAN", "BADAI", "MERDU", "PUNYA"

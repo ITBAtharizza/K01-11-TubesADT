@@ -1,32 +1,15 @@
-#include <string.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include "stack.h"
-
-
-void History(Stack *purchaseHistory, int n) {
-    if (IsEmpty(*purchaseHistory)) {
-        printf("Kamu belum membeli barang apapun!\n");
-        return;
+void AddToHistory(char *history[], int *historyCount, char *item, int quantity) {
+    if (*historyCount < MAX_HISTORY) {
+        for (int i = 0; i < *historyCount; i++) {
+            if (IsSameString(history[i], item)) {
+                printf("Item sudah tercatat di history.\n");
+                return;
+            }
+        }
+        history[*historyCount] = item;
+        (*historyCount)++;
+        printf("Item %s dengan jumlah %d berhasil ditambahkan ke history.\n", item, quantity);
+    } else {
+        printf("History penuh, tidak bisa menambahkan lebih banyak data.\n");
     }
-
-    printf("Riwayat pembelian barang:\n");
-    Stack tempStack;
-    CreateEmpty(&tempStack);
-
-    int count = 0;
-    while (!IsEmpty(*purchaseHistory) && count < n) {
-        char topHistory[150];
-        Pop(purchaseHistory, topHistory);
-        printf("%d. %s\n", count + 1, topHistory);
-        Push(&tempStack, topHistory);
-        count++;
-    }
-
-    // Restore the original stack
-    while (!IsEmpty(tempStack)) {
-        char topHistory[150];
-        Pop(&tempStack, topHistory);
-        Push(purchaseHistory, topHistory);
-    }
-} 
+}

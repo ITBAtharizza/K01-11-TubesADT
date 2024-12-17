@@ -394,6 +394,28 @@ void CartAdd(ListDin *List_Items, Map *Cart) {
     }
 }
 
+//cart show
+void CartShow(Map Cart) {
+    if (IsEmptyMap(Cart)) {
+        printf("Keranjang kamu kosong!\n");
+    } else {
+        int total_biaya = 0;
+        printf("================================================================================ \n");
+        printf("| %-10s | %-50s | %-10s |\n", "Kuantitas", "Nama Barang", "Total");
+        printf("================================================================================ \n");
+
+        for (int i = 0; i < Cart.Count; i++) {
+            int total_harga = Cart.Elements[i].Quantity * Cart.Elements[i].Barang.price;
+            total_biaya += total_harga;
+
+            printf("| %-10d | %-50s | %-10d |\n", Cart.Elements[i].Quantity, Cart.Elements[i].Barang.name, total_harga);
+        }
+
+        printf("================================================================================ \n");
+        printf("Total biaya yang harus dikeluarkan adalah %d.\n", total_biaya);
+    }
+}
+
 //logout
 void Logout(User *logged_in, boolean *log_stats, int *where){
     printf("Selamat Jalan %s!\n", logged_in->name);

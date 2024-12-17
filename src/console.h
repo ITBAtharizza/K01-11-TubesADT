@@ -48,6 +48,8 @@ void Remove(ListDin *list_barang);
 //cart add
 void CartAdd(ListDin *List_Items, Map *Cart);
 
+//cart show
+void CartShow(Map Cart);
 
 //logout
 void Logout(User *logged_in, boolean *log_stats, int *where);

@@ -125,7 +125,7 @@ int main(){
                     //remove
                 }
                 if (IsWordEqual(currentWord, "SHOW")){
-                    //show
+                    CartShow(cart);
                 }
                 if (IsWordEqual(currentWord, "PAY")){
                     //pay

@@ -346,6 +346,54 @@ void Remove(ListDin *list_barang){
     }
 }
 
+//cart
+//cart add
+void CartAdd(ListDin *List_Items, Map *Cart) {
+    Word name;
+    char goods[50] = "";
+    int length = 0;
+
+    STARTWORD(NULL);
+    do{
+        GoodsWithManyWords(goods, &length, currentWord);
+        STARTWORD(NULL);
+    } while (WordToInt(currentWord) == -9999);
+
+    if (length > 0 && goods[length - 1] == ' '){
+        goods[length - 1] = '\0';
+        length -= 1;
+    }
+
+    if (length > 50){
+        length = 50;
+    }
+
+    CopyString(name.TabWord, goods);
+    name.Length = length;     
+
+    int Banyak = WordToInt(currentWord);
+
+    int index = IdxMemberListDin(*List_Items, name);
+    if (index == -1) {
+        printf("Barang tidak ada di toko!\n");
+    } else {
+        if (Banyak == 0) {
+            printf("Jumlah barang yang dimasukkan ke dalam cart tidak bisa 0!\n");
+        } else if (Banyak < 0) {
+            printf("Barang yang dimasukkan ke dalam keranjang harus berjumlah positif!\n");
+        } else {
+            Barang barang = makeBarang(List_Items->A[index].price, name);
+            if (IsMemberMap(*Cart, barang)){
+                printf("Barang sudah ada!\n");
+            }
+            else{
+                InsertMap(Cart, barang, Banyak);
+                printf("Berhasil menambahkan %d %s ke keranjang belanja!\n", Banyak, barang.name);
+            }
+        }
+    }
+}
+
 //logout
 void Logout(User *logged_in, boolean *log_stats, int *where){
     printf("Selamat Jalan %s!\n", logged_in->name);
@@ -534,7 +582,6 @@ int WordToInt(Word word){
     int integer = 0;
     for (int i = 0; i < word.Length; i++){
         if (word.TabWord[i] < '0' || word.TabWord[i] > '9'){
-            printf("Bukan Angka Valid!\n");
             return -9999;
         }
         else{

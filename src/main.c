@@ -11,12 +11,14 @@ int main(){
     List list_user;
     ListDin list_barang;
     Queue antrian;
+    Map cart;
     User logged_in;
     boolean log_stats = false;
     boolean running = true;
     int where = 0;
 
     CreateQueue(&antrian);
+    CreateEmptyMap(&cart);
     list_user = MakeList();
     list_barang = MakeListDin();
 
@@ -113,6 +115,24 @@ int main(){
                     StoreList(list_barang);
                 }
             }
+
+            if (IsWordEqual(currentWord, "CART")){
+                STARTWORD(NULL);
+                if (IsWordEqual(currentWord, "ADD")){
+                    CartAdd(&list_barang, &cart);
+                }
+                if (IsWordEqual(currentWord, "REMOVE")){
+                    //remove
+                }
+                if (IsWordEqual(currentWord, "SHOW")){
+                    //show
+                }
+                if (IsWordEqual(currentWord, "PAY")){
+                    //pay
+                }
+            }
+
+
 
             if (IsWordEqual(currentWord, "LOGOUT")){
                 Logout(&logged_in, &log_stats, &where);

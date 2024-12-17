@@ -7,6 +7,7 @@
 #include "ADT/list/list.h"
 #include "ADT/listdin/listdin.h"
 #include "ADT/queue/queue.h"
+#include "ADT/map/map.h"
 #include "ADT/custom/custom.h"
 #include "game/tebakAngka/tebakAngka.h"
 #include "game/wordl3/wordl3.h"
@@ -30,6 +31,7 @@ void Work(User *user);
 //work challenge
 void WorkChallenge(User *logged_in);
 
+//store
 //store list
 void StoreList(ListDin list_barang);
 
@@ -41,6 +43,11 @@ void Supply(Queue *antrian, ListDin *list_barang);
 
 //store remove
 void Remove(ListDin *list_barang);
+
+//cart
+//cart add
+void CartAdd(ListDin *List_Items, Map *Cart);
+
 
 //logout
 void Logout(User *logged_in, boolean *log_stats, int *where);

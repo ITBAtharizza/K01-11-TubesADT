@@ -9,39 +9,39 @@ boolean IsEmptyMap(Map M){
 }
 
 boolean IsFullMap(Map M){
-    return (M.Count == MaxEl);
+    return (M.Count == MaxElMap);
 }
 
 valuetype ValueMap(Map M, keytype k){
     int i = 0;
-    while (i < M.Count && M.Elements[i].Key != k){
+    while (i < M.Count && !IsSameString(M.Elements[i].Barang.name, k.name)){
         i++;
     }
     if (i < M.Count){
-        return M.Elements[i].Value;
+        return M.Elements[i].Quantity;
     } else {
         return Undefined;
     }
 }
 
-void InsertMap(Map *M, keytype k, valuetype v){
+void InsertMap(Map *M, keytype barang, valuetype quantity){
     if(IsEmpty(*M)){
-        M->Elements[0].Key = k;
-        M->Elements[0].Value = v;
+        M->Elements[0].Barang = barang;
+        M->Elements[0].Quantity = quantity;
         M->Count++;
     } else {
-        if (Value(*M, k) == Undefined){
-            M->Elements[M->Count].Key = k;
-            M->Elements[M->Count].Value = v;
+        if (ValueMap(*M, barang) == Undefined){
+            M->Elements[M->Count].Barang = barang;
+            M->Elements[M->Count].Quantity = quantity;
             M->Count++;
         }
     }
 }
 
 void DeleteMap(Map *M, keytype k){
-    if (Value(*M, k) != Undefined){
+    if (ValueMap(*M, k) != Undefined){
         int i = 0;
-        while (i < M->Count && M->Elements[i].Key != k){
+        while (i < M->Count && !IsSameString(M->Elements[i].Barang.name, k.name)){
             i++;
         }
         int idx = i;
@@ -57,7 +57,7 @@ boolean IsMemberMap(Map M, keytype k){
     int i = 0;
     boolean found = false;
     while (!found && i < M.Count) {
-        if (M.Elements[i].Key == k) {
+        if (IsSameString(M.Elements[i].Barang.name, k.name)) {
             found = true;
         } else {
             i++;

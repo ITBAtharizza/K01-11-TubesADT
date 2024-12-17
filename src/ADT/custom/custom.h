@@ -8,7 +8,7 @@
 typedef struct{
   char name[50];
   char password[50];
-  int money;z
+  int money;
 } User;
 
 typedef struct{

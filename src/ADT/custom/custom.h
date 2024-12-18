@@ -6,9 +6,7 @@
 #include "../mesinkata/mesinkata.h"
 #include "../stack/stack.h"
 #include "../linkedlist/linkedlist.h"
-
-struct Map;
-typedef struct Map Map;
+#include "../map/map.h"
 
 typedef struct{
   char name[50];
@@ -19,10 +17,7 @@ typedef struct{
   LinkedList wishlist;
 } User;
 
-typedef struct{
-  char name[50];
-  int price;
-} Barang;
+
 
 typedef struct {
 	Barang Barang;

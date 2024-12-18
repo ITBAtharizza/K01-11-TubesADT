@@ -7,8 +7,6 @@
 #define linkedlist_H
 
 #include "../../boolean.h"
-#include "../custom/custom.h"
-
 
 #define NilLL NULL
 

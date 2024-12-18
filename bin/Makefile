@@ -14,6 +14,8 @@ SRCS = $(SRC_DIR)/main.c \
        $(SRC_DIR)/ADT/mesinkata/mesinkata.c \
        $(SRC_DIR)/ADT/queue/queue.c \
        $(SRC_DIR)/ADT/map/map.c \
+       $(SRC_DIR)/ADT/stack/stack.c \
+       $(SRC_DIR)/ADT/linkedlist/linkedlist.c \
        $(SRC_DIR)/game/QuantumWordl3/QuantumWordl3.c \
        $(SRC_DIR)/game/tebakAngka/tebakAngka.c \
        $(SRC_DIR)/game/wordl3/wordl3.c

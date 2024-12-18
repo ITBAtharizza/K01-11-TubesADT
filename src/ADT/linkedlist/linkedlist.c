@@ -10,7 +10,7 @@ void CreateEmptyLinkedList (LinkedList *L){
     First(*L) = NilLL;
 }
 
-address AlokasiLinkedList (infotype X){
+address AlokasiLinkedList (infotypeLL X){
     address P = malloc (sizeof(ElmtList));
     if (P != NilLL){
         Info(P) = X;
@@ -23,7 +23,7 @@ void DealokasiLinkedList (address *P){
     free(*P);
 }
 
-address SearchLinkedList (LinkedList L, infotype X){
+address SearchLinkedList (LinkedList L, infotypeLL X){
     address P = First(L);
     while (P != NilLL){
         if (Info(P) == X){
@@ -34,7 +34,7 @@ address SearchLinkedList (LinkedList L, infotype X){
     return NilLL;
 }
 
-void InsVFirstLinkedList (LinkedList *L, infotype X){
+void InsVFirstLinkedList (LinkedList *L, infotypeLL X){
     address P = AlokasiLinkedList(X);
     if (P != NilLL){
         Next(P) = First(*L);
@@ -42,7 +42,7 @@ void InsVFirstLinkedList (LinkedList *L, infotype X){
     }
 }
 
-void InsVLastLinkedList (LinkedList *L, infotype X){
+void InsVLastLinkedList (LinkedList *L, infotypeLL X){
     address P = AlokasiLinkedList(X);
     if (P != NilLL){
         if (IsEmptyLinkedList(*L)){
@@ -57,7 +57,7 @@ void InsVLastLinkedList (LinkedList *L, infotype X){
     }
 }
 
-void DelVFirstLinkedList (LinkedList *L, infotype *X){
+void DelVFirstLinkedList (LinkedList *L, infotypeLL *X){
     address P = First(*L);  
     *X = Info(P);
     First(*L) = Next(P);
@@ -65,7 +65,7 @@ void DelVFirstLinkedList (LinkedList *L, infotype *X){
     DealokasiLinkedList(&P);
 }
 
-void DelVLastLinkedList (LinkedList *L, infotype *X){
+void DelVLastLinkedList (LinkedList *L, infotypeLL *X){
     address P = First(*L);
     address Prec = NilLL;
     while (Next(P) != NilLL){
@@ -109,7 +109,7 @@ void DelFirstLinkedList (LinkedList *L, address *P){
     Next(*P) = NilLL;
 }
 
-void DelPLinkedList (LinkedList *L, infotype X){
+void DelPLinkedList (LinkedList *L, infotypeLL X){
     address P = First(*L);
     address Prec = NilLL;
     while (P != NilLL && Info(P) != X){

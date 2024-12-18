@@ -2,7 +2,6 @@
 #define map_H
 #include <stdio.h>
 #include "../../boolean.h"
-#include "../custom/custom.h"
 
 /* MODUL Map
 Deklarasi stack yang dengan implementasi array eksplisit-statik rata kiri
@@ -14,7 +13,11 @@ Deklarasi stack yang dengan implementasi array eksplisit-statik rata kiri
 #define MaxElMap 10
 #define Undefined -999
 
-// typedef int bool;
+typedef struct {
+  char name[50];
+  int price;
+} Barang;
+
 typedef Barang keytype;
 typedef int valuetype;
 typedef int addressMap;

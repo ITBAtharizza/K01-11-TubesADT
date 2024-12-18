@@ -6,7 +6,6 @@
 #define __STACK_H__
 
 #include "../../boolean.h"
-#include "../custom/custom.h"
 
 #define NilStack -1
 #define MaxEl 100

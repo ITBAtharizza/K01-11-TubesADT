@@ -1,7 +1,7 @@
 #ifndef HISTORY_H
 #define HISTORY_H
 
-#include <stdbool.h>
+#include <stdio.h>
 
 /**
  * @brief Menambahkan riwayat pembelian ke daftar riwayat.
@@ -10,7 +10,7 @@
  * @param history Array untuk menyimpan riwayat pembelian.
  * @param count Pointer ke jumlah elemen dalam riwayat.
  */
-void AddToHistory(char *purchaseHistory, char history[][100], int *count);
+void AddToHistory(const char *purchaseHistory, char history[][100], int *count);
 
 /**
  * @brief Menampilkan semua riwayat pembelian.

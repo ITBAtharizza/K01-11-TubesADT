@@ -1,5 +1,5 @@
-#ifndef __PROFILE_H__
-#define __PROFILE_H__
+#ifndef __WISHLIST_ADD_H__
+#define __WISHLIST_ADD_H__
 
 #include "boolean.h"
 #include "ADT/mesinkarakter/mesinkarakter.h"

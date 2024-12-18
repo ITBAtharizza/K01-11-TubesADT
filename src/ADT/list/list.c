@@ -3,11 +3,13 @@
 
 // Konstruktor
 
-const User MARK_USER ={"", "", -1};
 
 List MakeList(){
 	List L;
 	IdxType i;
+
+	User MARK_USER = makeMarkUser();
+
 	for (i = 0; i < MaxEl; i++){
 		L.A[i] = MARK_USER;
 	}
@@ -101,6 +103,7 @@ void DeleteFirst(List *L){
 		(*L).A[i] = (*L).A[i+1];
         i++;
 	}
+	User MARK_USER = makeMarkUser();
     (*L).A[i] = MARK_USER;
 }
 
@@ -117,6 +120,7 @@ void DeleteAt(List *L, IdxType i){
 }
 
 void DeleteLast(List *L){
+	User MARK_USER = makeMarkUser();
 	(*L).A[LastIdx(*L)] = MARK_USER;
 }
 

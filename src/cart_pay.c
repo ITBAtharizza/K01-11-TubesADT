@@ -1,7 +1,6 @@
 #include "cart_pay.h"
 
-void CartPay(Map *M, User *user, char *purchaseHistory) {
-/*
+void CartPay(Map *M, int *userMoney, char *purchaseHistory) {
     if (IsEmptyMap(*M)) {
         printf("Keranjang kamu kosong!\n");
         return;
@@ -38,8 +37,8 @@ void CartPay(Map *M, User *user, char *purchaseHistory) {
     scanf("%s", response);
 
     if (IsSameString(response, "Ya")) {
-        if (*user->money >= totalCost) {
-            *user->money -= totalCost;
+        if (*userMoney >= totalCost) {
+            *userMoney -= totalCost;
             sprintf(purchaseHistory, "Barang: %s, Total: %d", highestPricedItem, highestPrice);
             printf("Selamat, kamu telah membeli barang-barang tersebut!\n");
             CreateEmptyMap(M);
@@ -52,4 +51,3 @@ void CartPay(Map *M, User *user, char *purchaseHistory) {
         printf("Input tidak valid. Kembali ke menu utama.\n");
     }
 }
-*/

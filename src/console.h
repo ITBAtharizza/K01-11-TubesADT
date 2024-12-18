@@ -8,6 +8,7 @@
 #include "ADT/listdin/listdin.h"
 #include "ADT/queue/queue.h"
 #include "ADT/map/map.h"
+#include "ADT/stack/stack.h"
 #include "ADT/custom/custom.h"
 #include "game/tebakAngka/tebakAngka.h"
 #include "game/wordl3/wordl3.h"
@@ -59,6 +60,12 @@ void wishlist_removei(int i, Map *Cart);
 
 void wishlist_remove(Map *Cart);
 
+//cart pay
+void CartPay(Map *Cart, User *user, Stack *history);
+
+//history
+void ShowHistory(Stack *history, int line);
+
 //logout
 void Logout(User *logged_in, boolean *log_stats, int *where);
 
@@ -106,5 +113,7 @@ boolean IsInString(Word *decoded, Word *code);
 void DumpUser(List *list_user, User *logged_in);
 
 Word MultiWordWord();
+
+int Lexical(char *str1, char *str2);
 
 #endif

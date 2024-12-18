@@ -2,8 +2,21 @@
 #include <stdlib.h>
 #include "custom.h"
 
+User makeMarkUser(){
+    User MARK_USER;
 
-User makeUser(int money, Word name, Word password){
+    CopyWord(MARK_USER.name, "");
+    CopyWord(MARK_USER.password, "");
+    MARK_USER.money = -1;
+
+    CreateEmptyMap(&MARK_USER.keranjang);
+    CreateEmptyStack(&MARK_USER.riwayat_pembelian);
+    CreateEmptyLinkedList(&MARK_USER.wishlist);
+
+    return MARK_USER;
+}
+
+User makeUser(int money, Word name, Word password, Stack riwayat_pembelian, LinkedList wishlist){
     User user;
     for (int i = 0; i < name.Length; i++){
         user.name[i] = name.TabWord[i];
@@ -15,6 +28,9 @@ User makeUser(int money, Word name, Word password){
     }
     user.password[password.Length] = '\0';
     user.money = money;
+
+    user.riwayat_pembelian = riwayat_pembelian;
+    user.wishlist = wishlist;
 
     return user;
 }
@@ -31,7 +47,7 @@ Barang makeBarang(int price, Word name){
 }
 
 boolean IsMarkUser(User user){
-    return (user.money == -1 && user.name[0] == '\0' && user.password[0] == '\0');
+    return (user.money == -1 && user.name[0] == '\0' && user.password[0] == '\0' && IsEmptyMap(user.keranjang) && IsEmptyStack(user.riwayat_pembelian) && IsEmptyLinkedList(user.wishlist));
 }
 
 boolean IsSameUser(User user1, User user2){

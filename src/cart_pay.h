@@ -1,18 +1,25 @@
-#ifndef __CARTPAY_H__
-#define __CARTPAY_H__
+#ifndef CART_PAY_H
+#define CART_PAY_H
 
-#include "boolean.h"
-#include "ADT/mesinkarakter/mesinkarakter.h"
-#include "ADT/mesinkata/mesinkata.h"
-#include "ADT/list/list.h"
-#include "ADT/listdin/listdin.h"
-#include "ADT/queue/queue.h"
-#include "ADT/map/map.h"
-#include "ADT/custom/custom.h"
-#include "game/tebakAngka/tebakAngka.h"
-#include "game/wordl3/wordl3.h"
-#include "game/QuantumWordl3/QuantumWordl3.h"
+#include "map.h"
+#include <stdio.h>
 
-void CartPay(Map *M, User *user, char *purchaseHistory);
+/**
+ * @brief Melakukan pembayaran untuk barang-barang yang ada di keranjang.
+ *
+ * @param M Pointer ke Map yang merepresentasikan keranjang belanja.
+ * @param userMoney Pointer ke jumlah uang pengguna.
+ * @param purchaseHistory Pointer ke string untuk menyimpan riwayat pembelian.
+ */
+void CartPay(Map *M, int *userMoney, char *purchaseHistory);
 
-#endif
+/**
+ * @brief Membandingkan dua string.
+ * 
+ * @param str1 Pointer ke string pertama.
+ * @param str2 Pointer ke string kedua.
+ * @return 1 jika kedua string sama, 0 jika berbeda.
+ */
+int IsSameString(const char *str1, const char *str2);
+
+#endif // CART_PAY_H

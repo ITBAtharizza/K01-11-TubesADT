@@ -1,20 +1,23 @@
-#ifndef __HISTORY_H__
-#define __HISTORY_H__
+#ifndef HISTORY_H
+#define HISTORY_H
 
-#include "boolean.h"
-#include "ADT/mesinkarakter/mesinkarakter.h"
-#include "ADT/mesinkata/mesinkata.h"
-#include "ADT/list/list.h"
-#include "ADT/listdin/listdin.h"
-#include "ADT/queue/queue.h"
-#include "ADT/map/map.h"
-#include "ADT/stack/stack.h"
-#include "ADT/custom/custom.h"
-#include "game/tebakAngka/tebakAngka.h"
-#include "game/wordl3/wordl3.h"
-#include "game/QuantumWordl3/QuantumWordl3.h"
+#include <stdio.h>
 
-void AddToHistory(Stack *history, infotype purchase);
-void ShowHistory(Stack *history);
+/**
+ * @brief Menambahkan riwayat pembelian ke daftar riwayat.
+ *
+ * @param purchaseHistory String yang merepresentasikan pembelian yang akan disimpan ke riwayat.
+ * @param history Array untuk menyimpan riwayat pembelian.
+ * @param count Pointer ke jumlah elemen dalam riwayat.
+ */
+void AddToHistory(const char *purchaseHistory, char history[][100], int *count);
 
-#endif
+/**
+ * @brief Menampilkan semua riwayat pembelian.
+ *
+ * @param history Array yang berisi riwayat pembelian.
+ * @param count Jumlah elemen dalam riwayat.
+ */
+void DisplayHistory(char history[][100], int count);
+
+#endif // HISTORY_H

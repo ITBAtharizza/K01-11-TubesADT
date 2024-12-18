@@ -21,7 +21,7 @@ boolean IsEmptyStack (Stack S)
 boolean IsFullStack (Stack S)
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 {
-    return (Top(S)==MaxEl-1);
+    return (Top(S)==MaxElStack-1);
 }
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */

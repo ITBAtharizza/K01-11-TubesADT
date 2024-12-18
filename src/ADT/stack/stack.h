@@ -8,7 +8,7 @@
 #include "../../boolean.h"
 
 #define NilStack -1
-#define MaxEl 100
+#define MaxElStack 100
 /* Nil adalah stack dengan elemen kosong . */
 
 
@@ -23,7 +23,7 @@ typedef int addressStack; /* indeks tabel */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
 typedef struct
 {
-  OneHistory T[MaxEl]; /* tabel penyimpan elemen */
+  OneHistory T[MaxElStack]; /* tabel penyimpan elemen */
   addressStack TOP;       /* alamat TOP: elemen puncak */
 } Stack;
 /* Definisi stack S kosong : S.TOP = Nil */

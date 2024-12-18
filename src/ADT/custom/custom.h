@@ -17,8 +17,6 @@ typedef struct{
   LinkedList wishlist;
 } User;
 
-
-
 typedef struct {
 	Barang Barang;
 	int Quantity;
@@ -63,4 +61,5 @@ boolean IsSameString(char *str1, char *str2);
 I.S Diterima masukan data string1 dan string2 yang akan dibandingkan.
 */
 
+void CopyString(char *dest, char *src);
 #endif

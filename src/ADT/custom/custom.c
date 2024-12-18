@@ -5,33 +5,25 @@
 User makeMarkUser(){
     User MARK_USER;
 
-    CopyWord(MARK_USER.name, "");
-    CopyWord(MARK_USER.password, "");
+    CopyString(MARK_USER.name, "");
+    CopyString(MARK_USER.password, "");
     MARK_USER.money = -1;
 
     CreateEmptyMap(&MARK_USER.keranjang);
-    CreateEmptyStack(&MARK_USER.riwayat_pembelian);
-    CreateEmptyLinkedList(&MARK_USER.wishlist);
 
     return MARK_USER;
 }
 
 User makeUser(int money, Word name, Word password, Stack riwayat_pembelian, LinkedList wishlist){
-    User user;
-    for (int i = 0; i < name.Length; i++){
-        user.name[i] = name.TabWord[i];
-    }
-    user.name[name.Length] = '\0';
-
-    for (int j = 0; j < password.Length; j++){
-        user.password[j] = password.TabWord[j];
-    }
-    user.password[password.Length] = '\0';
+    User user = makeMarkUser();
+    CopyString(user.name,name.TabWord);
+    CopyString(user.password, password.TabWord);
     user.money = money;
 
     user.riwayat_pembelian = riwayat_pembelian;
     user.wishlist = wishlist;
 
+    printf("%s", user.name);
     return user;
 }
 
@@ -47,7 +39,7 @@ Barang makeBarang(int price, Word name){
 }
 
 boolean IsMarkUser(User user){
-    return (user.money == -1 && user.name[0] == '\0' && user.password[0] == '\0' && IsEmptyMap(user.keranjang) && IsEmptyStack(user.riwayat_pembelian) && IsEmptyLinkedList(user.wishlist));
+    return (user.money == -1 && user.name[0] == '\0' && user.password[0] == '\0');
 }
 
 boolean IsSameUser(User user1, User user2){
@@ -68,3 +60,13 @@ boolean IsSameString(char *str1, char *str2){
 boolean IsSameBarang(Barang barang1, Barang barang2){
     return (IsSameString(barang1.name, barang2.name) && barang1.price == barang2.price);
 }
+
+void CopyString(char *dest, char *src) {
+    int i = 0;
+    while (src[i] != '\0') {
+        dest[i] = src[i];
+        i++;
+    }
+    dest[i] = '\0';
+}
+

@@ -92,9 +92,6 @@ int WordToInt(Word word);
 //fungsi GoodsWithManyWords
 void GoodsWithManyWords(char *goods, int *length, Word word);
 
-//fungsi CopyString
-void CopyString(char *dest, char *src);
-
 //fungsi DisplayUser
 void DisplayUser(List list_user);
 

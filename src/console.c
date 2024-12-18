@@ -51,7 +51,9 @@ void Load(char *filename, List *list_user, ListDin *list_barang, int *where){
         int money = WordToInt(currentWord);
 
         ADVWORD();
-        Word name = currentWord;
+        Word name;
+        CopyString(name.TabWord, currentWord.TabWord);
+        name.Length = currentWord.Length;
         
         ADVWORD();
         Word password = currentWord;
@@ -64,7 +66,11 @@ void Load(char *filename, List *list_user, ListDin *list_barang, int *where){
 
             Word barang = MultiWordWord();
 
-            OneHistory onehistory = {barang.TabWord, total};
+            OneHistory onehistory;
+            onehistory.total = total;
+            CopyString(onehistory.name, barang.TabWord);
+
+            printf("%d, %s", onehistory.total, onehistory.name);
             PushStack(&riwayat_pembelian, onehistory);
         }
         
@@ -612,7 +618,9 @@ void CartPay(Map *Cart, User *user, Stack *history) {
             printf("Uang kamu hanya %d, tidak cukup untuk membeli keranjang!\n", user->money);
             return;
         }
-        OneHistory addHistory = {max_barang.name, max_quantity};
+        OneHistory addHistory;
+        addHistory.total = max_quantity * max_barang.price;
+        CopyString(addHistory.name, max_barang.name);
         PushStack(history, addHistory);
         printf("Selamat kamu telah membeli barang-barang tersebut!\n");
     }
@@ -880,15 +888,6 @@ void GoodsWithManyWords(char *goods, int *length, Word currentWord){
 }
 
 // fungsi untuk salin string secara manual
-void CopyString(char *dest, char *src) {
-    int i = 0;
-    while (src[i] != '\0') {
-        dest[i] = src[i];
-        i++;
-    }
-    dest[i] = '\0';
-}
-
 void DisplayUser(List list_user) {
     if (IsEmpty(list_user)) {
         printf("USER KOSONG!\n");
@@ -896,9 +895,9 @@ void DisplayUser(List list_user) {
         printf("ISI USER:\n");
         for (IdxType i = FirstIdx(list_user); i <= LastIdx(list_user); i++) {
             printf("\n\n");
-            printf("Nama: %s", list_user.A[i].name);
-            printf("Nama: %s", list_user.A[i].password);
-            printf("Nama: %d", list_user.A[i].money);
+            printf("Nama: %s\n", list_user.A[i].name);
+            printf("Password: %s\n", list_user.A[i].password);
+            printf("Money: %d\n", list_user.A[i].money);
             DisplayMap(list_user.A[i].keranjang);
             ShowHistory(&list_user.A[i].riwayat_pembelian, 100);
             PrintInfoLinkedList(list_user.A[i].wishlist);

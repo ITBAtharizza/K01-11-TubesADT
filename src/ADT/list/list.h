@@ -9,7 +9,7 @@
 #include "../custom/custom.h"
 
 /* Kamus Umum */
-#define MaxEl 100
+#define MaxEl 10
 #define InvalidIdx -1  /* Indeks tak terdefinisi */
 
 /* Definisi elemen dan koleksi objek */
@@ -17,7 +17,7 @@ typedef int IdxType;
 typedef User ElTypeUser;
 
 typedef struct{
-    ElTypeUser A[100];
+    ElTypeUser A[MaxEl];
 } List;
 
 #define List(i) L.A(i)

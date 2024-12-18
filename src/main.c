@@ -5,26 +5,26 @@
 #include "console.h"
 
 int main(){
+    printf("Starting program...\n");
+    printf("Checkpoint 1\n");
+    
     char loadfile[50];
     char savefile[50];
 
     List list_user;
     ListDin list_barang;
     Queue antrian;
-    Map cart;
-    Stack history;
     User logged_in;
     boolean log_stats = false;
     boolean running = true;
     int where = 0;
 
     CreateQueue(&antrian);
-    CreateEmptyMap(&cart);
-    CreateEmptyStack(&history);
     list_user = MakeList();
     list_barang = MakeListDin();
 
     while (running){
+        printf("Checkpoint 2\n");
         printf(">> ");
         STARTWORD(NULL);
         printf("\n");
@@ -121,23 +121,23 @@ int main(){
             if (IsWordEqual(currentWord, "CART")){
                 STARTWORD(NULL);
                 if (IsWordEqual(currentWord, "ADD")){
-                    CartAdd(&list_barang, &cart);
+                    CartAdd(&list_barang, &logged_in.keranjang);
                 }
                 if (IsWordEqual(currentWord, "REMOVE")){
-                    CartRemove(&list_barang, &cart);
+                    CartRemove(&list_barang, &logged_in.keranjang);
                 }
                 if (IsWordEqual(currentWord, "SHOW")){
-                    CartShow(cart);
+                    CartShow(logged_in.keranjang);
                 }
                 if (IsWordEqual(currentWord, "PAY")){
-                    CartPay(&cart, &logged_in, &history);
+                    CartPay(&logged_in.keranjang, &logged_in, &logged_in.riwayat_pembelian);
                 }
             }
 
             if (IsWordEqual(currentWord, "HISTORY")){
                 STARTWORD(NULL);
                 int line = WordToInt(currentWord);
-                ShowHistory(&history, line);
+                ShowHistory(&logged_in.riwayat_pembelian, line);
             }
 
             if (IsWordEqual(currentWord, "LOGOUT")){

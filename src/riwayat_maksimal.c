@@ -1,3 +1,5 @@
+#include "riwayat_maksimal.h"
+
 void RiwayatMaksimal(char *history[], int historyCount, Map *M) {
     if (historyCount == 0) {
         printf("Belum ada riwayat pembelian.\n");

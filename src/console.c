@@ -70,7 +70,6 @@ void Load(char *filename, List *list_user, ListDin *list_barang, int *where){
             onehistory.total = total;
             CopyString(onehistory.name, barang.TabWord);
 
-            printf("%d, %s", onehistory.total, onehistory.name);
             PushStack(&riwayat_pembelian, onehistory);
         }
         
@@ -80,6 +79,7 @@ void Load(char *filename, List *list_user, ListDin *list_barang, int *where){
         int jumlah_wishlist = WordToInt(currentWord);
         for (int k = 0; k < jumlah_wishlist; k++){
             Word name = MultiWordWord();
+            InsVLastLinkedList(&wishlist, name.TabWord);
         }
 
         User user = makeUser(money, name, password, riwayat_pembelian, wishlist);
@@ -488,12 +488,9 @@ void CartRemove(ListDin *List_Items, Map *Cart){
 
 //wishlist
 //wishlist remove ke-i
-void wishlist_removei(LinkedList *wishlist) {
-    int i; 
-    printf("WISHLIST REMOVE ");
-    
+void WishlistRemoveI(LinkedList *wishlist) {
     STARTWORD(NULL);
-    i = WordToInt(currentWord);
+    int i = WordToInt(currentWord);
 
     if (IsEmptyLinkedList(*wishlist)) {
         printf("Penghapusan barang WISHLIST gagal dilakukan, WISHLIST kosong!\n");
@@ -531,7 +528,7 @@ void wishlist_removei(LinkedList *wishlist) {
 }
 
 //wishlist remove nama
-void wishlist_remove(LinkedList *wishlist) {
+void WishlistRemove(LinkedList *wishlist) {
     Word name;
     char goods[50] = "";
     int length = 0;
@@ -554,10 +551,10 @@ void wishlist_remove(LinkedList *wishlist) {
     address current = First(*wishlist);
     address prev = NULL;
 
-    while (current != NULL && !IsSameString((char *)Info(current), name.TabWord)) {
-    prev = current;
-    current = Next(current);
-}
+    while (current != NULL && !IsSameString(Info(current), name.TabWord)) {
+        prev = current;
+        current = Next(current);
+    }
 
     if (current == NULL) {
         printf("Penghapusan barang WISHLIST gagal dilakukan, %s tidak ada di WISHLIST!\n", name.TabWord);
@@ -635,7 +632,7 @@ void CartPay(Map *Cart, User *user, Stack *history) {
 //history
 void ShowHistory(Stack *history, int line){
     if (IsEmptyStack(*history)){
-        printf("Kamu belum membeli barang apapun!\n");
+        printf("Kamu belum membeli barang apapun!\n\n");
         return;
     }
 
@@ -644,14 +641,14 @@ void ShowHistory(Stack *history, int line){
     OneHistory X;
 
     printf("Riwayat Pembelian:\n");
-    printf("===========================================\n");
+    printf("============================================================================\n");
     printf("| %-5s | %-50s | %-10s |\n", "No", "Nama Barang", "Harga Total");
-    printf("===========================================\n");
+    printf("============================================================================\n");
 
     int i = 1;
     while (!IsEmptyStack(*history) && i < line){
         PopStack(history, &X);
-        printf("| %-5d | %-50s | %-10d |\n", i, X.name, X.total);
+        printf("| %-5d | %-50s | %-10d  |\n", i, X.name, X.total);
         PushStack(&temp, X);
         i++;
     }
@@ -661,7 +658,7 @@ void ShowHistory(Stack *history, int line){
         PushStack(history, X);
     }
 
-    printf("===========================================\n");    
+    printf("============================================================================\n\n");    
 }
 
 //logout
@@ -894,10 +891,10 @@ void DisplayUser(List list_user) {
     } else {
         printf("ISI USER:\n");
         for (IdxType i = FirstIdx(list_user); i <= LastIdx(list_user); i++) {
-            printf("\n\n");
+            printf("\n");
             printf("Nama: %s\n", list_user.A[i].name);
             printf("Password: %s\n", list_user.A[i].password);
-            printf("Money: %d\n", list_user.A[i].money);
+            printf("Money: %d\n\n", list_user.A[i].money);
             DisplayMap(list_user.A[i].keranjang);
             ShowHistory(&list_user.A[i].riwayat_pembelian, 100);
             PrintInfoLinkedList(list_user.A[i].wishlist);

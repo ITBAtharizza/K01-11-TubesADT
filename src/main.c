@@ -5,9 +5,6 @@
 #include "console.h"
 
 int main(){
-    printf("Starting program...\n");
-    printf("Checkpoint 1\n");
-    
     char loadfile[50];
     char savefile[50];
 
@@ -24,7 +21,6 @@ int main(){
     list_barang = MakeListDin();
 
     while (running){
-        printf("Checkpoint 2\n");
         printf(">> ");
         STARTWORD(NULL);
         printf("\n");
@@ -138,6 +134,27 @@ int main(){
                 STARTWORD(NULL);
                 int line = WordToInt(currentWord);
                 ShowHistory(&logged_in.riwayat_pembelian, line);
+            }
+
+            if (IsWordEqual(currentWord, "WISHLIST")){
+                STARTWORD(NULL);
+                if (IsWordEqual(currentWord, "ADD")){
+                    //add
+                }
+                if (IsWordEqual(currentWord, "SWAP")){
+                    //swap
+                }
+                if (IsWordEqual(currentWord, "REMOVE")){
+                    if (isEndWord()){
+                        WishlistRemove(&logged_in.wishlist);
+                    }
+                    else{
+                        WishlistRemoveI(&logged_in.wishlist);
+                    }
+                }
+                if (IsWordEqual(currentWord, "CLEAR")){
+                    //clear
+                }
             }
 
             if (IsWordEqual(currentWord, "LOGOUT")){

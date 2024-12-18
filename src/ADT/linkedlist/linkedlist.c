@@ -13,7 +13,7 @@ void CreateEmptyLinkedList (LinkedList *L){
 address AlokasiLinkedList (infotypeLL X){
     address P = malloc (sizeof(ElmtList));
     if (P != NilLL){
-        Info(P) = X;
+        CopyString(Info(P), X);
         Next(P) = NilLL;
     }
     return P;
@@ -59,7 +59,7 @@ void InsVLastLinkedList (LinkedList *L, infotypeLL X){
 
 void DelVFirstLinkedList (LinkedList *L, infotypeLL *X){
     address P = First(*L);  
-    *X = Info(P);
+    CopyString(*X, Info(P));
     First(*L) = Next(P);
     Next(P) = NilLL;
     DealokasiLinkedList(&P);
@@ -72,7 +72,7 @@ void DelVLastLinkedList (LinkedList *L, infotypeLL *X){
         Prec = P;
         P = Next(P);
     }
-    *X = Info(P);
+    CopyString(*X, Info(P));
     if (Prec == NilLL){
         First(*L) = NilLL;
     } else {
@@ -149,16 +149,17 @@ void DelAfterLinkedList (LinkedList *L, address *Pdel, address Prec){
 }
 
 void PrintInfoLinkedList (LinkedList L){
-    address P = First(L);
-    printf("[");
-    while (P != NilLL){
-        printf("%d",Info(P));
-        if (Next(P) != NilLL){
-            printf(",");
-        }
-        P = Next(P);
+    address temp = L.First;
+    printf("Isi wishlist: \n");
+    printf("+----------------------------------------------------+\n");
+    printf("|                      Wishlist                      |\n");
+    printf("+----------------------------------------------------+\n");
+
+    while (temp != NULL) {
+        printf("| %-50s |\n", temp->info);
+        temp = temp->next;
     }
-    printf("]\n");
+    printf("+----------------------------------------------------+\n\n");
 }
 
 int NbElmtLinkedList (LinkedList L){

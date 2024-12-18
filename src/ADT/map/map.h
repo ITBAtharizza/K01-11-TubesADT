@@ -70,4 +70,5 @@ void DeleteMap(Map *M, keytype k);
 boolean IsMemberMap(Map M, keytype k);
 /* Mengembalikan true jika k adalah member dari M */
 
+void DisplayMap(Map M);
 #endif

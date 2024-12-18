@@ -65,3 +65,19 @@ boolean IsMemberMap(Map M, keytype k){
     }
     return found;
 }
+
+void DisplayMap(Map M){
+    if (IsEmptyMap(M)){
+        printf("Tidak ada barang di keranjang belanja!\n");
+    } else {
+        printf("ISI KERANJANG BELANJA:\n");
+        printf("============================================================\n");
+        printf("| %-3s | %-50s | %-10s |\n", "No", "Nama Barang", "Jumlah");
+        printf("============================================================\n");
+
+        for (int i = 0; i < M.Count; i++){
+            printf("| %-3d | %-50s | %-10d |\n", i+1, M.Elements[i].Barang.name, M.Elements[i].Quantity);
+        }
+        printf("============================================================\n");
+    }
+}

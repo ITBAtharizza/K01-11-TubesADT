@@ -54,6 +54,11 @@ void CartRemove(ListDin *List_Items, Map *Cart);
 //cart show
 void CartShow(Map Cart);
 
+
+void wishlist_removei(int i, Map *Cart);
+
+void wishlist_remove(Map *Cart);
+
 //logout
 void Logout(User *logged_in, boolean *log_stats, int *where);
 

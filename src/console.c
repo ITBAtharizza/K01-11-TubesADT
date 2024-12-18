@@ -480,49 +480,95 @@ void CartRemove(ListDin *List_Items, Map *Cart){
     }
 }
 
+//wishlist
 //wishlist remove ke-i
-void wishlist_removei(int i, Map *Wishlist) {
+void wishlist_removei(LinkedList *wishlist) {
+    int i; 
     printf("WISHLIST REMOVE ");
+    
     STARTWORD(NULL);
-
     i = WordToInt(currentWord);
 
-    if (i == -9999) {
-        printf("Penghapusan barang WISHLIST gagal dilakukan, command tidak valid!\n");
-    } else
-
-    if (IsEmptyMap(*Wishlist)) {
+    if (IsEmptyLinkedList(*wishlist)) {
         printf("Penghapusan barang WISHLIST gagal dilakukan, WISHLIST kosong!\n");
-    } else {
-        if (i < 1 || i > Wishlist->Count) {
-        printf("Penghapusan barang WISHLIST gagal dilakukan, Barang %d tidak ada di WISHLIST!\n", i);
-    } else {
-        Barang barang = Wishlist->Elements[i - 1].Barang;
-        DeleteMap(Wishlist, barang);
-        printf("Berhasil menghapus barang posisi %d dari wishlist!\n", i);
-        }
+        return;
     }
+
+    if (i < 1) {
+        printf("Penghapusan barang WISHLIST gagal dilakukan, Posisi tidak valid!\n");
+        return;
+    }
+
+    address current = First(*wishlist);
+    address prev = NULL;
+    int idx = 1;
+
+    while (current != NULL && idx < i) {
+        prev = current;
+        current = Next(current);
+        idx++;
+    }
+
+    if (current == NULL) {
+        printf("Penghapusan barang WISHLIST gagal dilakukan, Barang ke-%d tidak ada di WISHLIST!\n", i);
+        return;
+    }
+
+    if (prev == NULL) {
+        First(*wishlist) = Next(current);
+    } else {
+        Next(prev) = Next(current);
+    }
+
+    printf("Berhasil menghapus barang posisi ke-%d dari wishlist!\n", i);
+    DealokasiLinkedList(&current);
 }
 
-//wishlist remove
-void wishlist_remove(Map *Wishlist) {
+//wishlist remove nama
+void wishlist_remove(LinkedList *wishlist) {
     Word name;
+    char goods[50] = "";
+    int length = 0;
+
+    if (IsEmptyLinkedList(*wishlist)) {
+        printf("Penghapusan barang WISHLIST gagal dilakukan, WISHLIST kosong!\n");
+        return;
+    }
+
     printf("Masukkan nama barang yang akan dihapus : ");
     STARTWORD(NULL);
-    CopyString(name.TabWord, currentWord.TabWord);
-    name.Length = currentWord.Length;
-    Barang barang;    
-    CopyString(barang.name, name.TabWord);
-    barang.price = 0; //price ga relevan
-    if (!IsMemberMap(*Wishlist, barang)) {
-        printf("Penghapusan barang WISHLIST gagal dilakukan, %s tidak ada di WISHLIST!\n", name.TabWord);
-    } else {
-        DeleteMap(Wishlist, barang);
-        printf("%s berhasil dihapus dari WISHLIST!\n", name.TabWord);
-    }
+    do {
+        GoodsWithManyWords(goods, &length, currentWord);
+        STARTWORD(NULL);
+    } while (WordToInt(currentWord) == -9999);
+
+    CopyString(name.TabWord, goods);
+    name.Length = length;
+
+    address current = First(*wishlist);
+    address prev = NULL;
+
+    while (current != NULL && !IsSameString((char *)Info(current), name.TabWord)) {
+    prev = current;
+    current = Next(current);
 }
 
-//cart pay
+    if (current == NULL) {
+        printf("Penghapusan barang WISHLIST gagal dilakukan, %s tidak ada di WISHLIST!\n", name.TabWord);
+        return;
+    }
+
+    if (prev == NULL) {
+        First(*wishlist) = Next(current);
+    } else {
+        Next(prev) = Next(current);
+    }
+
+    printf("%s berhasil dihapus dari WISHLIST!\n", name.TabWord);
+    DealokasiLinkedList(&current);
+}
+
+// cart pay
 void CartPay(Map *Cart, User *user, Stack *history) {
     if (IsEmptyMap(*Cart)) {
         printf("Keranjang kamu kosong!\n");

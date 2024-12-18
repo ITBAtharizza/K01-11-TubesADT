@@ -55,10 +55,11 @@ void CartRemove(ListDin *List_Items, Map *Cart);
 //cart show
 void CartShow(Map Cart);
 
+//wishlist remove ke-i
+void wishlist_removei(LinkedList *wishlist);
 
-void wishlist_removei(int i, Map *Cart);
-
-void wishlist_remove(Map *Cart);
+//wishlist remove
+void wishlist_remove(LinkedList *wishlist);
 
 //cart pay
 void CartPay(Map *Cart, User *user, Stack *history);

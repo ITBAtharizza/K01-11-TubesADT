@@ -1,11 +1,11 @@
 #include "map.h"
 
 void CreateEmptyMap(Map *M){
-    M->Count = Nil;
+    M->Count = NilMap;
 }
 
 boolean IsEmptyMap(Map M){
-    return (M.Count == Nil);
+    return (M.Count == NilMap);
 }
 
 boolean IsFullMap(Map M){

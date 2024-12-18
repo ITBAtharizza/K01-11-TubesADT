@@ -64,7 +64,7 @@ void wishlist_remove(Map *Cart);
 void CartPay(Map *Cart, User *user, Stack *history);
 
 //history
-void ShowHistory(Stack *history);
+void ShowHistory(Stack *history, int line);
 
 //logout
 void Logout(User *logged_in, boolean *log_stats, int *where);

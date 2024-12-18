@@ -4,9 +4,11 @@
 #include "../../boolean.h"
 #include "../mesinkarakter/mesinkarakter.h"
 #include "../mesinkata/mesinkata.h"
-#include "../map/map.h"
 #include "../stack/stack.h"
 #include "../linkedlist/linkedlist.h"
+
+struct Map;
+typedef struct Map Map;
 
 typedef struct{
   char name[50];
@@ -33,7 +35,10 @@ typedef struct {
   int duration; //durasi dalam detik
 } Job;
 
-User makeUser(int money, Word name, Word password);
+
+User makeMarkUser();
+
+User makeUser(int money, Word name, Word password, Stack riwayat_pembelian, LinkedList wishlist);
 /*Fungsi untuk membuat user
 I.S Sudah tersedia uang, nama dan password untuk akun pengguna
 F.S Terbentuk akun pengguna baru*/

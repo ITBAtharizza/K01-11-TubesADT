@@ -135,7 +135,9 @@ int main(){
             }
 
             if (IsWordEqual(currentWord, "HISTORY")){
-                ShowHistory(&history);
+                STARTWORD(NULL);
+                int line = WordToInt(currentWord);
+                ShowHistory(&history, line);
             }
 
             if (IsWordEqual(currentWord, "LOGOUT")){

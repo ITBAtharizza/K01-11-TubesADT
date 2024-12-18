@@ -3,18 +3,18 @@
 #include "linkedlist.h"
 
 boolean IsEmptyLinkedList (LinkedList L){
-    return (First(L) == Nil);
+    return (First(L) == NilLL);
 }
 
 void CreateEmptyLinkedList (LinkedList *L){
-    First(*L) = Nil;
+    First(*L) = NilLL;
 }
 
 address AlokasiLinkedList (infotype X){
     address P = malloc (sizeof(ElmtList));
-    if (P != Nil){
+    if (P != NilLL){
         Info(P) = X;
-        Next(P) = Nil;
+        Next(P) = NilLL;
     }
     return P;
 }
@@ -25,18 +25,18 @@ void DealokasiLinkedList (address *P){
 
 address SearchLinkedList (LinkedList L, infotype X){
     address P = First(L);
-    while (P != Nil){
+    while (P != NilLL){
         if (Info(P) == X){
             return P;
         }
         P = Next(P);
     }
-    return Nil;
+    return NilLL;
 }
 
 void InsVFirstLinkedList (LinkedList *L, infotype X){
     address P = AlokasiLinkedList(X);
-    if (P != Nil){
+    if (P != NilLL){
         Next(P) = First(*L);
         First(*L) = P;
     }
@@ -44,12 +44,12 @@ void InsVFirstLinkedList (LinkedList *L, infotype X){
 
 void InsVLastLinkedList (LinkedList *L, infotype X){
     address P = AlokasiLinkedList(X);
-    if (P != Nil){
+    if (P != NilLL){
         if (IsEmptyLinkedList(*L)){
             InsVFirstLinkedList(L,X);
         } else {
             address Last = First(*L);
-            while (Next(Last) != Nil){
+            while (Next(Last) != NilLL){
                 Last = Next(Last);
             }
             Next(Last) = P;
@@ -61,22 +61,22 @@ void DelVFirstLinkedList (LinkedList *L, infotype *X){
     address P = First(*L);  
     *X = Info(P);
     First(*L) = Next(P);
-    Next(P) = Nil;
+    Next(P) = NilLL;
     DealokasiLinkedList(&P);
 }
 
 void DelVLastLinkedList (LinkedList *L, infotype *X){
     address P = First(*L);
-    address Prec = Nil;
-    while (Next(P) != Nil){
+    address Prec = NilLL;
+    while (Next(P) != NilLL){
         Prec = P;
         P = Next(P);
     }
     *X = Info(P);
-    if (Prec == Nil){
-        First(*L) = Nil;
+    if (Prec == NilLL){
+        First(*L) = NilLL;
     } else {
-        Next(Prec) = Nil;
+        Next(Prec) = NilLL;
     }
     DealokasiLinkedList(&P);
 }
@@ -96,7 +96,7 @@ void InsertLastLinkedList (LinkedList *L, address P){
         InsertFirstLinkedList(L,P);
     } else {
         address Last = First(*L);
-        while (Next(Last) != Nil){
+        while (Next(Last) != NilLL){
             Last = Next(Last);
         }
         InsertAfterLinkedList(L,P,Last);
@@ -106,54 +106,54 @@ void InsertLastLinkedList (LinkedList *L, address P){
 void DelFirstLinkedList (LinkedList *L, address *P){
     *P = First(*L);
     First(*L) = Next(*P);
-    Next(*P) = Nil;
+    Next(*P) = NilLL;
 }
 
 void DelPLinkedList (LinkedList *L, infotype X){
     address P = First(*L);
-    address Prec = Nil;
-    while (P != Nil && Info(P) != X){
+    address Prec = NilLL;
+    while (P != NilLL && Info(P) != X){
         Prec = P;
         P = Next(P);
     }
-    if (P != Nil){
-        if (Prec == Nil){
+    if (P != NilLL){
+        if (Prec == NilLL){
             First(*L) = Next(P);
         } else {
             Next(Prec) = Next(P);
         }
-        Next(P) = Nil;
+        Next(P) = NilLL;
         DealokasiLinkedList(&P);
     }
 }
 
 void DelLastLinkedList (LinkedList *L, address *P){
     address Last = First(*L);
-    address Prec = Nil;
-    while (Next(Last) != Nil){
+    address Prec = NilLL;
+    while (Next(Last) != NilLL){
         Prec = Last;
         Last = Next(Last);
     }
     *P = Last;
-    if (Prec == Nil){
-        First(*L) = Nil;
+    if (Prec == NilLL){
+        First(*L) = NilLL;
     } else {
-        Next(Prec) = Nil;
+        Next(Prec) = NilLL;
     }
 }
 
 void DelAfterLinkedList (LinkedList *L, address *Pdel, address Prec){
     *Pdel = Next(Prec);
     Next(Prec) = Next(*Pdel);
-    Next(*Pdel) = Nil;     
+    Next(*Pdel) = NilLL;     
 }
 
 void PrintInfoLinkedList (LinkedList L){
     address P = First(L);
     printf("[");
-    while (P != Nil){
+    while (P != NilLL){
         printf("%d",Info(P));
-        if (Next(P) != Nil){
+        if (Next(P) != NilLL){
             printf(",");
         }
         P = Next(P);
@@ -164,7 +164,7 @@ void PrintInfoLinkedList (LinkedList L){
 int NbElmtLinkedList (LinkedList L){
     int count = 0;
     address P = First(L);
-    while (P != Nil){
+    while (P != NilLL){
         count++;
         P = Next(P);
     }
@@ -173,9 +173,9 @@ int NbElmtLinkedList (LinkedList L){
 
 void InversListLinkedList (LinkedList *L){
     address P = First(*L);
-    address Prec = Nil;
-    address NextP = Nil;
-    while (P != Nil){
+    address Prec = NilLL;
+    address NextP = NilLL;
+    while (P != NilLL){
         NextP = Next(P);
         Next(P) = Prec;
         Prec = P;
@@ -187,11 +187,11 @@ void InversListLinkedList (LinkedList *L){
 void KonkatLinkedList (LinkedList *L1, LinkedList *L2, LinkedList *L3){
     address P = First(*L1);
     address P2 = First(*L2);
-    while (P != Nil){
+    while (P != NilLL){
         InsVLastLinkedList(L3,Info(P));
         P = Next(P);
     }
-    while (P2 != Nil){
+    while (P2 != NilLL){
         InsVLastLinkedList(L3,Info(P2));
         P2 = Next(P2);
     }

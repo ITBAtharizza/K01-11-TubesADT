@@ -41,6 +41,12 @@ void Load(char *filename, List *list_user, ListDin *list_barang, int *where){
     int jumlah_user = WordToInt(currentWord);
 
     for (int i = 0; i < jumlah_user; i++){
+        Stack riwayat_pembelian;
+        CreateEmptyStack(&riwayat_pembelian);
+
+        LinkedList wishlist;
+        CreateEmptyLinkedList(&wishlist);
+
         ADVWORD();
         int money = WordToInt(currentWord);
 
@@ -50,24 +56,28 @@ void Load(char *filename, List *list_user, ListDin *list_barang, int *where){
         ADVWORD();
         Word password = currentWord;
 
-        User user = makeUser(money, name, password);
-
-        InsertLast(list_user, user);
-
         ADVWORD();
         int jumlah_riwayat = WordToInt(currentWord);
         for (int j = 0; j < jumlah_riwayat; j++){
             ADVWORD();
+            int total = WordToInt(currentWord);
 
+            Word barang = MultiWordWord();
+
+            OneHistory onehistory = {barang.TabWord, total};
+            PushStack(&riwayat_pembelian, onehistory);
         }
-
-
+        
+        FlipStack(&riwayat_pembelian);
 
         ADVWORD();
         int jumlah_wishlist = WordToInt(currentWord);
         for (int k = 0; k < jumlah_wishlist; k++){
             Word name = MultiWordWord();
         }
+
+        User user = makeUser(money, name, password, riwayat_pembelian, wishlist);
+        InsertLast(list_user, user);
     }
     *where = 1;
 }
@@ -569,10 +579,7 @@ void CartPay(Map *Cart, User *user, Stack *history) {
 }
 
 //history
-void ShowHistory(Stack *history){
-    STARTWORD(NULL);
-    int line = WordToInt(currentWord);
-    
+void ShowHistory(Stack *history, int line){
     if (IsEmptyStack(*history)){
         printf("Kamu belum membeli barang apapun!\n");
         return;
@@ -838,19 +845,20 @@ void CopyString(char *dest, char *src) {
 
 void DisplayUser(List list_user) {
     if (IsEmpty(list_user)) {
-        printf("USER KOSONG!\n\n");
+        printf("USER KOSONG!\n");
     } else {
         printf("ISI USER:\n");
-        printf("========================================================================================================================\n");
-        printf("| %-50s | %-50s | %-10s |\n", "Name", "Password", "Money");
-        printf("========================================================================================================================\n");
-
         for (IdxType i = FirstIdx(list_user); i <= LastIdx(list_user); i++) {
-            printf("| %-50s | %-50s | %-10d |\n", list_user.A[i].name, list_user.A[i].password, list_user.A[i].money);
+            printf("\n\n");
+            printf("Nama: %s", list_user.A[i].name);
+            printf("Nama: %s", list_user.A[i].password);
+            printf("Nama: %d", list_user.A[i].money);
+            DisplayMap(list_user.A[i].keranjang);
+            ShowHistory(&list_user.A[i].riwayat_pembelian, 100);
+            PrintInfoLinkedList(list_user.A[i].wishlist);
         }
-
-        printf("========================================================================================================================\n\n");
     }
+    printf("\n");
 }
 
 Word DNAToRNA(Word DNA){

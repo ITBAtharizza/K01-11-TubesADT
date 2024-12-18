@@ -8,14 +8,14 @@ void CreateEmptyStack (Stack *S)
 /* jadi indeksnya antara 0.. MaxEl */
 /* Ciri stack kosong : TOP bernilai Nil */
 {
-    Top(*S) = Nil;
+    Top(*S) = NilStack;
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
 boolean IsEmptyStack (Stack S)
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
 {
-    return (Top(S)==Nil);
+    return (Top(S)==NilStack);
 }
 
 boolean IsFullStack (Stack S)
@@ -42,4 +42,21 @@ void PopStack (Stack * S, OneHistory* X)
 {
     *X = InfoTop(*S);
     Top(*S) -= 1;
+}
+
+void FlipStack(Stack *S) {
+    Stack temp;
+    OneHistory X;        
+
+    CreateEmptyStack(&temp);
+
+    while (!IsEmptyStack(*S)) {
+        PopStack(S, &X);
+        PushStack(&temp, X);
+    }
+
+    while (!IsEmptyStack(temp)) {
+        PopStack(&temp, &X); 
+        PushStack(S, X);     
+    }
 }

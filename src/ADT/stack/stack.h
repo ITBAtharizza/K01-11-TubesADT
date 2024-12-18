@@ -8,7 +8,7 @@
 #include "../../boolean.h"
 #include "../custom/custom.h"
 
-#define Nil -1
+#define NilStack -1
 #define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
 
@@ -18,14 +18,14 @@ typedef struct {
   int total;
 } OneHistory;
 
-typedef int address; /* indeks tabel */
+typedef int addressStack; /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
 typedef struct
 {
   OneHistory T[MaxEl]; /* tabel penyimpan elemen */
-  address TOP;       /* alamat TOP: elemen puncak */
+  addressStack TOP;       /* alamat TOP: elemen puncak */
 } Stack;
 /* Definisi stack S kosong : S.TOP = Nil */
 /* Elemen yang dipakai menyimpan nilai Stack T[0]..T[MaxEl-1] */
@@ -62,5 +62,7 @@ void PopStack(Stack *S, OneHistory *X);
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
+
+void FlipStack(Stack *S);
 
 #endif

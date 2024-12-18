@@ -8,8 +8,6 @@
 #include "../../boolean.h"
 #include "../custom/custom.h"
 
-extern const User MARK_USER;
-
 /* Kamus Umum */
 #define MaxEl 100
 #define InvalidIdx -1  /* Indeks tak terdefinisi */

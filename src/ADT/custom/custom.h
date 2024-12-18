@@ -4,17 +4,28 @@
 #include "../../boolean.h"
 #include "../mesinkarakter/mesinkarakter.h"
 #include "../mesinkata/mesinkata.h"
+#include "../map/map.h"
+#include "../stack/stack.h"
+#include "../linkedlist/linkedlist.h"
 
 typedef struct{
   char name[50];
   char password[50];
   int money;
+  Map keranjang;
+  Stack riwayat_pembelian;
+  LinkedList wishlist;
 } User;
 
 typedef struct{
   char name[50];
   int price;
 } Barang;
+
+typedef struct {
+	Barang Barang;
+	int Quantity;
+} Pembelian;
 
 typedef struct {
   char name[50];

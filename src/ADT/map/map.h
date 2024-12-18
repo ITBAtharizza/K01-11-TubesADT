@@ -20,12 +20,7 @@ typedef int valuetype;
 typedef int address;
 
 typedef struct {
-	keytype Barang;
-	valuetype Quantity;
-} infotype;
-
-typedef struct {
-	infotype Elements[MaxElMap];
+	Pembelian Elements[MaxElMap];
 	address Count;
 } Map;
 

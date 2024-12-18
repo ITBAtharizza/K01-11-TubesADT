@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include "linkedlist.h"
 
-boolean IsEmptyLinkedList (List L){
+boolean IsEmptyLinkedList (LinkedList L){
     return (First(L) == Nil);
 }
 
-void CreateEmptyLinkedList (List *L){
+void CreateEmptyLinkedList (LinkedList *L){
     First(*L) = Nil;
 }
 
@@ -23,7 +23,7 @@ void DealokasiLinkedList (address *P){
     free(*P);
 }
 
-address SearchLinkedList (List L, infotype X){
+address SearchLinkedList (LinkedList L, infotype X){
     address P = First(L);
     while (P != Nil){
         if (Info(P) == X){
@@ -34,7 +34,7 @@ address SearchLinkedList (List L, infotype X){
     return Nil;
 }
 
-void InsVFirstLinkedList (List *L, infotype X){
+void InsVFirstLinkedList (LinkedList *L, infotype X){
     address P = AlokasiLinkedList(X);
     if (P != Nil){
         Next(P) = First(*L);
@@ -42,7 +42,7 @@ void InsVFirstLinkedList (List *L, infotype X){
     }
 }
 
-void InsVLastLinkedList (List *L, infotype X){
+void InsVLastLinkedList (LinkedList *L, infotype X){
     address P = AlokasiLinkedList(X);
     if (P != Nil){
         if (IsEmptyLinkedList(*L)){
@@ -57,7 +57,7 @@ void InsVLastLinkedList (List *L, infotype X){
     }
 }
 
-void DelVFirstLinkedList (List *L, infotype *X){
+void DelVFirstLinkedList (LinkedList *L, infotype *X){
     address P = First(*L);  
     *X = Info(P);
     First(*L) = Next(P);
@@ -65,7 +65,7 @@ void DelVFirstLinkedList (List *L, infotype *X){
     DealokasiLinkedList(&P);
 }
 
-void DelVLastLinkedList (List *L, infotype *X){
+void DelVLastLinkedList (LinkedList *L, infotype *X){
     address P = First(*L);
     address Prec = Nil;
     while (Next(P) != Nil){
@@ -81,17 +81,17 @@ void DelVLastLinkedList (List *L, infotype *X){
     DealokasiLinkedList(&P);
 }
 
-void InsertFirstLinkedList (List *L, address P){
+void InsertFirstLinkedList (LinkedList *L, address P){
     Next(P) = First(*L);
     First(*L) = P;
 }
 
-void InsertAfterLinkedList (List *L, address P, address Prec){
+void InsertAfterLinkedList (LinkedList *L, address P, address Prec){
     Next(P) = Next(Prec);
     Next(Prec) = P;
 }
 
-void InsertLastLinkedList (List *L, address P){
+void InsertLastLinkedList (LinkedList *L, address P){
     if (IsEmptyLinkedList(*L)){
         InsertFirstLinkedList(L,P);
     } else {
@@ -103,13 +103,13 @@ void InsertLastLinkedList (List *L, address P){
     }
 }
 
-void DelFirstLinkedList (List *L, address *P){
+void DelFirstLinkedList (LinkedList *L, address *P){
     *P = First(*L);
     First(*L) = Next(*P);
     Next(*P) = Nil;
 }
 
-void DelPLinkedList (List *L, infotype X){
+void DelPLinkedList (LinkedList *L, infotype X){
     address P = First(*L);
     address Prec = Nil;
     while (P != Nil && Info(P) != X){
@@ -127,7 +127,7 @@ void DelPLinkedList (List *L, infotype X){
     }
 }
 
-void DelLastLinkedList (List *L, address *P){
+void DelLastLinkedList (LinkedList *L, address *P){
     address Last = First(*L);
     address Prec = Nil;
     while (Next(Last) != Nil){
@@ -142,13 +142,13 @@ void DelLastLinkedList (List *L, address *P){
     }
 }
 
-void DelAfterLinkedList (List *L, address *Pdel, address Prec){
+void DelAfterLinkedList (LinkedList *L, address *Pdel, address Prec){
     *Pdel = Next(Prec);
     Next(Prec) = Next(*Pdel);
     Next(*Pdel) = Nil;     
 }
 
-void PrintInfoLinkedList (List L){
+void PrintInfoLinkedList (LinkedList L){
     address P = First(L);
     printf("[");
     while (P != Nil){
@@ -161,7 +161,7 @@ void PrintInfoLinkedList (List L){
     printf("]\n");
 }
 
-int NbElmtLinkedList (List L){
+int NbElmtLinkedList (LinkedList L){
     int count = 0;
     address P = First(L);
     while (P != Nil){
@@ -171,7 +171,7 @@ int NbElmtLinkedList (List L){
     return count;
 }
 
-void InversListLinkedList (List *L){
+void InversListLinkedList (LinkedList *L){
     address P = First(*L);
     address Prec = Nil;
     address NextP = Nil;
@@ -184,7 +184,7 @@ void InversListLinkedList (List *L){
     First(*L) = Prec;
 }  
 
-void KonkatLinkedList (List *L1, List *L2, List *L3){
+void KonkatLinkedList (LinkedList *L1, LinkedList *L2, LinkedList *L3){
     address P = First(*L1);
     address P2 = First(*L2);
     while (P != Nil){

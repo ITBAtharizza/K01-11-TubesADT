@@ -12,14 +12,19 @@
 #define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
 
-typedef int infotype;
+
+typedef struct {
+  char name[50];
+  int total;
+} OneHistory;
+
 typedef int address; /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
 typedef struct
 {
-  infotype T[MaxEl]; /* tabel penyimpan elemen */
+  OneHistory T[MaxEl]; /* tabel penyimpan elemen */
   address TOP;       /* alamat TOP: elemen puncak */
 } Stack;
 /* Definisi stack S kosong : S.TOP = Nil */
@@ -47,13 +52,13 @@ boolean IsFullStack(Stack S);
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
-void PushStack(Stack *S, infotype X);
+void PushStack(Stack *S, OneHistory X);
 /* Menambahkan X sebagai elemen Stack S. */
 /* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. TOP bertambah 1, X menjadi TOP yang baru, */
 
 /* ************ Menghapus sebuah elemen Stack ************ */
-void PopStack(Stack *S, infotype *X);
+void PopStack(Stack *S, OneHistory *X);
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */

@@ -56,28 +56,16 @@ void Load(char *filename, List *list_user, ListDin *list_barang, int *where){
 
         ADVWORD();
         int jumlah_riwayat = WordToInt(currentWord);
-
         for (int j = 0; j < jumlah_riwayat; j++){
             ADVWORD();
-            int numitems = WordToInt(currentWord);
 
-            ADVWORD();
-            int currentPrice = WordToInt(currentWord);
-            
-            for (int k = 0; k < numitems; k++){
-                ADVWORD();
-                int hargaitem = WordToInt(currentWord);
-
-                ADVWORD();
-                int jumlahitem = WordToInt(currentWord);
-
-                Word item = MultiWordWord();
-            }
         }
+
+
 
         ADVWORD();
         int jumlah_wishlist = WordToInt(currentWord);
-        for (int j = 0; j < jumlah_wishlist; j++){
+        for (int k = 0; k < jumlah_wishlist; k++){
             Word name = MultiWordWord();
         }
     }
@@ -398,6 +386,7 @@ void CartAdd(ListDin *List_Items, Map *Cart) {
 void CartShow(Map Cart) {
     if (IsEmptyMap(Cart)) {
         printf("Keranjang kamu kosong!\n");
+        return;
     } else {
         int total_biaya = 0;
         printf("================================================================================ \n");
@@ -521,6 +510,97 @@ void wishlist_remove(Map *Wishlist) {
         DeleteMap(Wishlist, barang);
         printf("%s berhasil dihapus dari WISHLIST!\n", name.TabWord);
     }
+}
+
+//cart pay
+void CartPay(Map *Cart, User *user, Stack *history) {
+    if (IsEmptyMap(*Cart)) {
+        printf("Keranjang kamu kosong!\n");
+        return;
+    }
+
+    printf("Kamu akan membeli barang-barang berikut:\n");
+    int total_biaya = 0;
+    int max_biaya, max_quantity;
+    Barang max_barang;
+    printf("================================================================================ \n");
+    printf("| %-10s | %-50s | %-10s |\n", "Kuantitas", "Nama Barang", "Total");
+    printf("================================================================================ \n");
+
+    for (int i = 0; i < Cart->Count; i++) {
+        int total_harga = Cart->Elements[i].Quantity * Cart->Elements[i].Barang.price;
+        if (i == 0 || max_biaya < total_harga){
+            max_biaya = total_harga;
+            max_quantity = Cart->Elements[i].Quantity;
+            max_barang = Cart->Elements[i].Barang;
+        }
+        else{
+            if (max_biaya == total_harga){
+                int whichone = Lexical(max_barang.name, Cart->Elements[i].Barang.name);
+                if (whichone == 1){
+                    max_barang = Cart->Elements[i].Barang;
+                    max_quantity = Cart->Elements[i].Quantity;
+                }
+            }
+        }
+        total_biaya += total_harga;
+        printf("| %-10d | %-50s | %-10d |\n", Cart->Elements[i].Quantity, Cart->Elements[i].Barang.name, total_harga);
+    }
+
+    printf("================================================================================ \n");
+    printf("Total biaya yang harus dikeluarkan adalah %d, apakah jadi dibeli? (Ya/Tidak): \n", total_biaya);
+
+    STARTWORD(NULL);
+    if (IsWordEqual(currentWord, "Ya")){
+        if (total_biaya > user->money){
+            printf("Uang kamu hanya %d, tidak cukup untuk membeli keranjang!\n", user->money);
+            return;
+        }
+        OneHistory addHistory = {max_barang.name, max_quantity};
+        PushStack(history, addHistory);
+        printf("Selamat kamu telah membeli barang-barang tersebut!\n");
+    }
+    else if (IsWordEqual(currentWord, "Tidak")){
+        printf("Pembelian dibatalkan\n");
+    }
+    else{
+        printf("Input tidak valid. Kembali ke menu utama.\n");
+    }
+}
+
+//history
+void ShowHistory(Stack *history){
+    STARTWORD(NULL);
+    int line = WordToInt(currentWord);
+    
+    if (IsEmptyStack(*history)){
+        printf("Kamu belum membeli barang apapun!\n");
+        return;
+    }
+
+    Stack temp;
+    CreateEmptyStack(&temp);
+    OneHistory X;
+
+    printf("Riwayat Pembelian:\n");
+    printf("===========================================\n");
+    printf("| %-5s | %-50s | %-10s |\n", "No", "Nama Barang", "Harga Total");
+    printf("===========================================\n");
+
+    int i = 1;
+    while (!IsEmptyStack(*history) && i < line){
+        PopStack(history, &X);
+        printf("| %-5d | %-50s | %-10d |\n", i, X.name, X.total);
+        PushStack(&temp, X);
+        i++;
+    }
+
+    while (!IsEmptyStack(temp)){
+        PopStack(&temp, &X);
+        PushStack(history, X);
+    }
+
+    printf("===========================================\n");    
 }
 
 //logout
@@ -965,4 +1045,17 @@ Word MultiWordWord(){
     name.Length = length;
 
     return name;
+}
+
+//leksikal
+int Lexical(char *str1, char *str2){
+    int i = 0;
+    while (str1[i] != '\0' && str2[i] != '\0'){
+        if (str1[i] < str2[i]) return -1;
+        else if (str1[i] > str2[i]) return 1;
+        i++;
+    }
+    if (str1[i] == '\0' && str2[i] != '\0') return -1;
+    if (str1[i] != '\0' && str2[i] == '\0') return 1;
+    return 0;
 }

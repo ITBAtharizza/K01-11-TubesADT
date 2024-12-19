@@ -45,6 +45,9 @@ void Supply(Queue *antrian, ListDin *list_barang);
 //store remove
 void Remove(ListDin *list_barang);
 
+// profile
+void Profile (User *user);
+
 //cart
 //cart add
 void CartAdd(ListDin *List_Items, Map *Cart);

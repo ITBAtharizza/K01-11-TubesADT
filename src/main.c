@@ -114,6 +114,10 @@ int main(){
                 }
             }
 
+            if (IsWordEqual(currentWord, "PROFILE")){
+                Profile(&logged_in);
+            }
+
             if (IsWordEqual(currentWord, "CART")){
                 STARTWORD(NULL);
                 if (IsWordEqual(currentWord, "ADD")){

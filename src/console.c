@@ -683,7 +683,7 @@ void Logout(User *logged_in, boolean *log_stats, int *where){
 }
 
 //save
-void Save(char *filename, List *list_user, ListDin *list_barang) {
+void Save(char *filename, List *list_user, ListDin *list_barang, User *logged_in) {
     char path[100] = "../save/";
     int idx = 0;
     while (filename[idx] != '\0' && idx < 50) {
@@ -706,6 +706,8 @@ void Save(char *filename, List *list_user, ListDin *list_barang) {
         }
         system("mkdir save >nul 2>nul");
     }
+
+    DumpUser(list_user, logged_in);
 
     file = fopen(path, "w");
     if (file == NULL) {
@@ -733,7 +735,7 @@ void Save(char *filename, List *list_user, ListDin *list_barang) {
 }
 
 //quit
-void Quit(List *list_user, ListDin *list_barang, boolean *running){
+void Quit(List *list_user, ListDin *list_barang, User *logged_in,boolean *running){
     char filename[50];
 
     printf("Apakah kamu ingin menyimpan data sesi sekarang (Y/N)? ");
@@ -745,7 +747,7 @@ void Quit(List *list_user, ListDin *list_barang, boolean *running){
 
         CopyString(filename, currentWord.TabWord); 
 
-        Save(filename, list_user, list_barang);
+        Save(filename, list_user, list_barang, logged_in);
 
         printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n");
         *running = false;
@@ -1069,6 +1071,9 @@ void DumpUser(List *list_user, User *logged_in){
     for (int i = 0; i < Length(*list_user); i++){
         if (IsSameString(list_user->A[i].name, logged_in->name) && IsSameString(list_user->A[i].password, logged_in->password)){
             list_user->A[i].money = logged_in->money;
+            list_user->A[i].keranjang = logged_in->keranjang;
+            list_user->A[i].riwayat_pembelian = logged_in->riwayat_pembelian;
+            list_user->A[i].wishlist = logged_in->wishlist;
         }
     }
 }

@@ -74,10 +74,10 @@ void ShowHistory(Stack *history, int line);
 void Logout(User *logged_in, boolean *log_stats, int *where);
 
 //save
-void Save(char *filename, List *list_user, ListDin *list_barang);
+void Save(char *filename, List *list_user, ListDin *list_barang, User *logged_in);
 
 //quit
-void Quit(List *list_user, ListDin *list_barang, boolean *running);
+void Quit(List *list_user, ListDin *list_barang, User *logged_in, boolean *running);
 
 //help
 void Help(int where);

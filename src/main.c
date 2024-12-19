@@ -41,7 +41,7 @@ int main(){
             }
 
             if (IsWordEqual(currentWord, "QUIT")){
-                Quit(&list_user, &list_barang, &running);
+                Quit(&list_user, &list_barang, &logged_in, &running);
             }
 
             if (IsWordEqual(currentWord, "HELP")){
@@ -63,7 +63,7 @@ int main(){
             }
 
             if (IsWordEqual(currentWord, "QUIT")){
-                Quit(&list_user, &list_barang, &running);
+                Quit(&list_user, &list_barang, &logged_in, &running);
             }
 
             if (IsWordEqual(currentWord, "HELP")){
@@ -82,7 +82,6 @@ int main(){
                         WorkChallenge(&logged_in);
                     }
                 }
-                DumpUser(&list_user, &logged_in);
                 DisplayUser(list_user);
             }
 
@@ -168,11 +167,11 @@ int main(){
             if (IsWordEqual(currentWord, "SAVE")){
                 STARTWORD(NULL);
                 CopyString(savefile, currentWord.TabWord);
-                Save(savefile, &list_user, &list_barang);
+                Save(savefile, &list_user, &list_barang, &logged_in);
             }
 
             if (IsWordEqual(currentWord, "QUIT")){
-                Quit(&list_user, &list_barang, &running);
+                Quit(&list_user, &list_barang, &logged_in, &running);
             }
             
             if (IsWordEqual(currentWord, "HELP")){

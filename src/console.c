@@ -532,7 +532,7 @@ void CartPay(Map *Cart, User *user, Stack *history) {
     }
 
     printf("================================================================================ \n");
-    printf("Total biaya yang harus dikeluarkan adalah %d, apakah jadi dibeli? (Ya/Tidak): \n", total_biaya);
+    printf("Total biaya yang harus dikeluarkan adalah %d, apakah jadi dibeli? (Ya/Tidak): ", total_biaya);
 
     STARTWORD(NULL);
     if (IsWordEqual(currentWord, "Ya")){
@@ -662,6 +662,18 @@ void WishlistRemove(LinkedList *wishlist) {
     DealokasiLinkedList(&current);
 }
 
+//wishlist clear
+void WishlistClear(LinkedList *wishlist) {
+    if (IsEmptyLinkedList(*wishlist)){
+        printf("Wishlist Kosong!\n");
+        return;
+    }
+    infotypeLL temp;
+    while (!IsEmptyLinkedList(*wishlist)) {
+        DelVFirstLinkedList(wishlist, &temp);
+    }
+}
+
 //history
 void ShowHistory(Stack *history, int line){
     if (IsEmptyStack(*history)){
@@ -697,16 +709,15 @@ void ShowHistory(Stack *history, int line){
 //logout
 void Logout(User *logged_in, boolean *log_stats, int *where){
     printf("Selamat Jalan %s!\n", logged_in->name);
-    logged_in->name[0] = '\0';
-    logged_in->password[0] = '\0';
-    logged_in->money = 0;
+
+    *logged_in = makeMarkUser();
 
     *log_stats = false;
     *where = 1;
 }
 
 //save
-void Save(char *filename, List *list_user, ListDin *list_barang, User *logged_in) {
+void Save(char *filename, List *list_user, ListDin *list_barang, ListDin *list_barang_session, User *logged_in) {
     char path[100] = "../save/";
     int idx = 0;
     while (filename[idx] != '\0' && idx < 50) {
@@ -731,6 +742,7 @@ void Save(char *filename, List *list_user, ListDin *list_barang, User *logged_in
     }
 
     DumpUser(list_user, logged_in);
+    DumpBarang(list_barang_session, list_barang);
 
     file = fopen(path, "w");
     if (file == NULL) {
@@ -753,13 +765,14 @@ void Save(char *filename, List *list_user, ListDin *list_barang, User *logged_in
         fprintf(file, "%d %s %s", user.money, user.name, user.password);
 
         fprintf(file, "\n");
-        int LenStack = Top(list_user->A[i].riwayat_pembelian) + 1;
+        Stack dumpStack = list_user->A[i].riwayat_pembelian;
+        int LenStack = Top(dumpStack) + 1;
         fprintf(file, "%d", LenStack);
 
         for (int j = 0; j < LenStack; j++){
             OneHistory onehistory;
             fprintf(file, "\n");
-            PopStack(&list_user->A[i].riwayat_pembelian, &onehistory);
+            PopStack(&dumpStack, &onehistory);
             fprintf(file, "%d %s", onehistory.total, onehistory.name);
         }
 
@@ -779,7 +792,7 @@ void Save(char *filename, List *list_user, ListDin *list_barang, User *logged_in
 }
 
 //quit
-void Quit(List *list_user, ListDin *list_barang, User *logged_in,boolean *running){
+void Quit(List *list_user, ListDin *list_barang, ListDin *list_barang_session, User *logged_in,boolean *running){
     char filename[50];
 
     printf("Apakah kamu ingin menyimpan data sesi sekarang (Y/N)? ");
@@ -791,7 +804,7 @@ void Quit(List *list_user, ListDin *list_barang, User *logged_in,boolean *runnin
 
         CopyString(filename, currentWord.TabWord); 
 
-        Save(filename, list_user, list_barang, logged_in);
+        Save(filename, list_user, list_barang, list_barang_session, logged_in);
 
         printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n");
         *running = false;
@@ -1121,6 +1134,33 @@ void DumpUser(List *list_user, User *logged_in){
         }
     }
 }
+
+void DumpBarang(ListDin *list_barang_session, ListDin *list_barang){
+    list_barang->Capacity = list_barang_session->Capacity;
+    list_barang->Neff = list_barang_session->Neff;
+
+    list_barang->A = (ElTypeBarang *) malloc(list_barang->Capacity * sizeof(ElTypeBarang));
+    
+    for (int i = 0; i < list_barang_session->Neff; i++){
+        list_barang->A[i] = list_barang_session->A[i];
+    }
+}
+
+void ReverseDumpBarang(ListDin *list_barang, ListDin *list_barang_session){
+    if (list_barang_session->A != NULL){
+        free(list_barang_session->A);
+    }
+
+    list_barang_session->Capacity = list_barang->Capacity;
+    list_barang_session->Neff = list_barang->Neff;
+
+    list_barang_session->A = (ElTypeBarang *) malloc(list_barang->Capacity * sizeof(ElTypeBarang));
+    
+    for (int i = 0; i < list_barang->Neff; i++){
+        list_barang_session->A[i] = list_barang->A[i];
+    }
+}
+
 
 Word MultiWordWord(){
     Word name;

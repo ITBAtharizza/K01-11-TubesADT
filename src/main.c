@@ -10,6 +10,7 @@ int main(){
 
     List list_user;
     ListDin list_barang;
+    ListDin list_barang_session;
     Queue antrian;
     User logged_in;
     boolean log_stats = false;
@@ -28,20 +29,18 @@ int main(){
         if (where == 0){
             if (IsWordEqual(currentWord, "START")){
                 Start(&list_user, &list_barang, &where);
-                DisplayUser(list_user);
-                StoreList(list_barang);
+                ReverseDumpBarang(&list_barang, &list_barang_session);           
             }
 
             if (IsWordEqual(currentWord, "LOAD")){
                 STARTWORD(NULL);
                 CopyString(loadfile, currentWord.TabWord);
                 Load(loadfile, &list_user, &list_barang, &where);
-                DisplayUser(list_user);
-                StoreList(list_barang);
+                ReverseDumpBarang(&list_barang, &list_barang_session);           
             }
 
             if (IsWordEqual(currentWord, "QUIT")){
-                Quit(&list_user, &list_barang, &logged_in, &running);
+                Quit(&list_user, &list_barang, &list_barang_session, &logged_in, &running);
             }
 
             if (IsWordEqual(currentWord, "HELP")){
@@ -52,7 +51,6 @@ int main(){
         if (where == 1){
             if (IsWordEqual(currentWord, "REGISTER")){
                 Register(&list_user);
-                DisplayUser(list_user);
             }
             
             if (IsWordEqual(currentWord, "LOGIN")){
@@ -63,7 +61,7 @@ int main(){
             }
 
             if (IsWordEqual(currentWord, "QUIT")){
-                Quit(&list_user, &list_barang, &logged_in, &running);
+                Quit(&list_user, &list_barang, &list_barang_session, &logged_in, &running);
             }
 
             if (IsWordEqual(currentWord, "HELP")){
@@ -82,34 +80,29 @@ int main(){
                         WorkChallenge(&logged_in);
                     }
                 }
-                DisplayUser(list_user);
             }
 
             if (IsWordEqual(currentWord, "STORE")){
                 STARTWORD(NULL);
                 if (IsWordEqual(currentWord, "LIST")){
-                    StoreList(list_barang);
+                    StoreList(list_barang_session);
                 }
                 if (IsWordEqual(currentWord, "REQUEST")){
                     if (isEndWord()){
-                        Request(&antrian, &list_barang);
-                        displayQueue(antrian);
+                        Request(&antrian, &list_barang_session);
                     }
                     else{
                         STARTWORD(NULL);
                         if (IsWordEqual(currentWord, "BIOWEAPON")){
-                            Bioweapon(&antrian, &list_barang);
-                            displayQueue(antrian);
+                            Bioweapon(&antrian, &list_barang_session);
                         }
                     }
                 }
                 if (IsWordEqual(currentWord, "SUPPLY")){
-                    Supply(&antrian, &list_barang);
-                    StoreList(list_barang);
+                    Supply(&antrian, &list_barang_session);
                 }
                 if (IsWordEqual(currentWord, "REMOVE")){
-                    Remove(&list_barang);
-                    StoreList(list_barang);
+                    Remove(&list_barang_session);
                 }
             }
 
@@ -120,10 +113,10 @@ int main(){
             if (IsWordEqual(currentWord, "CART")){
                 STARTWORD(NULL);
                 if (IsWordEqual(currentWord, "ADD")){
-                    CartAdd(&list_barang, &logged_in.keranjang);
+                    CartAdd(&list_barang_session, &logged_in.keranjang);
                 }
                 if (IsWordEqual(currentWord, "REMOVE")){
-                    CartRemove(&list_barang, &logged_in.keranjang);
+                    CartRemove(&list_barang_session, &logged_in.keranjang);
                 }
                 if (IsWordEqual(currentWord, "SHOW")){
                     CartShow(logged_in.keranjang);
@@ -167,11 +160,11 @@ int main(){
             if (IsWordEqual(currentWord, "SAVE")){
                 STARTWORD(NULL);
                 CopyString(savefile, currentWord.TabWord);
-                Save(savefile, &list_user, &list_barang, &logged_in);
+                Save(savefile, &list_user, &list_barang, &list_barang_session, &logged_in);
             }
 
             if (IsWordEqual(currentWord, "QUIT")){
-                Quit(&list_user, &list_barang, &logged_in, &running);
+                Quit(&list_user, &list_barang, &list_barang_session, &logged_in, &running);
             }
             
             if (IsWordEqual(currentWord, "HELP")){

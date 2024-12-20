@@ -67,6 +67,9 @@ void WishlistRemoveI(LinkedList *wishlist);
 //wishlist remove
 void WishlistRemove(LinkedList *wishlist);
 
+//wishlist clear
+void WishlistClear(LinkedList *wishlist);
+
 //history
 void ShowHistory(Stack *history, int line);
 
@@ -74,10 +77,10 @@ void ShowHistory(Stack *history, int line);
 void Logout(User *logged_in, boolean *log_stats, int *where);
 
 //save
-void Save(char *filename, List *list_user, ListDin *list_barang, User *logged_in);
+void Save(char *filename, List *list_user, ListDin *list_barang, ListDin *list_barang_session, User *logged_in);
 
 //quit
-void Quit(List *list_user, ListDin *list_barang, User *logged_in, boolean *running);
+void Quit(List *list_user, ListDin *list_barang, ListDin *list_barang_session, User *logged_in, boolean *running);
 
 //help
 void Help(int where);
@@ -98,6 +101,7 @@ void GoodsWithManyWords(char *goods, int *length, Word word);
 //fungsi DisplayUser
 void DisplayUser(List list_user);
 
+
 //fungsi DNAToRNA
 Word DNAToRNA(Word DNA);
 
@@ -112,6 +116,10 @@ boolean IsInString(Word *decoded, Word *code);
 
 //fungsi DumpUser data saat work dan workchallenge
 void DumpUser(List *list_user, User *logged_in);
+
+void DumpBarang(ListDin *list_barang_session, ListDin *list_barang);
+
+void ReverseDumpBarang(ListDin *list_barang, ListDin *list_barang_session);
 
 Word MultiWordWord();
 

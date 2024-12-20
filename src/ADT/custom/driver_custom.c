@@ -7,11 +7,49 @@ int main() {
     /* Membuat beberapa user */
     Word name1 = {"Syasya", 6};
     Word password1 = {"12345", 5};
-    User user1 = makeUser(1000, name1, password1);
+    LinkedList L1;
+    infotypeLL itemL1_1 = "Soto Ayam";
+    infotypeLL itemL1_2 = "Nasi Goreng";
+    infotypeLL itemL1_3 = "Bakso";
+    infotypeLL itemL1_4 = "Mie Ayam";
+    address P;
+    CreateEmptyLinkedList(&L1);
+    InsVFirstLinkedList(&L1, itemL1_1);
+    InsVLastLinkedList(&L1, itemL1_2);
+    InsVLastLinkedList(&L1, itemL1_3);
+    InsVLastLinkedList(&L1, itemL1_4);
+    Stack Histori1;
+    CreateEmptyStack(&Histori1);
+    OneHistory his1_1 = {"Riwayat Pembelian Pertama", 100};
+    OneHistory his1_2 = {"Riwayat Pembelian Kedua", 200};
+    OneHistory his1_3 = {"Riwayat Pembelian Ketiga", 300};
+    PushStack(&Histori1, his1_1);
+    PushStack(&Histori1, his1_2);
+    PushStack(&Histori1, his1_3);
+    User user1 = makeUser(1000, name1, password1, Histori1, L1);
 
     Word name2 = {"Athira", 6};
     Word password2 = {"67890", 5};
-    User user2 = makeUser(1500, name2, password2);
+    LinkedList L2;
+    infotypeLL itemL2_1 = "Bakwan Jagung";
+    infotypeLL itemL2_2 = "Salmon Sushi";
+    infotypeLL itemL2_3 = "Iga Penyet";
+    infotypeLL itemL2_4 = "Bubur Ayam";
+    address P;
+    CreateEmptyLinkedList(&L2);
+    InsVFirstLinkedList(&L2, itemL2_1);
+    InsVLastLinkedList(&L2, itemL2_2);
+    InsVLastLinkedList(&L2, itemL2_3);
+    InsVLastLinkedList(&L2, itemL2_4);
+    Stack Histori2;
+    CreateEmptyStack(&Histori2);
+    OneHistory his2_1 = {"Riwayat Pembelian Pertama", 200};
+    OneHistory his2_2 = {"Riwayat Pembelian Kedua", 300};
+    OneHistory his2_3 = {"Riwayat Pembelian Ketiga", 400};
+    PushStack(&Histori2, his2_1);
+    PushStack(&Histori2, his2_2);
+    PushStack(&Histori2, his2_3);
+    User user2 = makeUser(1500, name2, password2, Histori2, L2);
 
     /* Mengcek apakah user telah dibuat */
     printf("User 1: %s, %s, %d\n", user1.name, user1.password, user1.money);

@@ -3,7 +3,6 @@
 
 // Konstruktor
 
-
 List MakeList(){
 	List L;
 	IdxType i;

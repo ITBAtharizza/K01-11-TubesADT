@@ -155,7 +155,7 @@ void PrintInfoLinkedList (LinkedList L){
     printf("|                      Wishlist                      |\n");
     printf("+----------------------------------------------------+\n");
 
-    while (temp != NULL) {
+    while (temp != NilLL) {
         printf("| %-50s |\n", temp->info);
         temp = temp->next;
     }

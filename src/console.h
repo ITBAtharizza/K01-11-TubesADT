@@ -58,14 +58,14 @@ void CartRemove(ListDin *List_Items, Map *Cart);
 //cart show
 void CartShow(Map Cart);
 
+//cart pay
+void CartPay(Map *Cart, User *user, Stack *history);
+
 //wishlist remove ke-i
 void WishlistRemoveI(LinkedList *wishlist);
 
 //wishlist remove
 void WishlistRemove(LinkedList *wishlist);
-
-//cart pay
-void CartPay(Map *Cart, User *user, Stack *history);
 
 //history
 void ShowHistory(Stack *history, int line);

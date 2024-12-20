@@ -54,9 +54,5 @@ void FlipStack(Stack *S) {
         PopStack(S, &X);
         PushStack(&temp, X);
     }
-
-    while (!IsEmptyStack(temp)) {
-        PopStack(&temp, &X); 
-        PushStack(S, X);     
-    }
+    *S = temp;
 }

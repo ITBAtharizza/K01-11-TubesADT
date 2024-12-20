@@ -23,7 +23,6 @@ User makeUser(int money, Word name, Word password, Stack riwayat_pembelian, Link
     user.riwayat_pembelian = riwayat_pembelian;
     user.wishlist = wishlist;
 
-    printf("%s", user.name);
     return user;
 }
 

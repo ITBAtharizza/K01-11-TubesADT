@@ -72,7 +72,7 @@ void Load(char *filename, List *list_user, ListDin *list_barang, int *where){
 
             PushStack(&riwayat_pembelian, onehistory);
         }
-        
+
         FlipStack(&riwayat_pembelian);
 
         ADVWORD();
@@ -496,91 +496,6 @@ void CartRemove(ListDin *List_Items, Map *Cart){
     }
 }
 
-//wishlist
-//wishlist remove ke-i
-void WishlistRemoveI(LinkedList *wishlist) {
-    STARTWORD(NULL);
-    int i = WordToInt(currentWord);
-
-    if (IsEmptyLinkedList(*wishlist)) {
-        printf("Penghapusan barang WISHLIST gagal dilakukan, WISHLIST kosong!\n");
-        return;
-    }
-
-    if (i < 1) {
-        printf("Penghapusan barang WISHLIST gagal dilakukan, Posisi tidak valid!\n");
-        return;
-    }
-
-    address current = First(*wishlist);
-    address prev = NULL;
-    int idx = 1;
-
-    while (current != NULL && idx < i) {
-        prev = current;
-        current = Next(current);
-        idx++;
-    }
-
-    if (current == NULL) {
-        printf("Penghapusan barang WISHLIST gagal dilakukan, Barang ke-%d tidak ada di WISHLIST!\n", i);
-        return;
-    }
-
-    if (prev == NULL) {
-        First(*wishlist) = Next(current);
-    } else {
-        Next(prev) = Next(current);
-    }
-
-    printf("Berhasil menghapus barang posisi ke-%d dari wishlist!\n", i);
-    DealokasiLinkedList(&current);
-}
-
-//wishlist remove nama
-void WishlistRemove(LinkedList *wishlist) {
-    Word name;
-    char goods[50] = "";
-    int length = 0;
-
-    if (IsEmptyLinkedList(*wishlist)) {
-        printf("Penghapusan barang WISHLIST gagal dilakukan, WISHLIST kosong!\n");
-        return;
-    }
-
-    printf("Masukkan nama barang yang akan dihapus : ");
-    STARTWORD(NULL);
-    do {
-        GoodsWithManyWords(goods, &length, currentWord);
-        STARTWORD(NULL);
-    } while (WordToInt(currentWord) == -9999);
-
-    CopyString(name.TabWord, goods);
-    name.Length = length;
-
-    address current = First(*wishlist);
-    address prev = NULL;
-
-    while (current != NULL && !IsSameString(Info(current), name.TabWord)) {
-        prev = current;
-        current = Next(current);
-    }
-
-    if (current == NULL) {
-        printf("Penghapusan barang WISHLIST gagal dilakukan, %s tidak ada di WISHLIST!\n", name.TabWord);
-        return;
-    }
-
-    if (prev == NULL) {
-        First(*wishlist) = Next(current);
-    } else {
-        Next(prev) = Next(current);
-    }
-
-    printf("%s berhasil dihapus dari WISHLIST!\n", name.TabWord);
-    DealokasiLinkedList(&current);
-}
-
 // cart pay
 void CartPay(Map *Cart, User *user, Stack *history) {
     if (IsEmptyMap(*Cart)) {
@@ -637,6 +552,114 @@ void CartPay(Map *Cart, User *user, Stack *history) {
     else{
         printf("Input tidak valid. Kembali ke menu utama.\n");
     }
+}
+
+//wishlist
+//wishlist remove ke-i
+void WishlistRemoveI(LinkedList *wishlist) {
+    STARTWORD(NULL);
+    int i = WordToInt(currentWord);
+
+    if (IsEmptyLinkedList(*wishlist)) {
+        printf("Penghapusan barang WISHLIST gagal dilakukan, WISHLIST kosong!\n");
+        return;
+    }
+
+    if (i < 1) {
+        printf("Penghapusan barang WISHLIST gagal dilakukan, Posisi tidak valid!\n");
+        return;
+    }
+
+    address current = First(*wishlist);
+    address prev = NULL;
+    int idx = 1;
+
+    while (current != NULL && idx < i) {
+        prev = current;
+        current = Next(current);
+        idx++;
+    }
+
+    if (current == NULL) {
+        printf("Penghapusan barang WISHLIST gagal dilakukan, Barang ke-%d tidak ada di WISHLIST!\n", i);
+        return;
+    }
+
+    if (prev == NULL) {
+        First(*wishlist) = Next(current);
+    } else {
+        Next(prev) = Next(current);
+    }
+
+    printf("Berhasil menghapus barang posisi ke-%d dari wishlist!\n", i);
+    DealokasiLinkedList(&current);
+}
+
+//wishlist remove nama
+void WishlistRemove(LinkedList *wishlist) {
+
+    if (IsEmptyLinkedList(*wishlist)) {
+        printf("Penghapusan barang WISHLIST gagal dilakukan, WISHLIST kosong!\n");
+        return;
+    }
+
+    Word name;
+    name.Length = 0;
+    
+    char goods[50] = "";
+    int length = 0;
+
+    printf("Masukkan nama barang yang akan dihapus : ");
+    STARTWORD(NULL);
+    if (isEndWord()){
+        GoodsWithManyWords(goods, &length, currentWord);    
+    }
+    else{
+        do{
+            GoodsWithManyWords(goods, &length, currentWord);
+            STARTWORD(NULL);
+            if (isEndWord()){
+                GoodsWithManyWords(goods, &length, currentWord);    
+            }
+        } while (!isEndWord());
+    }
+
+    if (length > 0 && goods[length - 1] == ' '){
+        goods[length - 1] = '\0';
+        length -= 1;
+    }
+
+    if (length > 50){
+        length = 50;
+    }
+
+    for (int j = 0; j < length && j < 50; j++){
+        name.TabWord[j] = goods[j];
+    }            
+    name.TabWord[length] = '\0';
+    name.Length = length;
+
+    address current = First(*wishlist);
+    address prev = NULL;
+
+    while (current != NULL && !IsSameString(Info(current), name.TabWord)) {
+        prev = current;
+        current = Next(current);
+    }
+
+    if (current == NULL) {
+        printf("Penghapusan barang WISHLIST gagal dilakukan, %s tidak ada di WISHLIST!\n", name.TabWord);
+        return;
+    }
+
+    if (prev == NULL) {
+        First(*wishlist) = Next(current);
+    } else {
+        Next(prev) = Next(current);
+    }
+
+    printf("%s berhasil dihapus dari WISHLIST!\n", name.TabWord);
+    DealokasiLinkedList(&current);
 }
 
 //history
@@ -728,6 +751,27 @@ void Save(char *filename, List *list_user, ListDin *list_barang, User *logged_in
         fprintf(file, "\n");
         ElTypeUser user = list_user->A[i];
         fprintf(file, "%d %s %s", user.money, user.name, user.password);
+
+        fprintf(file, "\n");
+        int LenStack = Top(list_user->A[i].riwayat_pembelian) + 1;
+        fprintf(file, "%d", LenStack);
+
+        for (int j = 0; j < LenStack; j++){
+            OneHistory onehistory;
+            fprintf(file, "\n");
+            PopStack(&list_user->A[i].riwayat_pembelian, &onehistory);
+            fprintf(file, "%d %s", onehistory.total, onehistory.name);
+        }
+
+        fprintf(file, "\n");
+        int LenLinked = NbElmtLinkedList(list_user->A[i].wishlist);
+        fprintf(file, "%d", LenLinked);
+            address temp = list_user->A[i].wishlist.First;
+            while (temp != NilLL) {
+                fprintf(file, "\n");
+                fprintf(file, "%s", temp->info);
+                temp = temp->next;
+            }
     }
 
     fclose(file);

@@ -1,13 +1,19 @@
+#include "store_list_gacor.h"
 #include <stdio.h>
-#include "listdin.h"
 
-void OptimizeStoreList(ListDin *store) {
+void StoreListGacor(ListDin *store) {
     if (IsEmptyListDin(*store)) {
-        printf("Toko kosong. Tidak ada yang bisa dioptimalkan.\n");
-        return;
+        printf("TOKO KOSONG!\n");
+    } else {
+        printf("ISI TOKO:\n");
+        printf("============================================================\n");
+        printf("| %-3s | %-50s | %-10s |\n", "No", "Nama Barang", "Harga");
+        printf("============================================================\n");
+
+        for (int i = 0; i < store->Neff; i++) {
+            printf("| %-3d | %-50s | %-10d |\n", i + 1, store->A[i].name, store->A[i].price);
+        }
+
+        printf("============================================================\n");
     }
-    ReverseListDin(store);
-    printf("Daftar barang di toko telah dioptimalkan (dibalik urutannya).\n");
-    printf("Berikut barang setelah dioptimalkan:\n");
-    PrintListDin(*store);
 }

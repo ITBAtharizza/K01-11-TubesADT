@@ -34,7 +34,7 @@ void WishlistSwap(LinkedList *wishlist, int i, int j) {
         return;
     }
 
-    // Tukar informasi pada elemen p1 dan p2
+    // Tuker informasi pada elemen p1 dan p2
     infotypeLL temp = Info(p1);
     Info(p1) = Info(p2);
     Info(p2) = temp;

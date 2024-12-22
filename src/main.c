@@ -135,10 +135,10 @@ int main(){
             if (IsWordEqual(currentWord, "WISHLIST")){
                 STARTWORD(NULL);
                 if (IsWordEqual(currentWord, "ADD")){
-                    //add
+                    WishlistAdd(&list_barang, &logged_in.wishlist);
                 }
                 if (IsWordEqual(currentWord, "SWAP")){
-                    //swap
+                    WishlistSwap(&logged_in.wishlist);
                 }
                 if (IsWordEqual(currentWord, "REMOVE")){
                     if (isEndWord()){
@@ -149,7 +149,7 @@ int main(){
                     }
                 }
                 if (IsWordEqual(currentWord, "CLEAR")){
-                    //clear
+                    WishlistClear(&logged_in.wishlist);
                 }
             }
 

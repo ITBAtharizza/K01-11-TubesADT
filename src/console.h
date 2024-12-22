@@ -61,6 +61,13 @@ void CartShow(Map Cart);
 //cart pay
 void CartPay(Map *Cart, User *user, Stack *history);
 
+//wishlist
+//wishlist add
+void WishlistAdd(ListDin *list_barang, LinkedList *wishlist);
+
+//wishlist swap i j
+void WishlistSwap(LinkedList *wishlist);
+
 //wishlist remove ke-i
 void WishlistRemoveI(LinkedList *wishlist);
 

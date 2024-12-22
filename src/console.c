@@ -555,6 +555,95 @@ void CartPay(Map *Cart, User *user, Stack *history) {
 }
 
 //wishlist
+//wishlist add
+void WishlistAdd(ListDin *list_barang, LinkedList *wishlist) {
+    Word name;
+    name.Length = 0;
+    
+    char goods[50] = "";
+    int length = 0;
+
+    printf("Masukkan nama barang: ");
+    STARTWORD(NULL);
+    while (!isEndWord()) {
+        GoodsWithManyWords(goods, &length, currentWord);
+        STARTWORD(NULL);
+    }
+
+    if (length > 0 && goods[length - 1] == ' '){
+        goods[length - 1] = '\0';
+        length -= 1;
+    }
+
+    if (length > 50){
+        length = 50;
+    }
+
+    for (int j = 0; j < length && j < 50; j++){
+        name.TabWord[j] = goods[j];
+    }            
+    name.TabWord[length] = '\0';
+    name.Length = length;
+    
+    int index = IdxMemberListDin(*list_barang, name);
+    if (index == -1) {
+        printf("Tidak ada barang dengan nama %s!\n", name.TabWord);
+    } else {
+        if (SearchLinkedList(*wishlist, name.TabWord)) {
+            printf("%s sudah ada di wishlist!\n", name.TabWord);
+        } else {
+            InsVLastLinkedList(wishlist, name.TabWord);
+            printf("Berhasil menambahkan %s ke wishlist!\n", name.TabWord);
+        }
+    }
+}
+
+void WishlistSwap(LinkedList *wishlist) {
+    STARTWORD(NULL);
+    int i = WordToInt(currentWord);
+    STARTWORD(NULL);
+    int j = WordToInt(currentWord);
+
+    if (i <= 0 || j <= 0 || i > NbElmtLinkedList(*wishlist) || j > NbElmtLinkedList(*wishlist)) {
+        printf("Gagal menukar posisi! Indeks tidak valid.\n");
+        return;
+    }
+
+    if (i == j) {
+        printf("Tidak ada perubahan, posisi yang dipilih sama.\n");
+        return;
+    }
+
+    // Cari elemen pada posisi i dan j
+    address p1 = First(*wishlist);
+    address p2 = First(*wishlist);
+    int count = 1;
+
+    while (count < i && p1 != NilLL) {
+        p1 = Next(p1);
+        count++;
+    }
+
+    count = 1;
+    while (count < j && p2 != NilLL) {
+        p2 = Next(p2);
+        count++;
+    }
+
+    if (p1 == NilLL || p2 == NilLL) {
+        printf("Gagal menukar posisi! Salah satu elemen tidak ditemukan.\n");
+        return;
+    }
+
+    // Tukar informasi pada elemen p1 dan p2
+    infotypeLL temp;
+    CopyString(temp, Info(p1));
+    CopyString(Info(p1), Info(p2));
+    CopyString(Info(p2), temp);
+
+    printf("Berhasil menukar posisi barang pada indeks %d dengan indeks %d.\n", i, j);
+}
+
 //wishlist remove ke-i
 void WishlistRemoveI(LinkedList *wishlist) {
     STARTWORD(NULL);
@@ -611,17 +700,9 @@ void WishlistRemove(LinkedList *wishlist) {
 
     printf("Masukkan nama barang yang akan dihapus : ");
     STARTWORD(NULL);
-    if (isEndWord()){
-        GoodsWithManyWords(goods, &length, currentWord);    
-    }
-    else{
-        do{
-            GoodsWithManyWords(goods, &length, currentWord);
-            STARTWORD(NULL);
-            if (isEndWord()){
-                GoodsWithManyWords(goods, &length, currentWord);    
-            }
-        } while (!isEndWord());
+    while (!isEndWord()) {
+        GoodsWithManyWords(goods, &length, currentWord);
+        STARTWORD(NULL);
     }
 
     if (length > 0 && goods[length - 1] == ' '){

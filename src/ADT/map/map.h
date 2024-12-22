@@ -37,6 +37,11 @@ typedef struct Map {
 
 /* ********* Prototype ********* */
 
+boolean IsSameStringMap(char *str1, char *str2);
+/*Fungsi mengecek apakah string yang dimasukan sama dengan string yang dibaca
+I.S Diterima masukan data string1 dan string2 yang akan dibandingkan.
+*/
+
 /* *** Konstruktor/Kreator *** */
 void CreateEmptyMap(Map *M);
 /* I.S. Sembarang */

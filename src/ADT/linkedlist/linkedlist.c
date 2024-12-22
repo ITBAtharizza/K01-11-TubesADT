@@ -2,6 +2,15 @@
 #include <stdlib.h>
 #include "linkedlist.h"
 
+void CopyStringLL(char *dest, char *src) {
+    int i = 0;
+    while (src[i] != '\0') {
+        dest[i] = src[i];
+        i++;
+    }
+    dest[i] = '\0';
+}
+
 boolean IsEmptyLinkedList (LinkedList L){
     return (First(L) == NilLL);
 }
@@ -13,7 +22,7 @@ void CreateEmptyLinkedList (LinkedList *L){
 address AlokasiLinkedList (infotypeLL X){
     address P = malloc (sizeof(ElmtList));
     if (P != NilLL){
-        CopyString(Info(P), X);
+        CopyStringLL(Info(P), X);
         Next(P) = NilLL;
     }
     return P;
@@ -59,7 +68,7 @@ void InsVLastLinkedList (LinkedList *L, infotypeLL X){
 
 void DelVFirstLinkedList (LinkedList *L, infotypeLL *X){
     address P = First(*L);  
-    CopyString(*X, Info(P));
+    CopyStringLL(*X, Info(P));
     First(*L) = Next(P);
     Next(P) = NilLL;
     DealokasiLinkedList(&P);
@@ -72,7 +81,7 @@ void DelVLastLinkedList (LinkedList *L, infotypeLL *X){
         Prec = P;
         P = Next(P);
     }
-    CopyString(*X, Info(P));
+    CopyStringLL(*X, Info(P));
     if (Prec == NilLL){
         First(*L) = NilLL;
     } else {

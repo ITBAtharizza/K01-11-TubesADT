@@ -1,5 +1,16 @@
 #include "map.h"
 
+boolean IsSameStringMap(char *str1, char *str2){
+    int i = 0;
+    while (str1[i] != '\0' && str2[i] != '\0'){
+        if (str1[i] != str2[i]){
+            return false;
+        }
+        i++;
+    }
+    return str1[i] == '\0' && str2[i] == '\0';
+}
+
 void CreateEmptyMap(Map *M){
     M->Count = NilMap;
 }
@@ -14,7 +25,7 @@ boolean IsFullMap(Map M){
 
 valuetype ValueMap(Map M, keytype k){
     int i = 0;
-    while (i < M.Count && !IsSameString(M.Elements[i].Barang.name, k.name)){
+    while (i < M.Count && !IsSameStringMap(M.Elements[i].Barang.name, k.name)){
         i++;
     }
     if (i < M.Count){
@@ -41,7 +52,7 @@ void InsertMap(Map *M, keytype barang, valuetype quantity){
 void DeleteMap(Map *M, keytype k){
     if (ValueMap(*M, k) != Undefined){
         int i = 0;
-        while (i < M->Count && !IsSameString(M->Elements[i].Barang.name, k.name)){
+        while (i < M->Count && !IsSameStringMap(M->Elements[i].Barang.name, k.name)){
             i++;
         }
         int idx = i;
@@ -57,7 +68,7 @@ boolean IsMemberMap(Map M, keytype k){
     int i = 0;
     boolean found = false;
     while (!found && i < M.Count) {
-        if (IsSameString(M.Elements[i].Barang.name, k.name)) {
+        if (IsSameStringMap(M.Elements[i].Barang.name, k.name)) {
             found = true;
         } else {
             i++;

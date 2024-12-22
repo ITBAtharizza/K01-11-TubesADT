@@ -29,6 +29,9 @@ typedef struct {
 #define First(L) ((L).First)
 
 /* PROTOTYPE */
+
+void CopyStringLL(char *dest, char *src);
+
 /****************** TEST LIST KOSONG ******************/
 boolean IsEmptyLinkedList (LinkedList L);
 /* Mengirim true jika list kosong */

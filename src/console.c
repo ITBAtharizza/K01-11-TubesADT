@@ -581,17 +581,17 @@ void CartPay(Map *Cart, User *user, Stack *history) {
 //wishlist
 //wishlist add
 void WishlistAdd(ListDin *list_barang, LinkedList *wishlist) {
+    printf("Masukkan nama barang: ");
+    STARTWORD(NULL);
+
     Word name;
-    name.Length = 0;
-    
     char goods[50] = "";
     int length = 0;
 
-    printf("Masukkan nama barang: ");
-    STARTWORD(NULL);
-    while (!isEndWord()) {
-        GoodsWithManyWords(goods, &length, currentWord);
+    GoodsWithManyWords(goods, &length, currentWord);
+    while (!isEndWord()){
         STARTWORD(NULL);
+        GoodsWithManyWords(goods, &length, currentWord);
     }
 
     if (length > 0 && goods[length - 1] == ' '){
@@ -603,10 +603,7 @@ void WishlistAdd(ListDin *list_barang, LinkedList *wishlist) {
         length = 50;
     }
 
-    for (int j = 0; j < length && j < 50; j++){
-        name.TabWord[j] = goods[j];
-    }            
-    name.TabWord[length] = '\0';
+    CopyString(name.TabWord, goods);
     name.Length = length;
     
     int index = IdxMemberListDin(*list_barang, name);
@@ -742,7 +739,7 @@ void WishlistRemove(LinkedList *wishlist) {
     for (int j = 0; j < length && j < 50; j++){
         name.TabWord[j] = goods[j];
     }            
-    name.TabWord[length] = '\0';
+    CopyString(name.TabWord, goods);
     name.Length = length;
 
     address current = First(*wishlist);

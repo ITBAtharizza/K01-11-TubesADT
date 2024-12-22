@@ -135,7 +135,7 @@ int main(){
                 STARTWORD(NULL);
                 int line = WordToInt(currentWord);
                 if (line < 0){
-                    printf("Input tidak valid, kembali ke menu utama!\n");
+                    printf("Input tidak valid, kembali ke menu utama!\n\n");
                 }
                 ShowHistory(&logged_in.riwayat_pembelian, line);
             }

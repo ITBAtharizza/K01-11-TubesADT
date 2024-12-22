@@ -245,6 +245,7 @@ void WorkChallenge(User *logged_in){
             }
         }
     }
+    printf("\n");
 }
 
 //store list
@@ -793,10 +794,10 @@ void ShowHistory(Stack *history, int line){
     printf("| %-5s | %-50s | %-10s |\n", "No", "Nama Barang", "Harga Total");
     printf("============================================================================\n");
 
-    int i = 1;
+    int i = 0;
     while (!IsEmptyStack(*history) && i < line){
         PopStack(history, &X);
-        printf("| %-5d | %-50s | %-10d  |\n", i, X.name, X.total);
+        printf("| %-5d | %-50s | %-10d  |\n", i + 1, X.name, X.total);
         PushStack(&temp, X);
         i++;
     }
@@ -901,8 +902,6 @@ void Save(List *list_user, List *list_user_session, ListDin *list_barang, ListDi
 
 //quit
 void Quit(List *list_user, List *list_user_session, ListDin *list_barang, ListDin *list_barang_session, User *logged_in,boolean *running){
-    char filename[50];
-
     printf("Apakah kamu ingin menyimpan data sesi sekarang (Y/N)? ");
     STARTWORD(NULL);
 

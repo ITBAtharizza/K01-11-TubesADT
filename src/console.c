@@ -908,9 +908,6 @@ void Quit(List *list_user, List *list_user_session, ListDin *list_barang, ListDi
 
     if (IsWordEqual(currentWord, "Y") || IsWordEqual(currentWord, "y")){
         printf("Tuliskan nama file tempat kamu ingin menyimpan: ");
-        STARTWORD(NULL);
-
-        CopyString(filename, currentWord.TabWord); 
 
         Save(list_user, list_user_session, list_barang, list_barang_session, logged_in);
 

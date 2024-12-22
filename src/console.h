@@ -81,7 +81,7 @@ void WishlistClear(LinkedList *wishlist);
 void ShowHistory(Stack *history, int line);
 
 //logout
-void Logout(User *logged_in, boolean *log_stats, int *where);
+void Logout(List *list_user_session, User *logged_in, boolean *log_stats, int *where);
 
 //save
 void Save(List *list_user, List *list_user_session, ListDin *list_barang, ListDin *list_barang_session, User *logged_in);

@@ -158,10 +158,15 @@ void DelAfterLinkedList (LinkedList *L, address *Pdel, address Prec){
 }
 
 void PrintInfoLinkedList (LinkedList L){
+    if (IsEmptyLinkedList(L)){
+        printf("WISHLIST KOSONG!\n\n");
+        return;
+    }
+    
     address temp = L.First;
-    printf("Isi wishlist: \n");
+    printf("ISI WISHLIST: \n");
     printf("+----------------------------------------------------+\n");
-    printf("|                      Wishlist                      |\n");
+    printf("|                      WISHLIST                      |\n");
     printf("+----------------------------------------------------+\n");
 
     while (temp != NilLL) {

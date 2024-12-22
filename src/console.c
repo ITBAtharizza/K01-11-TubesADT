@@ -106,7 +106,7 @@ void Register(List *list_user) {
     }
 
     if (usernameExists) {
-        printf("Akun dengan username %s gagal dibuat. Silakan lakukan REGISTER ulang.\n", username);
+        printf("Akun dengan username %s gagal dibuat. Silakan lakukan REGISTER ulang.\n\n", username);
         return;
     }
 
@@ -120,7 +120,7 @@ void Register(List *list_user) {
     newUser.money = 0;
 
     InsertLast(list_user, newUser);
-    printf("Akun dengan username %s telah berhasil dibuat. Silakan LOGIN untuk melanjutkan.\n", username);
+    printf("Akun dengan username %s telah berhasil dibuat. Silakan LOGIN untuk melanjutkan.\n\n", username);
 }
 
 //login
@@ -149,6 +149,8 @@ void Login(List *list_user, User *logged_in, boolean *log_stats) {
         }
         first++;
     }
+    
+    printf("\n");
 
     if (isCorrectPass && *log_stats == false) {
         printf("Anda telah login ke PURRMART sebagai %s.\n\n", logged_in->name);
@@ -198,7 +200,7 @@ void Work(User *user) {
 
     // menambahkan pendapatan ke user
     user->money += selectedJob.income;
-    printf("Pekerjaan selesai. +%d rupiah telah ditambahkan ke akun Anda.\n", selectedJob.income);
+    printf("Pekerjaan selesai. +%d rupiah telah ditambahkan ke akun Anda.\n\n", selectedJob.income);
 }
 
 //work challenge
@@ -280,37 +282,55 @@ void Request(Queue *antrian, ListDin *list_barang){
     if (!IsMemberListDin(*list_barang, name)){
         if (!isMemberQueue(*antrian, name)){
             enqueue(antrian, name);
+            printf("Barang %s berhasil ditambahkan ke dalam antrian!\n", name.TabWord);
+        }
+        else{
+            printf("Barang dengan nama yang sama sudah ada di antrian!\n");
         }
     }
+    else{
+        printf("Barang dengan nama yang sama sudah ada di toko!\n");
+    }
+    printf("\n");
 }
 
 //store supply
 void Supply(Queue *antrian, ListDin *list_barang){
-    if (isEmpty(*antrian)){
-        return;
-    }
-    
     Word val;
-    dequeue(antrian, &val);
-    printf("Apakah kamu ingin menambahkan barang %s: ", val.TabWord);
-    STARTWORD(NULL);
-    if (IsWordEqual(currentWord, "Terima")){
-        printf("Harga barang: ");
+    if (!isEmpty(*antrian)){
+        printf("Apakah kamu ingin menambahkan barang %s (Terima/Tunda/Tolak): ", HEAD(*antrian).TabWord);
         STARTWORD(NULL);
-        int Harga = WordToInt(currentWord);
-        if (Harga != -9999){
-            Barang barang = makeBarang(Harga, val);
-            InsertLastListDin(list_barang, barang);
-            printf("%s dengan harga %d telah ditambahkan ke toko.\n", list_barang->A[list_barang->Neff-1].name, list_barang->A[list_barang->Neff-1].price);
+        if (IsWordEqual(currentWord, "Terima")){
+            printf("Harga barang: ");
+            STARTWORD(NULL);
+            int Harga = WordToInt(currentWord);
+            if (Harga != -9999){
+                dequeue(antrian, &val);
+                Barang barang = makeBarang(Harga, val);
+                InsertLastListDin(list_barang, barang);
+                printf("%s dengan harga %d telah ditambahkan ke toko.\n", list_barang->A[list_barang->Neff-1].name, list_barang->A[list_barang->Neff-1].price);
+            }
+            else{
+                printf("Input tidak valid, kembali ke menu utama!\n");
+            }
+        }
+        else if (IsWordEqual(currentWord, "Tunda")){
+            dequeue(antrian, &val);
+            enqueue(antrian, val);
+            printf("%s dikembalikan ke antrian.\n", val.TabWord);
+        }
+        else if (IsWordEqual(currentWord, "Tolak")){
+            dequeue(antrian, &val);
+            printf("%s dihapuskan dari antrian.\n", val.TabWord);
+        }
+        else{
+            printf("Input tidak valid, kembali ke menu utama!\n");
         }
     }
-    else if (IsWordEqual(currentWord, "Tunda")){
-        enqueue(antrian, val);
-        printf("%s dikembalikan ke antrian.\n", val.TabWord);
+    else{
+        printf("Antrian Kosong!\n");
     }
-    else if (IsWordEqual(currentWord, "Tolak")){
-        printf("%s dihapuskan dari antrian.\n", val.TabWord);
-    }
+    printf("\n");
 }
 
 //store remove
@@ -343,11 +363,12 @@ void Remove(ListDin *list_barang){
     if (IsMemberListDin(*list_barang, name)){
         int idx = IdxMemberListDin(*list_barang, name);
         DeleteAtListDin(list_barang, idx);
-        printf("%s telah dihapus dari toko.\n", name.TabWord);
+        printf("%s telah berhasil dihapus.\n", name.TabWord);
     }
     else{
-        printf("Barang tidak ditemukan di toko.\n");
+        printf("Toko tidak menjual %s.\n", name.TabWord);
     }
+    printf("\n");
 }
 
 //profile
@@ -406,13 +427,13 @@ void CartAdd(ListDin *List_Items, Map *Cart) {
             }
         }
     }
+    printf("\n");
 }
 
 //cart show
 void CartShow(Map Cart) {
     if (IsEmptyMap(Cart)) {
         printf("Keranjang kamu kosong!\n");
-        return;
     } else {
         int total_biaya = 0;
         printf("================================================================================ \n");
@@ -426,9 +447,10 @@ void CartShow(Map Cart) {
             printf("| %-10d | %-50s | %-10d |\n", Cart.Elements[i].Quantity, Cart.Elements[i].Barang.name, total_harga);
         }
 
-        printf("================================================================================ \n");
+        printf("================================================================================ \n\n");
         printf("Total biaya yang harus dikeluarkan adalah %d.\n", total_biaya);
     }
+    printf("\n");
 }
 
 void CartRemove(ListDin *List_Items, Map *Cart){
@@ -494,64 +516,66 @@ void CartRemove(ListDin *List_Items, Map *Cart){
             }
         }
     }
+    printf("\n");
 }
 
 // cart pay
 void CartPay(Map *Cart, User *user, Stack *history) {
     if (IsEmptyMap(*Cart)) {
         printf("Keranjang kamu kosong!\n");
-        return;
     }
+    else{  
+        printf("Kamu akan membeli barang-barang berikut:\n");
+        int total_biaya = 0;
+        int max_biaya, max_quantity;
+        Barang max_barang;
+        printf("================================================================================ \n");
+        printf("| %-10s | %-50s | %-10s |\n", "Kuantitas", "Nama Barang", "Total");
+        printf("================================================================================ \n");
 
-    printf("Kamu akan membeli barang-barang berikut:\n");
-    int total_biaya = 0;
-    int max_biaya, max_quantity;
-    Barang max_barang;
-    printf("================================================================================ \n");
-    printf("| %-10s | %-50s | %-10s |\n", "Kuantitas", "Nama Barang", "Total");
-    printf("================================================================================ \n");
-
-    for (int i = 0; i < Cart->Count; i++) {
-        int total_harga = Cart->Elements[i].Quantity * Cart->Elements[i].Barang.price;
-        if (i == 0 || max_biaya < total_harga){
-            max_biaya = total_harga;
-            max_quantity = Cart->Elements[i].Quantity;
-            max_barang = Cart->Elements[i].Barang;
-        }
-        else{
-            if (max_biaya == total_harga){
-                int whichone = Lexical(max_barang.name, Cart->Elements[i].Barang.name);
-                if (whichone == 1){
-                    max_barang = Cart->Elements[i].Barang;
-                    max_quantity = Cart->Elements[i].Quantity;
+        for (int i = 0; i < Cart->Count; i++) {
+            int total_harga = Cart->Elements[i].Quantity * Cart->Elements[i].Barang.price;
+            if (i == 0 || max_biaya < total_harga){
+                max_biaya = total_harga;
+                max_quantity = Cart->Elements[i].Quantity;
+                max_barang = Cart->Elements[i].Barang;
+            }
+            else{
+                if (max_biaya == total_harga){
+                    int whichone = Lexical(max_barang.name, Cart->Elements[i].Barang.name);
+                    if (whichone == 1){
+                        max_barang = Cart->Elements[i].Barang;
+                        max_quantity = Cart->Elements[i].Quantity;
+                    }
                 }
             }
+            total_biaya += total_harga;
+            printf("| %-10d | %-50s | %-10d |\n", Cart->Elements[i].Quantity, Cart->Elements[i].Barang.name, total_harga);
         }
-        total_biaya += total_harga;
-        printf("| %-10d | %-50s | %-10d |\n", Cart->Elements[i].Quantity, Cart->Elements[i].Barang.name, total_harga);
-    }
 
-    printf("================================================================================ \n");
-    printf("Total biaya yang harus dikeluarkan adalah %d, apakah jadi dibeli? (Ya/Tidak): ", total_biaya);
+        printf("================================================================================ \n\n");
+        printf("Total biaya yang harus dikeluarkan adalah %d, apakah jadi dibeli? (Ya/Tidak): ", total_biaya);
 
-    STARTWORD(NULL);
-    if (IsWordEqual(currentWord, "Ya")){
-        if (total_biaya > user->money){
-            printf("Uang kamu hanya %d, tidak cukup untuk membeli keranjang!\n", user->money);
-            return;
+        STARTWORD(NULL);
+        if (IsWordEqual(currentWord, "Ya")){
+            if (total_biaya > user->money){
+                printf("Uang kamu hanya %d, tidak cukup untuk membeli keranjang!\n", user->money);
+                return;
+            }
+            OneHistory addHistory;
+            addHistory.total = max_quantity * max_barang.price;
+            CopyString(addHistory.name, max_barang.name);
+            PushStack(history, addHistory);
+            printf("Selamat kamu telah membeli barang-barang tersebut!\n");
         }
-        OneHistory addHistory;
-        addHistory.total = max_quantity * max_barang.price;
-        CopyString(addHistory.name, max_barang.name);
-        PushStack(history, addHistory);
-        printf("Selamat kamu telah membeli barang-barang tersebut!\n");
+        else if (IsWordEqual(currentWord, "Tidak")){
+            printf("Pembelian dibatalkan\n");
+        }
+        else{
+            printf("Input tidak valid. Kembali ke menu utama.\n");
+        }
     }
-    else if (IsWordEqual(currentWord, "Tidak")){
-        printf("Pembelian dibatalkan\n");
-    }
-    else{
-        printf("Input tidak valid. Kembali ke menu utama.\n");
-    }
+    printf("\n");
 }
 
 //wishlist
@@ -596,6 +620,7 @@ void WishlistAdd(ListDin *list_barang, LinkedList *wishlist) {
             printf("Berhasil menambahkan %s ke wishlist!\n", name.TabWord);
         }
     }
+    printf("\n");
 }
 
 void WishlistSwap(LinkedList *wishlist) {
@@ -605,12 +630,12 @@ void WishlistSwap(LinkedList *wishlist) {
     int j = WordToInt(currentWord);
 
     if (i <= 0 || j <= 0 || i > NbElmtLinkedList(*wishlist) || j > NbElmtLinkedList(*wishlist)) {
-        printf("Gagal menukar posisi! Indeks tidak valid.\n");
+        printf("Gagal menukar posisi! Indeks tidak valid.\n\n");
         return;
     }
 
     if (i == j) {
-        printf("Tidak ada perubahan, posisi yang dipilih sama.\n");
+        printf("Tidak ada perubahan, posisi yang dipilih sama.\n\n");
         return;
     }
 
@@ -631,7 +656,7 @@ void WishlistSwap(LinkedList *wishlist) {
     }
 
     if (p1 == NilLL || p2 == NilLL) {
-        printf("Gagal menukar posisi! Salah satu elemen tidak ditemukan.\n");
+        printf("Gagal menukar posisi! Salah satu elemen tidak ditemukan.\n\n");
         return;
     }
 
@@ -641,7 +666,7 @@ void WishlistSwap(LinkedList *wishlist) {
     CopyString(Info(p1), Info(p2));
     CopyString(Info(p2), temp);
 
-    printf("Berhasil menukar posisi barang pada indeks %d dengan indeks %d.\n", i, j);
+    printf("Berhasil menukar posisi barang pada indeks %d dengan indeks %d.\n\n", i, j);
 }
 
 //wishlist remove ke-i
@@ -650,12 +675,12 @@ void WishlistRemoveI(LinkedList *wishlist) {
     int i = WordToInt(currentWord);
 
     if (IsEmptyLinkedList(*wishlist)) {
-        printf("Penghapusan barang WISHLIST gagal dilakukan, WISHLIST kosong!\n");
+        printf("Penghapusan barang WISHLIST gagal dilakukan, WISHLIST kosong!\n\n");
         return;
     }
 
     if (i < 1) {
-        printf("Penghapusan barang WISHLIST gagal dilakukan, Posisi tidak valid!\n");
+        printf("Penghapusan barang WISHLIST gagal dilakukan, Posisi tidak valid!\n\n");
         return;
     }
 
@@ -670,7 +695,7 @@ void WishlistRemoveI(LinkedList *wishlist) {
     }
 
     if (current == NULL) {
-        printf("Penghapusan barang WISHLIST gagal dilakukan, Barang ke-%d tidak ada di WISHLIST!\n", i);
+        printf("Penghapusan barang WISHLIST gagal dilakukan, Barang ke-%d tidak ada di WISHLIST!\n\n", i);
         return;
     }
 
@@ -680,7 +705,7 @@ void WishlistRemoveI(LinkedList *wishlist) {
         Next(prev) = Next(current);
     }
 
-    printf("Berhasil menghapus barang posisi ke-%d dari wishlist!\n", i);
+    printf("Berhasil menghapus barang posisi ke-%d dari wishlist!\n\n", i);
     DealokasiLinkedList(&current);
 }
 
@@ -688,7 +713,7 @@ void WishlistRemoveI(LinkedList *wishlist) {
 void WishlistRemove(LinkedList *wishlist) {
 
     if (IsEmptyLinkedList(*wishlist)) {
-        printf("Penghapusan barang WISHLIST gagal dilakukan, WISHLIST kosong!\n");
+        printf("Penghapusan barang WISHLIST gagal dilakukan, WISHLIST kosong!\n\n");
         return;
     }
 
@@ -729,7 +754,7 @@ void WishlistRemove(LinkedList *wishlist) {
     }
 
     if (current == NULL) {
-        printf("Penghapusan barang WISHLIST gagal dilakukan, %s tidak ada di WISHLIST!\n", name.TabWord);
+        printf("Penghapusan barang WISHLIST gagal dilakukan, %s tidak ada di WISHLIST!\n\n", name.TabWord);
         return;
     }
 
@@ -739,19 +764,20 @@ void WishlistRemove(LinkedList *wishlist) {
         Next(prev) = Next(current);
     }
 
-    printf("%s berhasil dihapus dari WISHLIST!\n", name.TabWord);
+    printf("%s berhasil dihapus dari WISHLIST!\n\n", name.TabWord);
     DealokasiLinkedList(&current);
 }
 
 //wishlist clear
 void WishlistClear(LinkedList *wishlist) {
     if (IsEmptyLinkedList(*wishlist)){
-        printf("Wishlist Kosong!\n");
+        printf("Wishlist Kosong!\n\n");
         return;
     }
     infotypeLL temp;
     while (!IsEmptyLinkedList(*wishlist)) {
         DelVFirstLinkedList(wishlist, &temp);
+        printf("Wishlist telah dikosongkan.\n\n");
     }
 }
 
@@ -788,11 +814,10 @@ void ShowHistory(Stack *history, int line){
 }
 
 //logout
-void Logout(User *logged_in, boolean *log_stats, int *where){
-    printf("Selamat Jalan %s!\n", logged_in->name);
-
+void Logout(List *list_user_session, User *logged_in, boolean *log_stats, int *where){
+    printf("Selamat Jalan %s!\n\n", logged_in->name);
+    DumpLoggedIn(list_user_session, logged_in);
     *logged_in = makeMarkUser();
-
     *log_stats = false;
     *where = 1;
 }
@@ -876,7 +901,7 @@ void Save(List *list_user, List *list_user_session, ListDin *list_barang, ListDi
     }
 
     fclose(file);
-    printf("Data berhasil disimpan ke %s\n", path);
+    printf("Data berhasil disimpan ke %s\n\n", path);
 }
 
 //quit
@@ -894,7 +919,7 @@ void Quit(List *list_user, List *list_user_session, ListDin *list_barang, ListDi
 
         Save(list_user, list_user_session, list_barang, list_barang_session, logged_in);
 
-        printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n");
+        printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n\n");
         *running = false;
     } 
     else{
@@ -902,6 +927,7 @@ void Quit(List *list_user, List *list_user_session, ListDin *list_barang, ListDi
         STARTWORD(NULL);
         if (IsWordEqual(currentWord, "Y") || IsWordEqual(currentWord, "y")){
             *running = false;
+            printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n\n");
         }
     }
 }
@@ -920,15 +946,25 @@ void Help(int where) {
         printf("  QUIT           -> Untuk keluar dari program\n\n");
     } else if (where == 2) {
         printf("====================[ Main Menu Help PURRMART ]====================\n");
-        printf("  WORK           -> Untuk bekerja\n");
-        printf("  WORK CHALLENGE -> Untuk mengerjakan challenge\n");
-        printf("  STORE LIST     -> Untuk melihat barang-barang di toko\n");
-        printf("  STORE REQUEST  -> Untuk meminta penambahan barang\n");
-        printf("  STORE SUPPLY   -> Untuk menambahkan barang dari permintaan\n");
-        printf("  STORE REMOVE   -> Untuk menghapus barang\n");
-        printf("  LOGOUT         -> Untuk keluar dari sesi\n");
-        printf("  SAVE           -> Untuk menyimpan state ke dalam file\n");
-        printf("  QUIT           -> Untuk keluar dari program\n\n");
+        printf("  WORK            -> Untuk bekerja\n");
+        printf("  WORK CHALLENGE  -> Untuk mengerjakan challenge\n");
+        printf("  STORE LIST      -> Untuk melihat barang-barang di toko\n");
+        printf("  STORE REQUEST   -> Untuk meminta penambahan barang\n");
+        printf("  STORE SUPPLY    -> Untuk menambahkan barang dari permintaan\n");
+        printf("  STORE REMOVE    -> Untuk menghapus barang\n");
+        printf("  CART ADD        -> Untuk menambahkan barang ke dalam keranjang\n");
+        printf("  CART REMOVE     -> Untuk menghapus barang dari keranjang\n");
+        printf("  CART SHOW       -> Untuk menampilkan isi keranjang\n");
+        printf("  CART PAY        -> Untuk membayar barang di keranjang\n");
+        printf("  HISTORY         -> Untuk melihat riwayat transaksi\n");
+        printf("  WISHLIST ADD    -> Untuk menambahkan barang ke wishlist\n");
+        printf("  WISHLIST SWAP   -> Untuk menukar posisi barang di wishlist\n");
+        printf("  WISHLIST REMOVE -> Untuk menghapus barang dari wishlist\n");
+        printf("  WISHLIST CLEAR  -> Untuk mengosongkan wishlist\n");
+        printf("  WISHLIST SHOW   -> Untuk menampilkan isi wishlist\n");
+        printf("  LOGOUT          -> Untuk keluar dari sesi\n");
+        printf("  SAVE            -> Untuk menyimpan state ke dalam file\n");
+        printf("  QUIT            -> Untuk keluar dari program\n\n");
     }
 }
 

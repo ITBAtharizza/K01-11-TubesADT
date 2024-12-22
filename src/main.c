@@ -22,7 +22,8 @@ int main(){
     list_user_session = MakeList();
     list_barang = MakeListDin();
     list_barang_session = MakeListDin();
-
+    
+    system("cls");
     while (running){
         printf(">> ");
         STARTWORD(NULL);
@@ -155,10 +156,13 @@ int main(){
                 if (IsWordEqual(currentWord, "CLEAR")){
                     WishlistClear(&logged_in.wishlist);
                 }
+                if (IsWordEqual(currentWord, "SHOW")){
+                    PrintInfoLinkedList(logged_in.wishlist);
+                }
             }
 
             if (IsWordEqual(currentWord, "LOGOUT")){
-                Logout(&logged_in, &log_stats, &where);
+                Logout(&list_user_session, &logged_in, &log_stats, &where);
             }
 
             if (IsWordEqual(currentWord, "SAVE")){

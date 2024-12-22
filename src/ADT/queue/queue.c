@@ -31,11 +31,7 @@ int length(Queue q)
 
 void enqueue(Queue *q, ElTypeQueue val)
 {
-    if (isFull(*q))
-    {
-        printf("Queue is full!\n");
-    }
-    else
+    if (!isFull(*q))
     {
         if (isEmpty(*q)) 
         {
@@ -54,11 +50,7 @@ void enqueue(Queue *q, ElTypeQueue val)
 
 void dequeue(Queue *q, ElTypeQueue *val)
 {
-    if (isEmpty(*q))
-    {
-        printf("Queue is empty!\n");
-    }
-    else
+    if (!isEmpty(*q))
     {
         *val = HEAD(*q);
         if (IDX_HEAD(*q) == IDX_TAIL(*q))
@@ -76,10 +68,10 @@ void dequeue(Queue *q, ElTypeQueue *val)
 
 void displayQueue(Queue q) {
     if (isEmpty(q)) {
-        printf("ANTRIAN KOSONG!\n\n");
+        printf("Antrian Kosong!\n\n");
     } else {
         int i, count = 1;
-        printf("ISI ANTRIAN:\n");
+        printf("Isi Antrian:\n");
         printf("============================================================\n");
         printf("| %-3s | %-50s |\n", "No", "Content");
         printf("============================================================\n");
@@ -101,7 +93,6 @@ int isMemberQueue(Queue q, ElTypeQueue val)
     {
         if (IsSameString(q.buffer[i].TabWord, val.TabWord))
         {
-            printf("Barang dengan nama yang sama sudah ada di antrian!\n");
             return 1;
         }
         if (i == IDX_TAIL(q)) break;

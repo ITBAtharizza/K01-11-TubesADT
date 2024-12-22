@@ -6,9 +6,9 @@
 
 int main(){
     char loadfile[50];
-    char savefile[50];
 
     List list_user;
+    List list_user_session;
     ListDin list_barang;
     ListDin list_barang_session;
     Queue antrian;
@@ -19,7 +19,9 @@ int main(){
 
     CreateQueue(&antrian);
     list_user = MakeList();
+    list_user_session = MakeList();
     list_barang = MakeListDin();
+    list_barang_session = MakeListDin();
 
     while (running){
         printf(">> ");
@@ -29,18 +31,20 @@ int main(){
         if (where == 0){
             if (IsWordEqual(currentWord, "START")){
                 Start(&list_user, &list_barang, &where);
-                ReverseDumpBarang(&list_barang, &list_barang_session);           
+                ReverseDumpBarang(&list_barang, &list_barang_session);
+                ReverseDumpUser(&list_user, &list_user_session);
             }
 
             if (IsWordEqual(currentWord, "LOAD")){
                 STARTWORD(NULL);
                 CopyString(loadfile, currentWord.TabWord);
                 Load(loadfile, &list_user, &list_barang, &where);
-                ReverseDumpBarang(&list_barang, &list_barang_session);           
+                ReverseDumpBarang(&list_barang, &list_barang_session);
+                ReverseDumpUser(&list_user, &list_user_session);
             }
 
             if (IsWordEqual(currentWord, "QUIT")){
-                Quit(&list_user, &list_barang, &list_barang_session, &logged_in, &running);
+                Quit(&list_user, &list_user_session, &list_barang, &list_barang_session, &logged_in, &running);
             }
 
             if (IsWordEqual(currentWord, "HELP")){
@@ -50,18 +54,18 @@ int main(){
 
         if (where == 1){
             if (IsWordEqual(currentWord, "REGISTER")){
-                Register(&list_user);
+                Register(&list_user_session);
             }
             
             if (IsWordEqual(currentWord, "LOGIN")){
-                Login(&list_user, &logged_in, &log_stats);
+                Login(&list_user_session, &logged_in, &log_stats);
                 if (log_stats){
                     where = 2;
                 }
             }
 
             if (IsWordEqual(currentWord, "QUIT")){
-                Quit(&list_user, &list_barang, &list_barang_session, &logged_in, &running);
+                Quit(&list_user, &list_user_session, &list_barang, &list_barang_session, &logged_in, &running);
             }
 
             if (IsWordEqual(currentWord, "HELP")){
@@ -158,13 +162,11 @@ int main(){
             }
 
             if (IsWordEqual(currentWord, "SAVE")){
-                STARTWORD(NULL);
-                CopyString(savefile, currentWord.TabWord);
-                Save(savefile, &list_user, &list_barang, &list_barang_session, &logged_in);
+                Save(&list_user, &list_user_session, &list_barang, &list_barang_session, &logged_in);
             }
 
             if (IsWordEqual(currentWord, "QUIT")){
-                Quit(&list_user, &list_barang, &list_barang_session, &logged_in, &running);
+                Quit(&list_user, &list_user_session, &list_barang, &list_barang_session, &logged_in, &running);
             }
             
             if (IsWordEqual(currentWord, "HELP")){

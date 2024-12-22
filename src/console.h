@@ -84,10 +84,10 @@ void ShowHistory(Stack *history, int line);
 void Logout(User *logged_in, boolean *log_stats, int *where);
 
 //save
-void Save(char *filename, List *list_user, ListDin *list_barang, ListDin *list_barang_session, User *logged_in);
+void Save(List *list_user, List *list_user_session, ListDin *list_barang, ListDin *list_barang_session, User *logged_in);
 
 //quit
-void Quit(List *list_user, ListDin *list_barang, ListDin *list_barang_session, User *logged_in, boolean *running);
+void Quit(List *list_user, List *list_user_session, ListDin *list_barang, ListDin *list_barang_session, User *logged_in, boolean *running);
 
 //help
 void Help(int where);
@@ -122,7 +122,9 @@ void Decoding(char *column, char *decoded, int index);
 boolean IsInString(Word *decoded, Word *code);
 
 //fungsi DumpUser data saat work dan workchallenge
-void DumpUser(List *list_user, User *logged_in);
+void ReverseDumpUser(List *list_user, List *list_user_session);
+void DumpLoggedIn(List *list_user_session, User *logged_in);
+void DumpUser(List *list_user_session, List *list_user);
 
 void DumpBarang(ListDin *list_barang_session, ListDin *list_barang);
 

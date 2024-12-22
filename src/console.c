@@ -798,9 +798,15 @@ void Logout(User *logged_in, boolean *log_stats, int *where){
 }
 
 //save
-void Save(char *filename, List *list_user, ListDin *list_barang, ListDin *list_barang_session, User *logged_in) {
+void Save(List *list_user, List *list_user_session, ListDin *list_barang, ListDin *list_barang_session, User *logged_in) {
     char path[100] = "../save/";
     int idx = 0;
+
+    char filename[50];
+
+    STARTWORD(NULL);
+    CopyString(filename, currentWord.TabWord);
+
     while (filename[idx] != '\0' && idx < 50) {
         path[8 + idx] = filename[idx];
         idx++;
@@ -822,7 +828,8 @@ void Save(char *filename, List *list_user, ListDin *list_barang, ListDin *list_b
         system("mkdir save >nul 2>nul");
     }
 
-    DumpUser(list_user, logged_in);
+    DumpLoggedIn(list_user_session, logged_in);
+    DumpUser(list_user_session, list_user);
     DumpBarang(list_barang_session, list_barang);
 
     file = fopen(path, "w");
@@ -873,7 +880,7 @@ void Save(char *filename, List *list_user, ListDin *list_barang, ListDin *list_b
 }
 
 //quit
-void Quit(List *list_user, ListDin *list_barang, ListDin *list_barang_session, User *logged_in,boolean *running){
+void Quit(List *list_user, List *list_user_session, ListDin *list_barang, ListDin *list_barang_session, User *logged_in,boolean *running){
     char filename[50];
 
     printf("Apakah kamu ingin menyimpan data sesi sekarang (Y/N)? ");
@@ -885,7 +892,7 @@ void Quit(List *list_user, ListDin *list_barang, ListDin *list_barang_session, U
 
         CopyString(filename, currentWord.TabWord); 
 
-        Save(filename, list_user, list_barang, list_barang_session, logged_in);
+        Save(list_user, list_user_session, list_barang, list_barang_session, logged_in);
 
         printf("Kamu keluar dari PURRMART. \nDadah ^_^/\n");
         *running = false;
@@ -1205,14 +1212,26 @@ boolean IsInString(Word *decoded, Word *code){
     return false;
 }
 
-void DumpUser(List *list_user, User *logged_in){
-    for (int i = 0; i < Length(*list_user); i++){
-        if (IsSameString(list_user->A[i].name, logged_in->name) && IsSameString(list_user->A[i].password, logged_in->password)){
-            list_user->A[i].money = logged_in->money;
-            list_user->A[i].keranjang = logged_in->keranjang;
-            list_user->A[i].riwayat_pembelian = logged_in->riwayat_pembelian;
-            list_user->A[i].wishlist = logged_in->wishlist;
+void ReverseDumpUser(List *list_user, List *list_user_session){
+    int len = Length(*list_user);
+    for (int i = 0; i < len; i++){
+        Set(list_user_session, i, Get(*list_user, i));
+    }
+}
+
+void DumpLoggedIn(List *list_user_session, User *logged_in){
+    for (int i = 0; i < Length(*list_user_session); i++){
+        if (IsSameString(list_user_session->A[i].name, logged_in->name) && IsSameString(list_user_session->A[i].password, logged_in->password)){
+            Set(list_user_session, i, *logged_in);
         }
+    }
+}
+
+void DumpUser(List *list_user_session, List *list_user){
+    *list_user = MakeList();
+    int len = Length(*list_user_session);
+    for (int i = 0; i < len; i++){
+        Set(list_user, i, Get(*list_user_session, i));
     }
 }
 

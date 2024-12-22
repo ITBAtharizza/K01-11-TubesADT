@@ -10,6 +10,8 @@ User makeMarkUser(){
     MARK_USER.money = -1;
 
     CreateEmptyMap(&MARK_USER.keranjang);
+    CreateEmptyStack(&MARK_USER.riwayat_pembelian);
+    CreateEmptyLinkedList(&MARK_USER.wishlist);
 
     return MARK_USER;
 }

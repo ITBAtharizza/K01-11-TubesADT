@@ -114,7 +114,7 @@ void Register(List *list_user) {
     STARTWORD(NULL);
     CopyString(password, currentWord.TabWord);
 
-    User newUser;
+    User newUser = makeMarkUser();
     CopyString(newUser.name, username);
     CopyString(newUser.password, password);
     newUser.money = 0;
@@ -848,10 +848,11 @@ void Save(List *list_user, List *list_user_session, ListDin *list_barang, ListDi
         }
         system("mkdir save >nul 2>nul");
     }
-
+    
     DumpLoggedIn(list_user_session, logged_in);
     DumpUser(list_user_session, list_user);
     DumpBarang(list_barang_session, list_barang);
+
 
     file = fopen(path, "w");
     if (file == NULL) {
@@ -867,7 +868,6 @@ void Save(List *list_user, List *list_user_session, ListDin *list_barang, ListDi
     }
 
     fprintf(file, "%d", Length(*list_user));
-
     for (int i = 0; i < Length(*list_user); i++) {
         fprintf(file, "\n");
         ElTypeUser user = list_user->A[i];
@@ -888,14 +888,13 @@ void Save(List *list_user, List *list_user_session, ListDin *list_barang, ListDi
         fprintf(file, "\n");
         int LenLinked = NbElmtLinkedList(list_user->A[i].wishlist);
         fprintf(file, "%d", LenLinked);
-            address temp = list_user->A[i].wishlist.First;
-            while (temp != NilLL) {
-                fprintf(file, "\n");
-                fprintf(file, "%s", temp->info);
-                temp = temp->next;
-            }
+        address temp = list_user->A[i].wishlist.First;
+        while (temp != NilLL) {
+            fprintf(file, "\n");
+            fprintf(file, "%s", temp->info);
+            temp = temp->next;
+        }
     }
-
     fclose(file);
     printf("Data berhasil disimpan ke %s\n\n", path);
 }
@@ -1260,19 +1259,21 @@ void DumpLoggedIn(List *list_user_session, User *logged_in){
 }
 
 void DumpUser(List *list_user_session, List *list_user){
-    *list_user = MakeList();
     int len = Length(*list_user_session);
     for (int i = 0; i < len; i++){
-        Set(list_user, i, Get(*list_user_session, i));
+        if (IsSameString(list_user->A[i].name, list_user_session->A[i].name)){
+            Set(list_user, i, Get(*list_user_session, i));
+        }
     }
 }
 
 void DumpBarang(ListDin *list_barang_session, ListDin *list_barang){
+    if (list_barang->A != NULL){
+        free(list_barang->A);
+    }
     list_barang->Capacity = list_barang_session->Capacity;
     list_barang->Neff = list_barang_session->Neff;
-
-    list_barang->A = (ElTypeBarang *) malloc(list_barang->Capacity * sizeof(ElTypeBarang));
-    
+    list_barang->A = (ElTypeBarang *) malloc(list_barang->Capacity * sizeof(ElTypeBarang));    
     for (int i = 0; i < list_barang_session->Neff; i++){
         list_barang->A[i] = list_barang_session->A[i];
     }

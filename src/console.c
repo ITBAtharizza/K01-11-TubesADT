@@ -612,7 +612,7 @@ void WishlistAdd(ListDin *list_barang, LinkedList *wishlist) {
     if (index == -1) {
         printf("Tidak ada barang dengan nama %s!\n", name.TabWord);
     } else {
-        if (SearchLinkedList(*wishlist, name.TabWord)) {
+        if (IsMemberLinkedList(*wishlist, name.TabWord)) {
             printf("%s sudah ada di wishlist!\n", name.TabWord);
         } else {
             InsVLastLinkedList(wishlist, name.TabWord);
@@ -740,7 +740,7 @@ void WishlistRemove(LinkedList *wishlist) {
 
     CopyString(name.TabWord, goods);
     name.Length = length;
-    
+
     address current = First(*wishlist);
     address prev = NULL;
 

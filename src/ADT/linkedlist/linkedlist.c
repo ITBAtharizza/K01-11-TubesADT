@@ -211,3 +211,16 @@ void KonkatLinkedList (LinkedList *L1, LinkedList *L2, LinkedList *L3){
         P2 = Next(P2);
     }
 }
+
+boolean IsMemberLinkedList(LinkedList L, infotypeLL X){
+    address current = L.First;
+
+    while (current != NilLL){
+        if (IsSameString(current->info, X)){
+            return true;
+        }
+        current = current->next;
+    }
+
+    return false;
+}

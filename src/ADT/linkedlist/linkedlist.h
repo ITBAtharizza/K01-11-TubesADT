@@ -142,4 +142,6 @@ void KonkatLinkedList (LinkedList *L1, LinkedList *L2, LinkedList *L3);
 /* dan L1 serta L2 menjadi list kosong.*/
 /* Tidak ada alokasi/dealokasi pada prosedur ini */
 
+boolean IsMemberLinkedList(LinkedList L, infotypeLL X);
+
 #endif

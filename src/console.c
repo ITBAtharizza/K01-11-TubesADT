@@ -774,14 +774,17 @@ void WishlistClear(LinkedList *wishlist) {
     infotypeLL temp;
     while (!IsEmptyLinkedList(*wishlist)) {
         DelVFirstLinkedList(wishlist, &temp);
-        printf("Wishlist telah dikosongkan.\n\n");
     }
+    printf("Wishlist telah dikosongkan.\n\n");
 }
 
 //history
 void ShowHistory(Stack *history, int line){
     if (IsEmptyStack(*history)){
         printf("HISTORY KOSONG!\n\n");
+        return;
+    }
+    if (line < 0){
         return;
     }
 

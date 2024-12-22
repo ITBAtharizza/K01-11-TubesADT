@@ -9,7 +9,7 @@
 #include "../custom/custom.h"
 
 /* Kamus Umum */
-#define MaxEl 10
+#define MaxEl 50
 #define InvalidIdx -1  /* Indeks tak terdefinisi */
 
 /* Definisi elemen dan koleksi objek */

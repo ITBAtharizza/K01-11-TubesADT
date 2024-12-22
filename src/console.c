@@ -561,7 +561,7 @@ void CartPay(Map *Cart, User *user, Stack *history) {
         STARTWORD(NULL);
         if (IsWordEqual(currentWord, "Ya")){
             if (total_biaya > user->money){
-                printf("Uang kamu hanya %d, tidak cukup untuk membeli keranjang!\n", user->money);
+                printf("Uang kamu hanya %d, tidak cukup untuk membeli keranjang!\n\n", user->money);
                 return;
             }
             OneHistory addHistory;

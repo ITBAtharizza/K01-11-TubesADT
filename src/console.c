@@ -373,12 +373,13 @@ void Remove(ListDin *list_barang){
 
 //profile
 void Profile (User *user) {
-    printf("\n+----------------------------------------+\n");
-    printf("|             Profil Pengguna            |\n");
-    printf("+----------------------------------------+\n");
-    printf("| Nama  : %-30s |\n", user->name);
-    printf("| Saldo : %-30d |\n", user->money);
-    printf("+----------------------------------------+\n");
+    printf("+------------------------------------------------------------+\n");
+    printf("|                       Profil Pengguna                      |\n");
+    printf("+------------------------------------------------------------+\n");
+    printf("| Nama  : %-50s |\n", user->name);
+    printf("| Saldo : %-50d |\n", user->money);
+    printf("+------------------------------------------------------------+\n\n");
+
 }
 
 //cart
@@ -566,6 +567,7 @@ void CartPay(Map *Cart, User *user, Stack *history) {
             addHistory.total = max_quantity * max_barang.price;
             CopyString(addHistory.name, max_barang.name);
             PushStack(history, addHistory);
+            CreateEmptyMap(Cart);
             printf("Selamat kamu telah membeli barang-barang tersebut!\n");
         }
         else if (IsWordEqual(currentWord, "Tidak")){
@@ -714,17 +716,17 @@ void WishlistRemove(LinkedList *wishlist) {
         return;
     }
 
+    printf("Masukkan nama barang: ");
+    STARTWORD(NULL);
+
     Word name;
-    name.Length = 0;
-    
     char goods[50] = "";
     int length = 0;
 
-    printf("Masukkan nama barang yang akan dihapus : ");
-    STARTWORD(NULL);
-    while (!isEndWord()) {
-        GoodsWithManyWords(goods, &length, currentWord);
+    GoodsWithManyWords(goods, &length, currentWord);
+    while (!isEndWord()){
         STARTWORD(NULL);
+        GoodsWithManyWords(goods, &length, currentWord);
     }
 
     if (length > 0 && goods[length - 1] == ' '){
@@ -736,12 +738,9 @@ void WishlistRemove(LinkedList *wishlist) {
         length = 50;
     }
 
-    for (int j = 0; j < length && j < 50; j++){
-        name.TabWord[j] = goods[j];
-    }            
     CopyString(name.TabWord, goods);
     name.Length = length;
-
+    
     address current = First(*wishlist);
     address prev = NULL;
 
@@ -781,7 +780,7 @@ void WishlistClear(LinkedList *wishlist) {
 //history
 void ShowHistory(Stack *history, int line){
     if (IsEmptyStack(*history)){
-        printf("Kamu belum membeli barang apapun!\n\n");
+        printf("HISTORY KOSONG!\n\n");
         return;
     }
 
@@ -789,7 +788,7 @@ void ShowHistory(Stack *history, int line){
     CreateEmptyStack(&temp);
     OneHistory X;
 
-    printf("Riwayat Pembelian:\n");
+    printf("ISI HISTORY:\n");
     printf("============================================================================\n");
     printf("| %-5s | %-50s | %-10s |\n", "No", "Nama Barang", "Harga Total");
     printf("============================================================================\n");
